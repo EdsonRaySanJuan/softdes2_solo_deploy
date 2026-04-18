@@ -5,6 +5,8 @@ from flask_cors import CORS
 
 # Import route blueprints to handle modular system tasks 
 from routes.report_routes import report_bp
+from routes.dashboard_routes import dashboard_bp
+
 
 
 app = Flask(__name__)
@@ -84,6 +86,8 @@ init_sqlite_db()
 
 # 3. REGISTER BLUEPRINTS: Maps RESTful API endpoints for seamless workflows [cite: 3, 16]
 app.register_blueprint(report_bp, url_prefix='/api/reports')
+app.register_blueprint(dashboard_bp, url_prefix='/api/dashboard')
+
 
 
 @app.route("/")
