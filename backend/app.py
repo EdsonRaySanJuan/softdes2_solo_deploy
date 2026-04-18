@@ -17,7 +17,6 @@ app = Flask(__name__)
 # 1. CORS: Facilitates data exchange between the React client and Flask server [cite: 12, 18]
 CORS(app, resources={r"/api/*": {
     "origins": [
-        "http://localhost:3000",
         "https://softdes-finalproj.vercel.app"
     ]
 }})
