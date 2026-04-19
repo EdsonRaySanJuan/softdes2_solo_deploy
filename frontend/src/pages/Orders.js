@@ -209,7 +209,7 @@ export default function Orders() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const currentCategory = menuData[selectedCategory];
-
+    
   const total = useMemo(() => {
     return cart.reduce((sum, item) => sum + item.line_total, 0);
   }, [cart]);
@@ -354,9 +354,11 @@ export default function Orders() {
   };
 
   return (
-    <div className="orders-page">
-      <Sidebar />
-      <div className="orders-content">
+  <div className="app-body">
+    <div className="app-shell">
+      <Sidebar role="Employee" />
+
+      <main className="main-content">
         <h1>Orders</h1>
 
         <div className="category-tabs">
@@ -372,11 +374,13 @@ export default function Orders() {
         </div>
 
         <div className="menu-grid">
-          {currentCategory.items.map((item, index) => (
+          {currentCategory?.items?.map((item, index) => (
             <div key={index} className="menu-card">
               <h3>{item.name}</h3>
               <p>{currentCategory.description}</p>
-              <button onClick={() => openItemModal(item)}>Add Item</button>
+              <button onClick={() => openItemModal(item)}>
+                Add Item
+              </button>
             </div>
           ))}
         </div>
@@ -491,7 +495,8 @@ export default function Orders() {
             </div>
           </div>
         )}
-      </div>
+      </main>
     </div>
-  );
+  </div>
+);
 }
