@@ -1,8 +1,17 @@
 import sqlite3
-from flask import Blueprint, jsonify, request
+import os
+import csv
+import io
+
+from flask import Blueprint, jsonify, request, Response
 from db import get_db_connection, is_postgres
 
-inventory_bp = Blueprint('inventory', __name__)
+
+inventory_bp = Blueprint("inventory", __name__)
+
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+BACKEND_DIR = os.path.dirname(BASE_DIR)
+DATA_DIR = os.path.join(BACKEND_DIR, "data")
 
 
 def rows_to_dicts(rows):
@@ -15,6 +24,22 @@ def rows_to_dicts(rows):
     return result
 
 
+def csv_file_path(filename):
+    safe_name = os.path.basename(filename)
+    return os.path.join(DATA_DIR, safe_name)
+
+
+def compute_status(current_stock, reorder_level):
+    status = "Normal"
+    if current_stock <= 0:
+        status = "Out of Stock"
+    elif current_stock <= (reorder_level * 0.25):
+        status = "Critical"
+    elif current_stock <= reorder_level:
+        status = "Low"
+    return status
+
+
 @inventory_bp.route("/", methods=["GET"])
 def get_inventory():
     try:
@@ -24,6 +49,89 @@ def get_inventory():
         items = rows_to_dicts(cursor.fetchall())
         conn.close()
         return jsonify(items)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@inventory_bp.route("/csv-list", methods=["GET"])
+def get_csv_list():
+    try:
+        if not os.path.exists(DATA_DIR):
+            return jsonify({
+                "success": True,
+                "files": []
+            }), 200
+
+        files = [
+            f for f in os.listdir(DATA_DIR)
+            if f.lower().endswith(".csv")
+        ]
+
+        files.sort()
+
+        return jsonify({
+            "success": True,
+            "count": len(files),
+            "files": files
+        }), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@inventory_bp.route("/csv-view/<path:filename>", methods=["GET"])
+def view_csv_file(filename):
+    try:
+        file_path = csv_file_path(filename)
+
+        if not os.path.exists(file_path):
+            return jsonify({"error": f"{filename} not found"}), 404
+
+        with open(file_path, "r", encoding="utf-8-sig", newline="") as f:
+            rows = list(csv.DictReader(f))
+
+        return jsonify({
+            "success": True,
+            "filename": os.path.basename(filename),
+            "count": len(rows),
+            "rows": rows
+        }), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@inventory_bp.route("/export-db-csv", methods=["GET"])
+def export_inventory_db_to_csv():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM inventory ORDER BY category ASC, item_name ASC")
+        rows = cursor.fetchall()
+
+        if not rows:
+            conn.close()
+            return jsonify({"error": "No inventory data found"}), 404
+
+        rows = rows_to_dicts(rows)
+        conn.close()
+
+        output = io.StringIO()
+        writer = csv.DictWriter(output, fieldnames=list(rows[0].keys()))
+        writer.writeheader()
+        writer.writerows(rows)
+
+        csv_data = output.getvalue()
+        output.close()
+
+        return Response(
+            csv_data,
+            mimetype="text/csv",
+            headers={
+                "Content-Disposition": "attachment; filename=inventory_export.csv"
+            }
+        )
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -43,13 +151,7 @@ def add_item():
         if not item_name or not category:
             return jsonify({"error": "Missing required fields"}), 400
 
-        status = "Normal"
-        if current_stock <= 0:
-            status = "Out of Stock"
-        elif current_stock <= (reorder_level * 0.25):
-            status = "Critical"
-        elif current_stock <= reorder_level:
-            status = "Low"
+        status = compute_status(current_stock, reorder_level)
 
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -60,14 +162,20 @@ def add_item():
                     item_name, category, unit, current_stock,
                     reorder_level, reorder_qty, status, supplier
                 ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            """, (item_name, category, unit, current_stock, reorder_level, reorder_qty, status, supplier))
+            """, (
+                item_name, category, unit, current_stock,
+                reorder_level, reorder_qty, status, supplier
+            ))
         else:
             cursor.execute("""
                 INSERT INTO inventory (
                     item_name, category, unit, current_stock,
                     reorder_level, reorder_qty, status, supplier
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            """, (item_name, category, unit, current_stock, reorder_level, reorder_qty, status, supplier))
+            """, (
+                item_name, category, unit, current_stock,
+                reorder_level, reorder_qty, status, supplier
+            ))
 
         conn.commit()
         conn.close()
@@ -103,30 +211,43 @@ def update_item(item_id):
         new_unit = data.get("unit", item["unit"])
         new_stock = int(data.get("current_stock", item["current_stock"]))
         new_reorder_lvl = int(data.get("reorder_level", item["reorder_level"]))
+        new_reorder_qty = int(data.get("reorder_qty", item.get("reorder_qty", 0)))
         new_supplier = data.get("supplier", item["supplier"])
 
-        status = "Normal"
-        if new_stock <= 0:
-            status = "Out of Stock"
-        elif new_stock <= (new_reorder_lvl * 0.25):
-            status = "Critical"
-        elif new_stock <= new_reorder_lvl:
-            status = "Low"
+        status = compute_status(new_stock, new_reorder_lvl)
 
         if is_postgres():
             cursor.execute("""
                 UPDATE inventory
-                SET item_name = %s, category = %s, unit = %s,
-                    current_stock = %s, reorder_level = %s, supplier = %s, status = %s
+                SET item_name = %s,
+                    category = %s,
+                    unit = %s,
+                    current_stock = %s,
+                    reorder_level = %s,
+                    reorder_qty = %s,
+                    supplier = %s,
+                    status = %s
                 WHERE id = %s
-            """, (new_name, new_cat, new_unit, new_stock, new_reorder_lvl, new_supplier, status, item_id))
+            """, (
+                new_name, new_cat, new_unit, new_stock,
+                new_reorder_lvl, new_reorder_qty, new_supplier, status, item_id
+            ))
         else:
             cursor.execute("""
                 UPDATE inventory
-                SET item_name = ?, category = ?, unit = ?,
-                    current_stock = ?, reorder_level = ?, supplier = ?, status = ?
+                SET item_name = ?,
+                    category = ?,
+                    unit = ?,
+                    current_stock = ?,
+                    reorder_level = ?,
+                    reorder_qty = ?,
+                    supplier = ?,
+                    status = ?
                 WHERE id = ?
-            """, (new_name, new_cat, new_unit, new_stock, new_reorder_lvl, new_supplier, status, item_id))
+            """, (
+                new_name, new_cat, new_unit, new_stock,
+                new_reorder_lvl, new_reorder_qty, new_supplier, status, item_id
+            ))
 
         conn.commit()
         conn.close()
@@ -171,9 +292,10 @@ def get_reorder_list():
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT item_name, supplier, reorder_qty, unit
+            SELECT item_name, supplier, reorder_qty, unit, current_stock, reorder_level, status
             FROM inventory
             WHERE status IN ('Critical', 'Low', 'Out of Stock')
+            ORDER BY current_stock ASC, item_name ASC
         """)
         items = rows_to_dicts(cursor.fetchall())
         conn.close()
