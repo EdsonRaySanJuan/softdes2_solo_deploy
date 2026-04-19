@@ -1,5 +1,11 @@
 menu_category,menu_item,size,ingredient_name,qty_used,unit,recipe_type
 
+
+Lemonade,Lemonade (Regular),regular,Water,170,ml,base
+Lemonade,Lemonade (Regular),regular,Ice,250,g,base
+Lemonade,Lemonade (Regular),regular,Sugar Syrup,20,ml,base
+
+
 # ================= BASE FORMULAS =================
 
 # LEMONADE BASE (ALL FLAVORS USE THIS PATTERN)
