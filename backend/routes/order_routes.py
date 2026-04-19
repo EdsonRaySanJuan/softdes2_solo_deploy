@@ -71,7 +71,7 @@ def get_addon_recipe_rows(addon_name):
     rows = load_csv_rows(ADDON_RECIPES_PATH)
     return [
         row for row in rows
-        if normalize_text(row.get("addon_name")) == normalize_text(addon_name)
+        if normalize_text(row.get("addon_name", "")).strip() == normalize_text(addon_name)
     ]
 
 
@@ -149,7 +149,7 @@ def deduct_inventory_ingredient(cursor, ingredient_name, qty_needed, inventory_w
         cursor.execute("""
             UPDATE inventory
             SET current_stock = current_stock - %s
-            WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(%s))
+            WHERE LOWER(item_name) LIKE LOWER(%s)
         """, (qty_needed, ingredient_name))
     else:
         cursor.execute("""
@@ -178,7 +178,7 @@ def deduct_inventory_ingredient(cursor, ingredient_name, qty_needed, inventory_w
                 WHEN current_stock <= reorder_level THEN 'Low'
                 ELSE 'Normal'
             END
-            WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(%s))
+            WHERE LOWER(item_name) LIKE LOWER(%s)
         """, (ingredient_name,))
     else:
         cursor.execute("""
@@ -192,31 +192,7 @@ def deduct_inventory_ingredient(cursor, ingredient_name, qty_needed, inventory_w
             WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(?))
         """, (ingredient_name,))
 
-# Added
-def check_ingredient_stock(cursor, ingredient_name, qty_needed):
-    if is_postgres():
-        cursor.execute("""
-            SELECT current_stock
-            FROM inventory
-            WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(%s))
-        """, (ingredient_name,))
-    else:
-        cursor.execute("""
-            SELECT current_stock
-            FROM inventory
-            WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(?))
-        """, (ingredient_name,))
-
-    row = cursor.fetchone()
-
-    if not row:
-        return False, 0  # ingredient not found
-
-    stock = row["current_stock"] if isinstance(row, dict) else row[0]
-
-    return stock >= qty_needed, stock
-# End of added function
-
+##
 @order_bp.route("/debug-db", methods=["GET"])
 def debug_orders_db():
     try:
@@ -302,14 +278,14 @@ def check_ingredient_stock(cursor, ingredient_name, qty_needed):
         cursor.execute("""
             SELECT current_stock
             FROM inventory
-            WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(%s))
+            WHERE LOWER(item_name) LIKE LOWER(%s)
         """, (ingredient_name,))
     else:
         cursor.execute("""
             SELECT current_stock
             FROM inventory
-            WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(?))
-        """, (ingredient_name,))
+            WHERE LOWER(item_name) LIKE LOWER(%s)
+        """, (f"%{ingredient_name}%",))
 
     row = cursor.fetchone()
 
@@ -398,9 +374,12 @@ def create_order():
             print("DEBUG RECIPES FOUND:", recipe_rows)
 
             if not recipe_rows:
-                inventory_warnings.append(
-                    f"No base recipe found for item='{name}' size='{size}'. Sale saved, but base ingredients were not deducted."
-                )
+                conn.rollback()
+                conn.close()
+                return jsonify({
+                    "success": False,
+                    "error": f"Recipe NOT FOUND for '{name}' ({size})"
+                }), 400
             else:
                 for recipe in recipe_rows:
                     ingredient_name = str(recipe.get("ingredient_name", "")).strip()
@@ -435,11 +414,12 @@ def create_order():
                     continue
 
                 addon_recipe_rows = get_addon_recipe_rows(addon_name)
-                if not addon_recipe_rows:
-                    inventory_warnings.append(
-                        f"No addon recipe found for addon='{addon_name}'"
-                    )
-                    continue
+                conn.rollback()
+                conn.close()
+                return jsonify({
+                    "success": False,
+                    "error": f"Addon '{addon_name}' NOT FOUND in recipes"
+                }), 400
 
                 for addon_recipe in addon_recipe_rows:
                     ingredient_name = str(addon_recipe.get("ingredient_name", "")).strip()
@@ -513,7 +493,13 @@ def create_order():
             "change": change,
             "lines_written": lines_written,
             "deducted_ingredients": deducted_ingredients,
-            "inventory_warnings": inventory_warnings
+            "inventory_warnings": inventory_warnings,
+
+            # 🔥 ADD THIS PART
+            "debug": {
+                "items_received": items
+            }
+
         }), 201
 
     except Exception as e:
