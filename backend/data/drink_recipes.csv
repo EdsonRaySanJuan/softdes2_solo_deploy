@@ -1,199 +1,183 @@
 menu_category,menu_item,size,ingredient_name,qty_used,unit,recipe_type
-
-# ================= LEMONADE =================
-Lemonade,Lemonade (Regular),regular,Water,170,ml,base
-Lemonade,Lemonade (Regular),regular,Ice,250,g,base
-Lemonade,Lemonade (Regular),regular,Sugar Syrup,20,ml,base
-
-Lemonade,Green Apple Lemonade,regular,Water,170,ml,base
-Lemonade,Green Apple Lemonade,regular,Ice,250,g,base
-Lemonade,Green Apple Lemonade,regular,Sugar Syrup,20,ml,base
-
-Lemonade,Strawberry Lemonade,regular,Water,170,ml,base
-Lemonade,Strawberry Lemonade,regular,Ice,250,g,base
-Lemonade,Strawberry Lemonade,regular,Strawberry Syrup,20,ml,base
-
-Lemonade,Blueberry Lemonade,regular,Water,170,ml,base
-Lemonade,Blueberry Lemonade,regular,Ice,250,g,base
-Lemonade,Blueberry Lemonade,regular,Blueberry Syrup,20,ml,base
-
-Lemonade,Peach Lemonade,regular,Water,170,ml,base
-Lemonade,Peach Lemonade,regular,Ice,250,g,base
-Lemonade,Peach Lemonade,regular,Sugar Syrup,20,ml,base
-
-Lemonade,Lychee Lemonade,regular,Water,170,ml,base
-Lemonade,Lychee Lemonade,regular,Ice,250,g,base
-Lemonade,Lychee Lemonade,regular,Sugar Syrup,20,ml,base
-
-Lemonade,Strawberry Lemon,regular,Water,170,ml,base
-Lemonade,Strawberry Lemon,regular,Ice,250,g,base
-Lemonade,Strawberry Lemon,regular,Strawberry Syrup,30,ml,base
-
-Lemonade,Blue Lemonade,regular,Water,170,ml,base
-Lemonade,Blue Lemonade,regular,Ice,250,g,base
-Lemonade,Blue Lemonade,regular,Blueberry Syrup,30,ml,base
-
-Lemonade,Red Fizz Lemonade,regular,Water,170,ml,base
-Lemonade,Red Fizz Lemonade,regular,Ice,250,g,base
-Lemonade,Red Fizz Lemonade,regular,Strawberry Syrup,30,ml,base
-
-Lemonade,Cucumber Lemonade,regular,Water,170,ml,base
-Lemonade,Cucumber Lemonade,regular,Ice,250,g,base
-Lemonade,Cucumber Lemonade,regular,Cucumber,50,g,base
-
-Lemonade,Honey Ginger,regular,Water,170,ml,base
-Lemonade,Honey Ginger,regular,Ice,250,g,base
-Lemonade,Honey Ginger,regular,Sugar Syrup,25,ml,base
-
-
-# ================= YOGURT =================
-Yogurt,Strawberry,grande,Milk,120,ml,base
-Yogurt,Strawberry,grande,Ice,180,g,base
-Yogurt,Strawberry,grande,Strawberry Syrup,20,ml,base
-
-Yogurt,Strawberry,venti,Milk,170,ml,base
-Yogurt,Strawberry,venti,Ice,250,g,base
-Yogurt,Strawberry,venti,Strawberry Syrup,30,ml,base
-
-Yogurt,Blueberry,grande,Milk,120,ml,base
-Yogurt,Blueberry,grande,Ice,180,g,base
-Yogurt,Blueberry,grande,Blueberry Syrup,20,ml,base
-
-Yogurt,Blueberry,venti,Milk,170,ml,base
-Yogurt,Blueberry,venti,Ice,250,g,base
-Yogurt,Blueberry,venti,Blueberry Syrup,30,ml,base
-
-Yogurt,Passion Fruit,grande,Milk,120,ml,base
-Yogurt,Passion Fruit,grande,Ice,180,g,base
-Yogurt,Passion Fruit,grande,Sugar Syrup,25,ml,base
-
-Yogurt,Biscoff,grande,Milk,120,ml,base
-Yogurt,Biscoff,grande,Ice,180,g,base
-Yogurt,Biscoff,grande,Sugar Syrup,30,ml,base
-
-
-# ================= FRUIT SODA =================
-Fruit Soda,Green Apple,grande,Water,120,ml,base
-Fruit Soda,Green Apple,grande,Ice,180,g,base
-Fruit Soda,Green Apple,grande,Sugar Syrup,20,ml,base
-
-Fruit Soda,Strawberry,grande,Water,120,ml,base
-Fruit Soda,Strawberry,grande,Ice,180,g,base
-Fruit Soda,Strawberry,grande,Strawberry Syrup,20,ml,base
-
-Fruit Soda,Blueberry,grande,Water,120,ml,base
-Fruit Soda,Blueberry,grande,Ice,180,g,base
-Fruit Soda,Blueberry,grande,Blueberry Syrup,20,ml,base
-
-Fruit Soda,Peach,grande,Water,120,ml,base
-Fruit Soda,Peach,grande,Ice,180,g,base
-Fruit Soda,Peach,grande,Sugar Syrup,20,ml,base
-
-
-# ================= MILK TEA =================
-Milk Tea,Matcha,grande,Water,100,ml,base
-Milk Tea,Matcha,grande,Milk,60,ml,base
-Milk Tea,Matcha,grande,Matcha Powder,20,g,base
-
-Milk Tea,Matcha,venti,Water,140,ml,base
-Milk Tea,Matcha,venti,Milk,85,ml,base
-Milk Tea,Matcha,venti,Matcha Powder,28,g,base
-
-Milk Tea,Wintermelon,grande,Water,100,ml,base
-Milk Tea,Wintermelon,grande,Sugar Syrup,25,ml,base
-
-Milk Tea,Oreo,grande,Water,100,ml,base
-Milk Tea,Oreo,grande,Milk,60,ml,base
-Milk Tea,Oreo,grande,Oreo,20,g,base
-
-Milk Tea,Dark Choco,grande,Water,100,ml,base
-Milk Tea,Dark Choco,grande,Sugar Syrup,25,ml,base
-
-
-# ================= COFFEE =================
-Coffee,Iced Latte,grande,Espresso Shot,1,shot,base
-Coffee,Iced Latte,grande,Milk,100,ml,base
-Coffee,Iced Latte,grande,Ice,180,g,base
-
-Coffee,Iced Latte,venti,Espresso Shot,2,shot,base
-Coffee,Iced Latte,venti,Milk,140,ml,base
-Coffee,Iced Latte,venti,Ice,250,g,base
-
-# ================= NON-COFFEE =================
-Non-Coffee,Strawberry Milk,grande,Milk,120,ml,base
-Non-Coffee,Strawberry Milk,grande,Ice,180,g,base
-Non-Coffee,Strawberry Milk,grande,Strawberry Syrup,20,ml,base
-
-Non-Coffee,Blueberry Milk,grande,Milk,120,ml,base
-Non-Coffee,Blueberry Milk,grande,Ice,180,g,base
-Non-Coffee,Blueberry Milk,grande,Blueberry Syrup,20,ml,base
-
-Non-Coffee,Oreo Milk,grande,Milk,120,ml,base
-Non-Coffee,Oreo Milk,grande,Ice,180,g,base
-Non-Coffee,Oreo Milk,grande,Oreo,20,g,base
-
-Non-Coffee,Swissmiss,grande,Milk,120,ml,base
-Non-Coffee,Swissmiss,grande,Ice,180,g,base
-Non-Coffee,Swissmiss,grande,Sugar Syrup,20,ml,base
-
-
-# ================= FRAPPUCCINO =================
-Frappuccino,Caramel,grande,Milk,100,ml,base
-Frappuccino,Caramel,grande,Ice,220,g,base
-Frappuccino,Caramel,grande,Caramel Syrup,20,ml,base
-
-Frappuccino,Dark Mocha,grande,Milk,100,ml,base
-Frappuccino,Dark Mocha,grande,Ice,220,g,base
-Frappuccino,Dark Mocha,grande,Sugar Syrup,25,ml,base
-
-Frappuccino,Mocha Jelly,grande,Milk,100,ml,base
-Frappuccino,Mocha Jelly,grande,Ice,220,g,base
-Frappuccino,Mocha Jelly,grande,Coffee Jelly,50,g,base
-
-Frappuccino,Nutella,grande,Milk,100,ml,base
-Frappuccino,Nutella,grande,Ice,220,g,base
-Frappuccino,Nutella,grande,Sugar Syrup,30,ml,base
-
-
-# ================= NON-COFFEE FRAPPE =================
-Non-Coffee Frappe,Cookies & Cream,grande,Milk,100,ml,base
-Non-Coffee Frappe,Cookies & Cream,grande,Ice,220,g,base
-Non-Coffee Frappe,Cookies & Cream,grande,Oreo,30,g,base
-
-Non-Coffee Frappe,Milo Cream,grande,Milk,100,ml,base
-Non-Coffee Frappe,Milo Cream,grande,Ice,220,g,base
-Non-Coffee Frappe,Milo Cream,grande,Sugar Syrup,25,ml,base
-
-Non-Coffee Frappe,Strawberry,grande,Milk,100,ml,base
-Non-Coffee Frappe,Strawberry,grande,Ice,220,g,base
-Non-Coffee Frappe,Strawberry,grande,Strawberry Syrup,25,ml,base
-
-Non-Coffee Frappe,Blueberry,grande,Milk,100,ml,base
-Non-Coffee Frappe,Blueberry,grande,Ice,220,g,base
-Non-Coffee Frappe,Blueberry,grande,Blueberry Syrup,25,ml,base
-
-Non-Coffee Frappe,Nutella Cream,grande,Milk,100,ml,base
-Non-Coffee Frappe,Nutella Cream,grande,Ice,220,g,base
-Non-Coffee Frappe,Nutella Cream,grande,Sugar Syrup,30,ml,base
-
-
-# ================= PREMIUM =================
-Premium,Strawberry Latte,grande,Milk,120,ml,base
-Premium,Strawberry Latte,grande,Ice,180,g,base
-Premium,Strawberry Latte,grande,Strawberry Syrup,20,ml,base
-
-Premium,Matcha Espresso,grande,Milk,120,ml,base
-Premium,Matcha Espresso,grande,Ice,180,g,base
-Premium,Matcha Espresso,grande,Matcha Powder,20,g,base
-
-Premium,Sea Salt Latte,grande,Milk,120,ml,base
-Premium,Sea Salt Latte,grande,Ice,180,g,base
-Premium,Sea Salt Latte,grande,Sugar Syrup,25,ml,base
-
-Premium,Biscoff Latte,grande,Milk,120,ml,base
-Premium,Biscoff Latte,grande,Ice,180,g,base
-Premium,Biscoff Latte,grande,Sugar Syrup,30,ml,base
-
-Premium,Nutella Latte,grande,Milk,120,ml,base
-Premium,Nutella Latte,grande,Ice,180,g,base
-Premium,Nutella Latte,grande,Sugar Syrup,30,ml,base
+Lemonade,Lemonade (Regular),Regular,Price,40,PHP,price
+Lemonade,Green Apple Lemonade,Regular,Price,50,PHP,price
+Lemonade,Strawberry Lemonade,Regular,Price,50,PHP,price
+Lemonade,Blueberry Lemonade,Regular,Price,50,PHP,price
+Lemonade,Peach Lemonade,Regular,Price,50,PHP,price
+Lemonade,Lychee Lemonade,Regular,Price,50,PHP,price
+Lemonade,Strawberry Lemon,Regular,Price,60,PHP,price
+Lemonade,Blue Lemonade,Regular,Price,60,PHP,price
+Lemonade,Red Fizz Lemonade,Regular,Price,60,PHP,price
+Lemonade,Cucumber Lemonade,Regular,Price,60,PHP,price
+Lemonade,Honey Ginger,Regular,Price,65,PHP,price
+Yogurt Smoothies,Strawberry,Grande,Price,60,PHP,price
+Yogurt Smoothies,Strawberry,Venti,Price,70,PHP,price
+Yogurt Smoothies,Blueberry,Grande,Price,60,PHP,price
+Yogurt Smoothies,Blueberry,Venti,Price,70,PHP,price
+Yogurt Smoothies,Passion Fruit,Grande,Price,60,PHP,price
+Yogurt Smoothies,Passion Fruit,Venti,Price,70,PHP,price
+Yogurt Smoothies,Biscoff,Grande,Price,70,PHP,price
+Yogurt Smoothies,Biscoff,Venti,Price,80,PHP,price
+Fruit Soda,Green Apple,Grande,Price,58,PHP,price
+Fruit Soda,Green Apple,Venti,Price,68,PHP,price
+Fruit Soda,Strawberry,Grande,Price,58,PHP,price
+Fruit Soda,Strawberry,Venti,Price,68,PHP,price
+Fruit Soda,Blueberry,Grande,Price,58,PHP,price
+Fruit Soda,Blueberry,Venti,Price,68,PHP,price
+Fruit Soda,Peach,Grande,Price,58,PHP,price
+Fruit Soda,Peach,Venti,Price,68,PHP,price
+Fruit Soda,Lychee,Grande,Price,58,PHP,price
+Fruit Soda,Lychee,Venti,Price,68,PHP,price
+Fruit Soda,Lemon,Grande,Price,58,PHP,price
+Fruit Soda,Lemon,Venti,Price,68,PHP,price
+Fruit Soda,Ginger Ale,Grande,Price,58,PHP,price
+Fruit Soda,Ginger Ale,Venti,Price,68,PHP,price
+Hot Coffee,Americano,Regular,Price,58,PHP,price
+Hot Coffee,Cà Phê Español,Regular,Price,58,PHP,price
+Hot Coffee,Hot Latte,Regular,Price,58,PHP,price
+Hot Coffee,Caramel Macchiato,Regular,Price,58,PHP,price
+Hot Coffee,Salted Caramel,Regular,Price,58,PHP,price
+Hot Coffee,Matcha Espresso,Regular,Price,58,PHP,price
+Hot Tea,Green Tea,Regular,Price,50,PHP,price
+Hot Tea,Spearmint Tea,Regular,Price,50,PHP,price
+Hot Tea,Chamomile Tea,Regular,Price,50,PHP,price
+Hot Tea,Hibiscus Tea,Regular,Price,50,PHP,price
+Hot Tea,Butterfly Pea Tea,Regular,Price,50,PHP,price
+Milk Tea,Matcha,Grande,Price,38,PHP,price
+Milk Tea,Matcha,Venti,Price,48,PHP,price
+Milk Tea,Wintermelon,Grande,Price,38,PHP,price
+Milk Tea,Wintermelon,Venti,Price,48,PHP,price
+Milk Tea,Oreo,Grande,Price,38,PHP,price
+Milk Tea,Oreo,Venti,Price,48,PHP,price
+Milk Tea,Red Velvet,Grande,Price,38,PHP,price
+Milk Tea,Red Velvet,Venti,Price,48,PHP,price
+Milk Tea,Dark Choco,Grande,Price,38,PHP,price
+Milk Tea,Dark Choco,Venti,Price,48,PHP,price
+Milk Tea,Sugar Jelly Milk Tea,Grande,Price,38,PHP,price
+Milk Tea,Sugar Jelly Milk Tea,Venti,Price,48,PHP,price
+Oolong Tea,Lychee,Grande,Price,45,PHP,price
+Oolong Tea,Lychee,Venti,Price,55,PHP,price
+Oolong Tea,Peach,Grande,Price,45,PHP,price
+Oolong Tea,Peach,Venti,Price,55,PHP,price
+Oolong Tea,Lemon,Grande,Price,45,PHP,price
+Oolong Tea,Lemon,Venti,Price,55,PHP,price
+Oolong Tea,Calamansi,Grande,Price,45,PHP,price
+Oolong Tea,Calamansi,Venti,Price,55,PHP,price
+Oolong Tea,Passion Fruit,Grande,Price,45,PHP,price
+Oolong Tea,Passion Fruit,Venti,Price,55,PHP,price
+Green Tea,Strawberry Lychee,Grande,Price,55,PHP,price
+Green Tea,Strawberry Lychee,Venti,Price,65,PHP,price
+Green Tea,Strawberry,Grande,Price,55,PHP,price
+Green Tea,Strawberry,Venti,Price,65,PHP,price
+Green Tea,Lychee,Grande,Price,55,PHP,price
+Green Tea,Lychee,Venti,Price,65,PHP,price
+Green Tea,Peach,Grande,Price,55,PHP,price
+Green Tea,Peach,Venti,Price,65,PHP,price
+Green Tea,Calamansi,Grande,Price,55,PHP,price
+Green Tea,Calamansi,Venti,Price,65,PHP,price
+Green Tea,Passion Fruit,Grande,Price,55,PHP,price
+Green Tea,Passion Fruit,Venti,Price,65,PHP,price
+Non-Coffee,Strawberry Milk,Grande,Price,38,PHP,price
+Non-Coffee,Strawberry Milk,Venti,Price,48,PHP,price
+Non-Coffee,Blueberry Milk,Grande,Price,38,PHP,price
+Non-Coffee,Blueberry Milk,Venti,Price,48,PHP,price
+Non-Coffee,Oreo Milk,Grande,Price,38,PHP,price
+Non-Coffee,Oreo Milk,Venti,Price,48,PHP,price
+Non-Coffee,Swissmiss,Grande,Price,38,PHP,price
+Non-Coffee,Swissmiss,Venti,Price,48,PHP,price
+Non-Coffee,Strawberry Oreo,Grande,Price,38,PHP,price
+Non-Coffee,Strawberry Oreo,Venti,Price,48,PHP,price
+Non-Coffee,Strawberry Matcha,Grande,Price,38,PHP,price
+Non-Coffee,Strawberry Matcha,Venti,Price,48,PHP,price
+Non-Coffee,Ube Milk,Grande,Price,38,PHP,price
+Non-Coffee,Ube Milk,Venti,Price,48,PHP,price
+Non-Coffee,Sea Salt Cocoa,Grande,Price,65,PHP,price
+Non-Coffee,Sea Salt Cocoa,Venti,Price,75,PHP,price
+Non-Coffee,Choco Salt Cocoa,Grande,Price,65,PHP,price
+Non-Coffee,Choco Salt Cocoa,Venti,Price,75,PHP,price
+Non-Coffee,Choco-Berry,Grande,Price,65,PHP,price
+Non-Coffee,Choco-Berry,Venti,Price,75,PHP,price
+Non-Coffee,Milky Biscoff,Grande,Price,65,PHP,price
+Non-Coffee,Milky Biscoff,Venti,Price,75,PHP,price
+Non-Coffee,Nutella,Grande,Price,65,PHP,price
+Non-Coffee,Nutella,Venti,Price,75,PHP,price
+Frappuccino,Macchiato,Grande,Price,75,PHP,price
+Frappuccino,Macchiato,Venti,Price,85,PHP,price
+Frappuccino,Caramel,Grande,Price,75,PHP,price
+Frappuccino,Caramel,Venti,Price,85,PHP,price
+Frappuccino,Dark Mocha,Grande,Price,75,PHP,price
+Frappuccino,Dark Mocha,Venti,Price,85,PHP,price
+Frappuccino,Coffee Crumble,Grande,Price,75,PHP,price
+Frappuccino,Coffee Crumble,Venti,Price,85,PHP,price
+Frappuccino,Coffee Fudge,Grande,Price,75,PHP,price
+Frappuccino,Coffee Fudge,Venti,Price,85,PHP,price
+Frappuccino,Almond Fudge,Grande,Price,75,PHP,price
+Frappuccino,Almond Fudge,Venti,Price,85,PHP,price
+Frappuccino,Mocha Jelly,Grande,Price,75,PHP,price
+Frappuccino,Mocha Jelly,Venti,Price,85,PHP,price
+Frappuccino,Coffee Jelly,Grande,Price,75,PHP,price
+Frappuccino,Coffee Jelly,Venti,Price,85,PHP,price
+Frappuccino,Nutella,Grande,Price,75,PHP,price
+Frappuccino,Nutella,Venti,Price,85,PHP,price
+Non-Coffee Frappe,Cookies & Cream,Grande,Price,70,PHP,price
+Non-Coffee Frappe,Cookies & Cream,Venti,Price,80,PHP,price
+Non-Coffee Frappe,Milo Cream,Grande,Price,70,PHP,price
+Non-Coffee Frappe,Milo Cream,Venti,Price,80,PHP,price
+Non-Coffee Frappe,Strawberry,Grande,Price,70,PHP,price
+Non-Coffee Frappe,Strawberry,Venti,Price,80,PHP,price
+Non-Coffee Frappe,Blueberry,Grande,Price,70,PHP,price
+Non-Coffee Frappe,Blueberry,Venti,Price,80,PHP,price
+Non-Coffee Frappe,Purple Yam,Grande,Price,70,PHP,price
+Non-Coffee Frappe,Purple Yam,Venti,Price,80,PHP,price
+Non-Coffee Frappe,Matcha Oreo,Grande,Price,70,PHP,price
+Non-Coffee Frappe,Matcha Oreo,Venti,Price,80,PHP,price
+Non-Coffee Frappe,Matcha Strawberry,Grande,Price,70,PHP,price
+Non-Coffee Frappe,Matcha Strawberry,Venti,Price,80,PHP,price
+Non-Coffee Frappe,Ube Oreo,Grande,Price,70,PHP,price
+Non-Coffee Frappe,Ube Oreo,Venti,Price,80,PHP,price
+Non-Coffee Frappe,Chocolate Chip Cream,Grande,Price,70,PHP,price
+Non-Coffee Frappe,Chocolate Chip Cream,Venti,Price,80,PHP,price
+Non-Coffee Frappe,Nutella Cream,Grande,Price,70,PHP,price
+Non-Coffee Frappe,Nutella Cream,Venti,Price,80,PHP,price
+Cà Phê Espresso,Americano,Grande,Price,38,PHP,price
+Cà Phê Espresso,Americano,Venti,Price,48,PHP,price
+Cà Phê Espresso,Cà Phê Español,Grande,Price,38,PHP,price
+Cà Phê Espresso,Cà Phê Español,Venti,Price,48,PHP,price
+Cà Phê Espresso,Iced Latte,Grande,Price,38,PHP,price
+Cà Phê Espresso,Iced Latte,Venti,Price,48,PHP,price
+Cà Phê Espresso,Matcha Latte,Grande,Price,38,PHP,price
+Cà Phê Espresso,Matcha Latte,Venti,Price,48,PHP,price
+Cà Phê Espresso,Salted Caramel,Grande,Price,38,PHP,price
+Cà Phê Espresso,Salted Caramel,Venti,Price,48,PHP,price
+Cà Phê Espresso,Oreo Latte,Grande,Price,38,PHP,price
+Cà Phê Espresso,Oreo Latte,Venti,Price,48,PHP,price
+Cà Phê Espresso,Dark Mocha Latte,Grande,Price,38,PHP,price
+Cà Phê Espresso,Dark Mocha Latte,Venti,Price,48,PHP,price
+Premium,Strawberry Latte,Grande,Price,45,PHP,price
+Premium,Strawberry Latte,Venti,Price,55,PHP,price
+Premium,Matcha Espresso,Grande,Price,45,PHP,price
+Premium,Matcha Espresso,Venti,Price,55,PHP,price
+Premium,Salty Cream Latte,Grande,Price,45,PHP,price
+Premium,Salty Cream Latte,Venti,Price,55,PHP,price
+Premium,Sea Salt Latte,Grande,Price,45,PHP,price
+Premium,Sea Salt Latte,Venti,Price,55,PHP,price
+Premium,Barista's Drink,Grande,Price,45,PHP,price
+Premium,Barista's Drink,Venti,Price,55,PHP,price
+Premium,Dulce De Leche,Grande,Price,55,PHP,price
+Premium,Dulce De Leche,Venti,Price,65,PHP,price
+Premium,Velvet Cream Latte,Grande,Price,55,PHP,price
+Premium,Velvet Cream Latte,Venti,Price,65,PHP,price
+Premium,White Mocha Latte,Grande,Price,55,PHP,price
+Premium,White Mocha Latte,Venti,Price,65,PHP,price
+Premium,Vanilla Sweet Cream,Grande,Price,55,PHP,price
+Premium,Vanilla Sweet Cream,Venti,Price,65,PHP,price
+Premium,Toffee Nut Latte,Grande,Price,55,PHP,price
+Premium,Toffee Nut Latte,Venti,Price,65,PHP,price
+Premium,Almond Latte,Grande,Price,55,PHP,price
+Premium,Almond Latte,Venti,Price,65,PHP,price
+Premium,Peanut Butter Latte,Grande,Price,70,PHP,price
+Premium,Peanut Butter Latte,Venti,Price,80,PHP,price
+Premium,Biscoff Latte,Grande,Price,70,PHP,price
+Premium,Biscoff Latte,Venti,Price,80,PHP,price
+Premium,Nutella Latte,Grande,Price,70,PHP,price
+Premium,Nutella Latte,Venti,Price,80,PHP,price
