@@ -1,32 +1,69 @@
 item_name,category,unit,current_stock,reorder_level,reorder_qty
-lemon_base,base,unit,100,20,50
-water,base,ml,10000,2000,5000
-soda_water,base,ml,5000,1000,3000
-ice,base,cup,500,100,300
+yakult,Dairy,bottle,100,20,50
+dutchmill,Dairy,bottle,100,20,50
+nata_de_coco,Toppings,grams,3000,500,1500
+chia_seeds,Toppings,grams,1000,200,500
+salt_foam,Toppings,ml,2000,400,1000
+cream_cheese,Toppings,grams,1000,200,500
+oreo_crush,Toppings,grams,1000,200,500
+coffee_jelly,Toppings,grams,2000,400,1000
+boba_pearl,Toppings,grams,2000,400,1000
+sugar_jelly,Toppings,grams,2000,400,1000
+tea_bag_extra,Tea,bag,200,40,100
+espresso_shot,Coffee,shot,100,20,50
+lemongrass_syrup,Syrup,ml,1000,200,500
+milk,Dairy,ml,2000,400,1000
+whip_cream,Dairy,ml,2000,400,1000
 
-green_apple_syrup,flavor,ml,2000,500,1000
-strawberry_syrup,flavor,ml,2000,500,1000
-blueberry_syrup,flavor,ml,2000,500,1000
-peach_syrup,flavor,ml,2000,500,1000
-lychee_syrup,flavor,ml,2000,500,1000
-blue_syrup,flavor,ml,2000,500,1000
-red_syrup,flavor,ml,2000,500,1000
-cucumber_extract,flavor,ml,1000,300,500
-ginger_extract,flavor,ml,1000,300,500
-honey,flavor,ml,1000,300,500
+lemon_juice,Ingredients,ml,5000,1000,3000
+simple_syrup,Ingredients,ml,3000,500,2000
+honey,Ingredients,ml,1000,200,500
+ginger,Ingredients,g,500,100,300
+cucumber,Ingredients,pc,20,5,10
 
-yakult,addon,bottle,100,20,50
-dutchmill,addon,bottle,100,20,50
-nata_de_coco,addon,grams,2000,500,1000
-chia_seeds,addon,grams,1000,200,500
+green_apple_syrup,Syrup,ml,2000,400,1000
+strawberry_syrup,Syrup,ml,2000,400,1000
+blueberry_syrup,Syrup,ml,2000,400,1000
+peach_syrup,Syrup,ml,2000,400,1000
+lychee_syrup,Syrup,ml,2000,400,1000
+blue_curacao_syrup,Syrup,ml,1000,200,500
+butterfly_pea_extract,Syrup,ml,500,100,300
 
-Yakult,yakult,1,bottle
+yogurt,Dairy,ml,3000,600,1500
+soda_water,Beverages,ml,10000,2000,5000
+espresso_beans,Coffee,g,2000,400,1000
 
-Premium Upgrade,espresso_shot,1,shot
+green_tea_bags,Tea,pc,200,40,100
+spearmint_tea_bags,Tea,pc,100,20,50
+chamomile_tea_bags,Tea,pc,100,20,50
+hibiscus_tea_bags,Tea,pc,100,20,50
+butterfly_pea_tea_bags,Tea,pc,100,20,50
+oolong_tea_leaves,Tea,g,500,100,300
 
-Lemon Grass Oolong Upgrade,lemongrass_oolong_base,1,unit
+matcha_powder,Powder,g,500,100,300
+calamansi_juice,Ingredients,ml,1000,200,500
+passion_fruit_syrup,Syrup,ml,1000,200,500
+dark_chocolate_powder,Powder,g,1000,200,500
+red_velvet_powder,Powder,g,500,100,300
+wintermelon_syrup,Syrup,ml,1000,200,500
+swissmiss_mix,Powder,g,1000,200,500
+ube_powder,Powder,g,500,100,300
+caramel_sauce,Syrup,ml,1000,200,500
+sea_salt,Ingredients,g,500,100,300
 
-Extra Shot,espresso_shot,1,shot
-Milk,milk,50,ml
-Whip Cream,whipped_cream,30,ml
-Salty Cream,salt_foam,30,ml
+nutella,Spread,g,1000,200,500
+biscoff_spread,Spread,g,500,100,300
+almond_syrup,Syrup,ml,500,100,300
+peanut_butter,Spread,g,500,100,300
+milo_powder,Powder,g,1000,200,500
+vanilla_syrup,Syrup,ml,1000,200,500
+toffee_nut_syrup,Syrup,ml,500,100,300
+white_mocha_sauce,Syrup,ml,500,100,300
+dulce_de_leche,Spread,g,500,100,300
+
+ice,Ingredients,g,20000,5000,10000
+cups_22oz,Packaging,pc,500,100,200
+cups_16oz,Packaging,pc,500,100,200
+cups_12oz,Packaging,pc,300,50,100
+straws,Packaging,pc,1000,200,500
+lids,Packaging,pc,1000,200,500
