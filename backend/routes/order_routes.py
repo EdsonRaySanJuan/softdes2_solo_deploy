@@ -410,42 +410,57 @@ def create_order():
 
             for addon in addons_list:
                 addon_name = str(addon.get("name", "")).strip()
+
                 if not addon_name:
+                    inventory_warnings.append("Addon with empty name.")
                     continue
 
+                print(f"🔍 ADDON: {addon_name}")
+
                 addon_recipe_rows = get_addon_recipe_rows(addon_name)
-                conn.rollback()
-                conn.close()
-                return jsonify({
-                    "success": False,
-                    "error": f"Addon '{addon_name}' NOT FOUND in recipes"
-                }), 400
+
+                # ❌ ONLY FAIL IF NOT FOUND
+                if not addon_recipe_rows:
+                    inventory_warnings.append(f"Addon '{addon_name}' NOT FOUND in recipes")
+                    print(f"❌ ADDON NOT FOUND: {addon_name}")
+                    continue
+
+                print(f"✅ ADDON FOUND: {addon_name}")
 
                 for addon_recipe in addon_recipe_rows:
                     ingredient_name = str(addon_recipe.get("ingredient_name", "")).strip()
                     qty_used = float(addon_recipe.get("qty_used", 0) or 0) * qty
 
-                    if ingredient_name and qty_used > 0:
+                    print(f"➡️ ADDON INGREDIENT: {ingredient_name} | QTY: {qty_used}")
 
-                        # 🔥 STOCK CHECK (NEW)
-                        ok, stock = check_ingredient_stock(cursor, ingredient_name, qty_used)
-
-                        if not ok:
-                            conn.rollback()
-                            conn.close()
-                            return jsonify({
-                                "success": False,
-                                "error": f"Not enough stock for addon '{ingredient_name}'. Available: {stock}, Needed: {qty_used}"
-                            }), 400
-
-                        # ✅ ORIGINAL (KEEP)
-                        deduct_inventory_ingredient(
-                            cursor,
-                            ingredient_name,
-                            qty_used,
-                            inventory_warnings,
-                            deducted_ingredients
+                    if not ingredient_name or qty_used <= 0:
+                        inventory_warnings.append(
+                            f"Invalid addon data for '{addon_name}'"
                         )
+                        continue
+
+                    # 🔥 STOCK CHECK
+                    ok, stock = check_ingredient_stock(cursor, ingredient_name, qty_used)
+
+                    if not ok:
+                        print(f"❌ STOCK FAIL: {ingredient_name}")
+                        conn.rollback()
+                        conn.close()
+                        return jsonify({
+                            "success": False,
+                            "error": f"Not enough stock for addon '{ingredient_name}'. Available: {stock}, Needed: {qty_used}"
+                        }), 400
+
+                    # 🔥 DEDUCT
+                    deduct_inventory_ingredient(
+                        cursor,
+                        ingredient_name,
+                        qty_used,
+                        inventory_warnings,
+                        deducted_ingredients
+                    )
+
+                    print(f"✅ DEDUCTED: {ingredient_name}")
 
         cursor.execute("""
             SELECT item_name, current_stock, reorder_level
@@ -497,7 +512,9 @@ def create_order():
 
             # 🔥 ADD THIS PART
             "debug": {
-                "items_received": items
+                "items_received": items,
+                "deducted_ingredients": deducted_ingredients,
+                "warnings": inventory_warnings
             }
 
         }), 201
