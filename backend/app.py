@@ -92,6 +92,45 @@ def debug_db_check():
             "error": str(e)
         }), 500
 
+@app.route("/api/debug/seed-admin", methods=["GET"])
+def seed_admin():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        if is_postgres():
+            cursor.execute("""
+                INSERT INTO users (user_id, full_name, username, password, role, status)
+                VALUES (%s, %s, %s, %s, %s, %s)
+                ON CONFLICT (user_id) DO NOTHING
+            """, ("ADM001", "System Boss", "admin", "admin123", "Admin", "Active"))
+        else:
+            cursor.execute("""
+                INSERT OR IGNORE INTO users (user_id, full_name, username, password, role, status)
+                VALUES (?, ?, ?, ?, ?, ?)
+            """, ("ADM001", "System Boss", "admin", "admin123", "Admin", "Active"))
+
+        conn.commit()
+
+        cursor.execute("SELECT user_id, full_name, username, role, status FROM users WHERE user_id = %s" if is_postgres() else "SELECT user_id, full_name, username, role, status FROM users WHERE user_id = ?", ("ADM001",))
+        row = cursor.fetchone()
+        conn.close()
+
+        if row:
+            row = row if isinstance(row, dict) else dict(row)
+
+        return jsonify({
+            "success": True,
+            "message": "Admin user seeded successfully",
+            "user": row
+        }), 200
+
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
 app.register_blueprint(report_bp, url_prefix="/api/reports")
 app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
 app.register_blueprint(order_bp, url_prefix="/api/orders")
