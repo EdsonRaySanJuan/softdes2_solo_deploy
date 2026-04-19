@@ -130,7 +130,39 @@ def seed_admin():
             "success": False,
             "error": str(e)
         }), 500
+    
+@app.route("/api/debug/inventory", methods=["GET"])
+def debug_inventory():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
 
+        cursor.execute("""
+            SELECT id, item_name, current_stock, reorder_level, status, supplier
+            FROM inventory
+            ORDER BY item_name ASC
+            LIMIT 50
+        """)
+        rows = cursor.fetchall()
+        conn.close()
+
+        result = []
+        for row in rows:
+            result.append(row if isinstance(row, dict) else dict(row))
+
+        return jsonify({
+            "using_postgres": is_postgres(),
+            "inventory_count": len(result),
+            "items": result
+        }), 200
+
+    except Exception as e:
+        return jsonify({
+            "using_postgres": is_postgres(),
+            "error": str(e)
+        }), 500
+    
+    
 app.register_blueprint(report_bp, url_prefix="/api/reports")
 app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
 app.register_blueprint(order_bp, url_prefix="/api/orders")
