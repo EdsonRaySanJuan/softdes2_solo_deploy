@@ -347,7 +347,7 @@ def debug_inventory():
 @app.route("/api/debug/seed-inventory", methods=["GET"])
 def seed_inventory():
     try:
-        csv_path = os.path.join(BASE_DIR, "cafe_ingredients_inventory.csv")
+        csv_path = os.path.join(BASE_DIR, "drink_recipes.csv")
 
         if not os.path.exists(csv_path):
             return jsonify({

@@ -25,7 +25,7 @@ def load_csv_rows(path):
         return list(csv.DictReader(f))
 
 
-def get_base_recipe_rows(menu_item, size_label):
+def normalize_size(size_label):
     size_map = {
         "Regular": "regular",
         "Grande": "grande",
@@ -36,15 +36,31 @@ def get_base_recipe_rows(menu_item, size_label):
         "Medium": "medium",
         "Large": "large",
     }
+    return size_map.get(str(size_label).strip(), normalize_text(size_label))
 
-    normalized_size = size_map.get(size_label, normalize_text(size_label))
+
+def get_base_recipe_rows(menu_item, size_label):
+    normalized_menu_item = normalize_text(menu_item)
+    normalized_size = normalize_size(size_label)
     rows = load_csv_rows(DRINK_RECIPES_PATH)
 
-    return [
+    exact_matches = [
         row for row in rows
-        if normalize_text(row.get("menu_item")) == normalize_text(menu_item)
-        and normalize_text(row.get("size")) == normalize_text(normalized_size)
+        if normalize_text(row.get("menu_item")) == normalized_menu_item
+        and normalize_text(row.get("size")) == normalized_size
     ]
+    if exact_matches:
+        return exact_matches
+
+    fallback_matches = [
+        row for row in rows
+        if (
+            normalize_text(row.get("menu_item")).startswith(normalized_menu_item)
+            or normalized_menu_item.startswith(normalize_text(row.get("menu_item")))
+        )
+        and normalize_text(row.get("size")) == normalized_size
+    ]
+    return fallback_matches
 
 
 def get_addon_recipe_rows(addon_name):
@@ -124,7 +140,7 @@ def get_next_order_id(cursor):
     return int(row["next_id"] if "next_id" in row.keys() else row[0])
 
 
-def deduct_inventory_ingredient(cursor, ingredient_name, qty_needed, inventory_warnings):
+def deduct_inventory_ingredient(cursor, ingredient_name, qty_needed, inventory_warnings, deducted_ingredients):
     if is_postgres():
         cursor.execute("""
             UPDATE inventory
@@ -143,6 +159,11 @@ def deduct_inventory_ingredient(cursor, ingredient_name, qty_needed, inventory_w
             f"Missing inventory ingredient match for '{ingredient_name}'"
         )
         return
+
+    deducted_ingredients.append({
+        "ingredient_name": ingredient_name,
+        "qty_deducted": qty_needed
+    })
 
     if is_postgres():
         cursor.execute("""
@@ -275,6 +296,7 @@ def create_order():
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         order_id = get_next_order_id(cursor)
         inventory_warnings = []
+        deducted_ingredients = []
         lines_written = 0
 
         for item in items:
@@ -323,7 +345,7 @@ def create_order():
 
             if not recipe_rows:
                 inventory_warnings.append(
-                    f"No base recipe found for item='{name}' size='{size}'. Sale saved, but ingredients were not deducted."
+                    f"No base recipe found for item='{name}' size='{size}'. Sale saved, but base ingredients were not deducted."
                 )
             else:
                 for recipe in recipe_rows:
@@ -331,7 +353,13 @@ def create_order():
                     qty_used = float(recipe.get("qty_used", 0) or 0) * qty
 
                     if ingredient_name and qty_used > 0:
-                        deduct_inventory_ingredient(cursor, ingredient_name, qty_used, inventory_warnings)
+                        deduct_inventory_ingredient(
+                            cursor,
+                            ingredient_name,
+                            qty_used,
+                            inventory_warnings,
+                            deducted_ingredients
+                        )
 
             for addon in addons_list:
                 addon_name = str(addon.get("name", "")).strip()
@@ -351,7 +379,13 @@ def create_order():
                     qty_used = float(addon_recipe.get("qty_used", 0) or 0) * qty
 
                     if ingredient_name and qty_used > 0:
-                        deduct_inventory_ingredient(cursor, ingredient_name, qty_used, inventory_warnings)
+                        deduct_inventory_ingredient(
+                            cursor,
+                            ingredient_name,
+                            qty_used,
+                            inventory_warnings,
+                            deducted_ingredients
+                        )
 
         cursor.execute("""
             SELECT item_name, current_stock, reorder_level
@@ -368,21 +402,23 @@ def create_order():
 
             if is_postgres():
                 cursor.execute("""
-                    INSERT INTO rpa_logs (timestamp, action, details)
-                    VALUES (%s, %s, %s)
+                    INSERT INTO rpa_logs (timestamp, bot_name, task_description, status)
+                    VALUES (%s, %s, %s, %s)
                 """, (
                     timestamp,
-                    "LOW_STOCK_ALERT",
-                    f"{item_name} is low on stock ({current_stock} <= reorder level {reorder_level})"
+                    "inventory_bot",
+                    f"{item_name} is low on stock ({current_stock} <= reorder level {reorder_level})",
+                    "LOW_STOCK_ALERT"
                 ))
             else:
                 cursor.execute("""
-                    INSERT INTO rpa_logs (timestamp, action, details)
-                    VALUES (?, ?, ?)
+                    INSERT INTO rpa_logs (timestamp, bot_name, task_description, status)
+                    VALUES (?, ?, ?, ?)
                 """, (
                     timestamp,
-                    "LOW_STOCK_ALERT",
-                    f"{item_name} is low on stock ({current_stock} <= reorder level {reorder_level})"
+                    "inventory_bot",
+                    f"{item_name} is low on stock ({current_stock} <= reorder level {reorder_level})",
+                    "LOW_STOCK_ALERT"
                 ))
 
         conn.commit()
@@ -396,6 +432,7 @@ def create_order():
             "cash": cash,
             "change": change,
             "lines_written": lines_written,
+            "deducted_ingredients": deducted_ingredients,
             "inventory_warnings": inventory_warnings,
         }), 201
 
