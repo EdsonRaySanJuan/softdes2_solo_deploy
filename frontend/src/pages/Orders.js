@@ -1,148 +1,24 @@
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "../styles/orders.css";
-import API_BASE_URL from "../config";
+import { API_BASE_URL } from "../config";
 
-function commonSinkers() {
-  return [
-    { name: "Oreo", price: 10 },
-    { name: "Coffee Jelly", price: 10 },
-    { name: "Extra Shot", price: 10 },
-    { name: "Boba Pearl", price: 10 },
-    { name: "Sugar Jelly", price: 10 },
-    { name: "Nata", price: 10 },
-    { name: "Milk", price: 10 },
-    { name: "Whip Cream", price: 10 },
-    { name: "Salty Cream", price: 10 },
-  ];
-}
-
-function coffeeAddons() {
-  return [
-    { name: "Extra Shot", price: 10 },
-    { name: "Milk", price: 10 },
-    { name: "Whip Cream", price: 10 },
-    { name: "Salty Cream", price: 10 },
-    { name: "Coffee Jelly", price: 10 },
-    { name: "Oreo", price: 10 },
-  ];
-}
-
-const MENU = {
+const menuData = {
   lemonade: {
     label: "Lemonade",
     description: "22oz drinks",
     items: [
-      {
-        name: "Lemonade (Regular)",
-        sizes: { regular: 40 },
-        addons: [
-          { name: "Yakult", price: 15 },
-          { name: "Dutchmill", price: 25 },
-          { name: "Nata", price: 15 },
-          { name: "Chia Seeds", price: 15 },
-        ],
-      },
-      {
-        name: "Green Apple Lemonade",
-        sizes: { regular: 50 },
-        addons: [
-          { name: "Yakult", price: 15 },
-          { name: "Dutchmill", price: 25 },
-          { name: "Nata", price: 15 },
-          { name: "Chia Seeds", price: 15 },
-        ],
-      },
-      {
-        name: "Strawberry Lemonade",
-        sizes: { regular: 50 },
-        addons: [
-          { name: "Yakult", price: 15 },
-          { name: "Dutchmill", price: 25 },
-          { name: "Nata", price: 15 },
-          { name: "Chia Seeds", price: 15 },
-        ],
-      },
-      {
-        name: "Blueberry Lemonade",
-        sizes: { regular: 50 },
-        addons: [
-          { name: "Yakult", price: 15 },
-          { name: "Dutchmill", price: 25 },
-          { name: "Nata", price: 15 },
-          { name: "Chia Seeds", price: 15 },
-        ],
-      },
-      {
-        name: "Peach Lemonade",
-        sizes: { regular: 50 },
-        addons: [
-          { name: "Yakult", price: 15 },
-          { name: "Dutchmill", price: 25 },
-          { name: "Nata", price: 15 },
-          { name: "Chia Seeds", price: 15 },
-        ],
-      },
-      {
-        name: "Lychee Lemonade",
-        sizes: { regular: 50 },
-        addons: [
-          { name: "Yakult", price: 15 },
-          { name: "Dutchmill", price: 25 },
-          { name: "Nata", price: 15 },
-          { name: "Chia Seeds", price: 15 },
-        ],
-      },
-      {
-        name: "Strawberry Lemon",
-        sizes: { regular: 60 },
-        addons: [
-          { name: "Yakult", price: 15 },
-          { name: "Dutchmill", price: 25 },
-          { name: "Nata", price: 15 },
-          { name: "Chia Seeds", price: 15 },
-        ],
-      },
-      {
-        name: "Blue Lemonade",
-        sizes: { regular: 60 },
-        addons: [
-          { name: "Yakult", price: 15 },
-          { name: "Dutchmill", price: 25 },
-          { name: "Nata", price: 15 },
-          { name: "Chia Seeds", price: 15 },
-        ],
-      },
-      {
-        name: "Red Fizz Lemonade",
-        sizes: { regular: 60 },
-        addons: [
-          { name: "Yakult", price: 15 },
-          { name: "Dutchmill", price: 25 },
-          { name: "Nata", price: 15 },
-          { name: "Chia Seeds", price: 15 },
-        ],
-      },
-      {
-        name: "Cucumber Lemonade",
-        sizes: { regular: 60 },
-        addons: [
-          { name: "Yakult", price: 15 },
-          { name: "Dutchmill", price: 25 },
-          { name: "Nata", price: 15 },
-          { name: "Chia Seeds", price: 15 },
-        ],
-      },
-      {
-        name: "Honey Ginger",
-        sizes: { regular: 65 },
-        addons: [
-          { name: "Yakult", price: 15 },
-          { name: "Dutchmill", price: 25 },
-          { name: "Nata", price: 15 },
-          { name: "Chia Seeds", price: 15 },
-        ],
-      },
+      { name: "Lemonade (Regular)", prices: { Regular: 40 }, addons: ["Yakult", "Dutchmill", "Nata", "Chia Seeds"] },
+      { name: "Green Apple Lemonade", prices: { Regular: 50 }, addons: ["Yakult", "Dutchmill", "Nata", "Chia Seeds"] },
+      { name: "Strawberry Lemonade", prices: { Regular: 50 }, addons: ["Yakult", "Dutchmill", "Nata", "Chia Seeds"] },
+      { name: "Blueberry Lemonade", prices: { Regular: 50 }, addons: ["Yakult", "Dutchmill", "Nata", "Chia Seeds"] },
+      { name: "Peach Lemonade", prices: { Regular: 50 }, addons: ["Yakult", "Dutchmill", "Nata", "Chia Seeds"] },
+      { name: "Lychee Lemonade", prices: { Regular: 50 }, addons: ["Yakult", "Dutchmill", "Nata", "Chia Seeds"] },
+      { name: "Strawberry Lemon", prices: { Regular: 60 }, addons: ["Yakult", "Dutchmill", "Nata", "Chia Seeds"] },
+      { name: "Blue Lemonade", prices: { Regular: 60 }, addons: ["Yakult", "Dutchmill", "Nata", "Chia Seeds"] },
+      { name: "Red Fizz Lemonade", prices: { Regular: 60 }, addons: ["Yakult", "Dutchmill", "Nata", "Chia Seeds"] },
+      { name: "Cucumber Lemonade", prices: { Regular: 60 }, addons: ["Yakult", "Dutchmill", "Nata", "Chia Seeds"] },
+      { name: "Honey Ginger", prices: { Regular: 65 }, addons: ["Yakult", "Dutchmill", "Nata", "Chia Seeds"] },
     ],
   },
 
@@ -150,10 +26,10 @@ const MENU = {
     label: "Yogurt Smoothies",
     description: "Grande 16oz / Venti 22oz",
     items: [
-      { name: "Strawberry", sizes: { grande: 60, venti: 70 }, addons: [] },
-      { name: "Blueberry", sizes: { grande: 60, venti: 70 }, addons: [] },
-      { name: "Passion Fruit", sizes: { grande: 60, venti: 70 }, addons: [] },
-      { name: "Biscoff", sizes: { grande: 70, venti: 80 }, addons: [] },
+      { name: "Strawberry", prices: { Grande: 60, Venti: 70 }, addons: [] },
+      { name: "Blueberry", prices: { Grande: 60, Venti: 70 }, addons: [] },
+      { name: "Passion Fruit", prices: { Grande: 60, Venti: 70 }, addons: [] },
+      { name: "Biscoff", prices: { Grande: 70, Venti: 80 }, addons: [] },
     ],
   },
 
@@ -161,13 +37,13 @@ const MENU = {
     label: "Fruit Soda",
     description: "Grande 16oz / Venti 22oz",
     items: [
-      { name: "Green Apple", sizes: { grande: 58, venti: 68 }, addons: [{ name: "Yakult", price: 15 }] },
-      { name: "Strawberry", sizes: { grande: 58, venti: 68 }, addons: [{ name: "Yakult", price: 15 }] },
-      { name: "Blueberry", sizes: { grande: 58, venti: 68 }, addons: [{ name: "Yakult", price: 15 }] },
-      { name: "Peach", sizes: { grande: 58, venti: 68 }, addons: [{ name: "Yakult", price: 15 }] },
-      { name: "Lychee", sizes: { grande: 58, venti: 68 }, addons: [{ name: "Yakult", price: 15 }] },
-      { name: "Lemon", sizes: { grande: 58, venti: 68 }, addons: [{ name: "Yakult", price: 15 }] },
-      { name: "Ginger Ale", sizes: { grande: 58, venti: 68 }, addons: [{ name: "Yakult", price: 15 }] },
+      { name: "Green Apple", prices: { Grande: 58, Venti: 68 }, addons: ["Yakult"] },
+      { name: "Strawberry", prices: { Grande: 58, Venti: 68 }, addons: ["Yakult"] },
+      { name: "Blueberry", prices: { Grande: 58, Venti: 68 }, addons: ["Yakult"] },
+      { name: "Peach", prices: { Grande: 58, Venti: 68 }, addons: ["Yakult"] },
+      { name: "Lychee", prices: { Grande: 58, Venti: 68 }, addons: ["Yakult"] },
+      { name: "Lemon", prices: { Grande: 58, Venti: 68 }, addons: ["Yakult"] },
+      { name: "Ginger Ale", prices: { Grande: 58, Venti: 68 }, addons: ["Yakult"] },
     ],
   },
 
@@ -175,12 +51,12 @@ const MENU = {
     label: "Hot Coffee",
     description: "12oz hot coffee",
     items: [
-      { name: "Americano", sizes: { regular: 58 }, addons: [{ name: "Premium Upgrade", price: 10 }] },
-      { name: "Cà Phê Español", sizes: { regular: 58 }, addons: [{ name: "Premium Upgrade", price: 10 }] },
-      { name: "Hot Latte", sizes: { regular: 58 }, addons: [{ name: "Premium Upgrade", price: 10 }] },
-      { name: "Caramel Macchiato", sizes: { regular: 58 }, addons: [{ name: "Premium Upgrade", price: 10 }] },
-      { name: "Salted Caramel", sizes: { regular: 58 }, addons: [{ name: "Premium Upgrade", price: 10 }] },
-      { name: "Matcha Espresso", sizes: { regular: 58 }, addons: [{ name: "Premium Upgrade", price: 10 }] },
+      { name: "Americano", prices: { Regular: 58 }, addons: ["Premium Upgrade"] },
+      { name: "Cà Phê Español", prices: { Regular: 58 }, addons: ["Premium Upgrade"] },
+      { name: "Hot Latte", prices: { Regular: 58 }, addons: ["Premium Upgrade"] },
+      { name: "Caramel Macchiato", prices: { Regular: 58 }, addons: ["Premium Upgrade"] },
+      { name: "Salted Caramel", prices: { Regular: 58 }, addons: ["Premium Upgrade"] },
+      { name: "Matcha Espresso", prices: { Regular: 58 }, addons: ["Premium Upgrade"] },
     ],
   },
 
@@ -188,11 +64,11 @@ const MENU = {
     label: "Hot Tea",
     description: "12oz hot tea",
     items: [
-      { name: "Green Tea", sizes: { regular: 50 }, addons: [{ name: "Extra Bag", price: 25 }] },
-      { name: "Spearmint Tea", sizes: { regular: 50 }, addons: [{ name: "Extra Bag", price: 25 }] },
-      { name: "Chamomile Tea", sizes: { regular: 50 }, addons: [{ name: "Extra Bag", price: 25 }] },
-      { name: "Hibiscus Tea", sizes: { regular: 50 }, addons: [{ name: "Extra Bag", price: 25 }] },
-      { name: "Butterfly Pea Tea", sizes: { regular: 50 }, addons: [{ name: "Extra Bag", price: 25 }] },
+      { name: "Green Tea", prices: { Regular: 50 }, addons: ["Extra Bag"] },
+      { name: "Spearmint Tea", prices: { Regular: 50 }, addons: ["Extra Bag"] },
+      { name: "Chamomile Tea", prices: { Regular: 50 }, addons: ["Extra Bag"] },
+      { name: "Hibiscus Tea", prices: { Regular: 50 }, addons: ["Extra Bag"] },
+      { name: "Butterfly Pea Tea", prices: { Regular: 50 }, addons: ["Extra Bag"] },
     ],
   },
 
@@ -200,82 +76,12 @@ const MENU = {
     label: "Milk Tea",
     description: "Grande 16oz / Venti 22oz",
     items: [
-      {
-        name: "Matcha",
-        sizes: { grande: 38, venti: 48 },
-        addons: [
-          { name: "Salty Cream", price: 45 },
-          { name: "Cream Cheese", price: 55 },
-          { name: "Oreo", price: 10 },
-          { name: "Coffee Jelly", price: 10 },
-          { name: "Boba Pearl", price: 10 },
-          { name: "Sugar Jelly", price: 10 },
-          { name: "Nata", price: 10 },
-        ],
-      },
-      {
-        name: "Wintermelon",
-        sizes: { grande: 38, venti: 48 },
-        addons: [
-          { name: "Salty Cream", price: 45 },
-          { name: "Cream Cheese", price: 55 },
-          { name: "Oreo", price: 10 },
-          { name: "Coffee Jelly", price: 10 },
-          { name: "Boba Pearl", price: 10 },
-          { name: "Sugar Jelly", price: 10 },
-          { name: "Nata", price: 10 },
-        ],
-      },
-      {
-        name: "Oreo",
-        sizes: { grande: 38, venti: 48 },
-        addons: [
-          { name: "Salty Cream", price: 45 },
-          { name: "Cream Cheese", price: 55 },
-          { name: "Coffee Jelly", price: 10 },
-          { name: "Boba Pearl", price: 10 },
-          { name: "Sugar Jelly", price: 10 },
-          { name: "Nata", price: 10 },
-        ],
-      },
-      {
-        name: "Red Velvet",
-        sizes: { grande: 38, venti: 48 },
-        addons: [
-          { name: "Salty Cream", price: 45 },
-          { name: "Cream Cheese", price: 55 },
-          { name: "Oreo", price: 10 },
-          { name: "Coffee Jelly", price: 10 },
-          { name: "Boba Pearl", price: 10 },
-          { name: "Sugar Jelly", price: 10 },
-          { name: "Nata", price: 10 },
-        ],
-      },
-      {
-        name: "Dark Choco",
-        sizes: { grande: 38, venti: 48 },
-        addons: [
-          { name: "Salty Cream", price: 45 },
-          { name: "Cream Cheese", price: 55 },
-          { name: "Oreo", price: 10 },
-          { name: "Coffee Jelly", price: 10 },
-          { name: "Boba Pearl", price: 10 },
-          { name: "Sugar Jelly", price: 10 },
-          { name: "Nata", price: 10 },
-        ],
-      },
-      {
-        name: "Sugar Jelly Milk Tea",
-        sizes: { grande: 38, venti: 48 },
-        addons: [
-          { name: "Salty Cream", price: 45 },
-          { name: "Cream Cheese", price: 55 },
-          { name: "Oreo", price: 10 },
-          { name: "Coffee Jelly", price: 10 },
-          { name: "Boba Pearl", price: 10 },
-          { name: "Nata", price: 10 },
-        ],
-      },
+      { name: "Matcha", prices: { Grande: 38, Venti: 48 }, addons: ["Salty Cream", "Cream Cheese", "Oreo", "Coffee Jelly", "Boba Pearl", "Sugar Jelly", "Nata"] },
+      { name: "Wintermelon", prices: { Grande: 38, Venti: 48 }, addons: ["Salty Cream", "Cream Cheese", "Oreo", "Coffee Jelly", "Boba Pearl", "Sugar Jelly", "Nata"] },
+      { name: "Oreo", prices: { Grande: 38, Venti: 48 }, addons: ["Salty Cream", "Cream Cheese", "Coffee Jelly", "Boba Pearl", "Sugar Jelly", "Nata"] },
+      { name: "Red Velvet", prices: { Grande: 38, Venti: 48 }, addons: ["Salty Cream", "Cream Cheese", "Oreo", "Coffee Jelly", "Boba Pearl", "Sugar Jelly", "Nata"] },
+      { name: "Dark Choco", prices: { Grande: 38, Venti: 48 }, addons: ["Salty Cream", "Cream Cheese", "Oreo", "Coffee Jelly", "Boba Pearl", "Sugar Jelly", "Nata"] },
+      { name: "Sugar Jelly Milk Tea", prices: { Grande: 38, Venti: 48 }, addons: ["Salty Cream", "Cream Cheese", "Oreo", "Coffee Jelly", "Boba Pearl", "Nata"] },
     ],
   },
 
@@ -283,11 +89,11 @@ const MENU = {
     label: "Oolong Tea",
     description: "Grande 16oz / Venti 22oz",
     items: [
-      { name: "Lychee", sizes: { grande: 45, venti: 55 }, addons: [{ name: "Lemon Grass Oolong Upgrade", price: 15 }] },
-      { name: "Peach", sizes: { grande: 45, venti: 55 }, addons: [{ name: "Lemon Grass Oolong Upgrade", price: 15 }] },
-      { name: "Lemon", sizes: { grande: 45, venti: 55 }, addons: [{ name: "Lemon Grass Oolong Upgrade", price: 15 }] },
-      { name: "Calamansi", sizes: { grande: 45, venti: 55 }, addons: [{ name: "Lemon Grass Oolong Upgrade", price: 15 }] },
-      { name: "Passion Fruit", sizes: { grande: 45, venti: 55 }, addons: [{ name: "Lemon Grass Oolong Upgrade", price: 15 }] },
+      { name: "Lychee", prices: { Grande: 45, Venti: 55 }, addons: ["Lemon Grass Oolong Upgrade"] },
+      { name: "Peach", prices: { Grande: 45, Venti: 55 }, addons: ["Lemon Grass Oolong Upgrade"] },
+      { name: "Lemon", prices: { Grande: 45, Venti: 55 }, addons: ["Lemon Grass Oolong Upgrade"] },
+      { name: "Calamansi", prices: { Grande: 45, Venti: 55 }, addons: ["Lemon Grass Oolong Upgrade"] },
+      { name: "Passion Fruit", prices: { Grande: 45, Venti: 55 }, addons: ["Lemon Grass Oolong Upgrade"] },
     ],
   },
 
@@ -295,12 +101,12 @@ const MENU = {
     label: "Green Tea",
     description: "Grande 16oz / Venti 22oz",
     items: [
-      { name: "Strawberry Lychee", sizes: { grande: 55, venti: 65 }, addons: [] },
-      { name: "Strawberry", sizes: { grande: 55, venti: 65 }, addons: [] },
-      { name: "Lychee", sizes: { grande: 55, venti: 65 }, addons: [] },
-      { name: "Peach", sizes: { grande: 55, venti: 65 }, addons: [] },
-      { name: "Calamansi", sizes: { grande: 55, venti: 65 }, addons: [] },
-      { name: "Passion Fruit", sizes: { grande: 55, venti: 65 }, addons: [] },
+      { name: "Strawberry Lychee", prices: { Grande: 55, Venti: 65 }, addons: [] },
+      { name: "Strawberry", prices: { Grande: 55, Venti: 65 }, addons: [] },
+      { name: "Lychee", prices: { Grande: 55, Venti: 65 }, addons: [] },
+      { name: "Peach", prices: { Grande: 55, Venti: 65 }, addons: [] },
+      { name: "Calamansi", prices: { Grande: 55, Venti: 65 }, addons: [] },
+      { name: "Passion Fruit", prices: { Grande: 55, Venti: 65 }, addons: [] },
     ],
   },
 
@@ -308,18 +114,18 @@ const MENU = {
     label: "Non-Coffee",
     description: "Grande 16oz / Venti 22oz",
     items: [
-      { name: "Strawberry Milk", sizes: { grande: 38, venti: 48 }, addons: commonSinkers() },
-      { name: "Blueberry Milk", sizes: { grande: 38, venti: 48 }, addons: commonSinkers() },
-      { name: "Oreo Milk", sizes: { grande: 38, venti: 48 }, addons: commonSinkers() },
-      { name: "Swissmiss", sizes: { grande: 38, venti: 48 }, addons: commonSinkers() },
-      { name: "Strawberry Oreo", sizes: { grande: 38, venti: 48 }, addons: commonSinkers() },
-      { name: "Strawberry Matcha", sizes: { grande: 38, venti: 48 }, addons: commonSinkers() },
-      { name: "Ube Milk", sizes: { grande: 38, venti: 48 }, addons: commonSinkers() },
-      { name: "Sea Salt Cocoa", sizes: { grande: 65, venti: 75 }, addons: commonSinkers() },
-      { name: "Choco Salt Cocoa", sizes: { grande: 65, venti: 75 }, addons: commonSinkers() },
-      { name: "Choco-Berry", sizes: { grande: 65, venti: 75 }, addons: commonSinkers() },
-      { name: "Milky Biscoff", sizes: { grande: 65, venti: 75 }, addons: commonSinkers() },
-      { name: "Nutella", sizes: { grande: 65, venti: 75 }, addons: commonSinkers() },
+      { name: "Strawberry Milk", prices: { Grande: 38, Venti: 48 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Blueberry Milk", prices: { Grande: 38, Venti: 48 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Oreo Milk", prices: { Grande: 38, Venti: 48 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Swissmiss", prices: { Grande: 38, Venti: 48 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Strawberry Oreo", prices: { Grande: 38, Venti: 48 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Strawberry Matcha", prices: { Grande: 38, Venti: 48 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Ube Milk", prices: { Grande: 38, Venti: 48 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Sea Salt Cocoa", prices: { Grande: 65, Venti: 75 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Choco Salt Cocoa", prices: { Grande: 65, Venti: 75 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Choco-Berry", prices: { Grande: 65, Venti: 75 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Milky Biscoff", prices: { Grande: 65, Venti: 75 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Nutella", prices: { Grande: 65, Venti: 75 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
     ],
   },
 
@@ -327,15 +133,15 @@ const MENU = {
     label: "Frappuccino",
     description: "Grande 16oz / Venti 22oz",
     items: [
-      { name: "Macchiato", sizes: { grande: 75, venti: 85 }, addons: commonSinkers() },
-      { name: "Caramel", sizes: { grande: 75, venti: 85 }, addons: commonSinkers() },
-      { name: "Dark Mocha", sizes: { grande: 75, venti: 85 }, addons: commonSinkers() },
-      { name: "Coffee Crumble", sizes: { grande: 75, venti: 85 }, addons: commonSinkers() },
-      { name: "Coffee Fudge", sizes: { grande: 75, venti: 85 }, addons: commonSinkers() },
-      { name: "Almond Fudge", sizes: { grande: 75, venti: 85 }, addons: commonSinkers() },
-      { name: "Mocha Jelly", sizes: { grande: 75, venti: 85 }, addons: commonSinkers() },
-      { name: "Coffee Jelly", sizes: { grande: 75, venti: 85 }, addons: commonSinkers() },
-      { name: "Nutella", sizes: { grande: 75, venti: 85 }, addons: commonSinkers() },
+      { name: "Macchiato", prices: { Grande: 75, Venti: 85 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Caramel", prices: { Grande: 75, Venti: 85 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Dark Mocha", prices: { Grande: 75, Venti: 85 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Coffee Crumble", prices: { Grande: 75, Venti: 85 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Coffee Fudge", prices: { Grande: 75, Venti: 85 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Almond Fudge", prices: { Grande: 75, Venti: 85 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Mocha Jelly", prices: { Grande: 75, Venti: 85 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Coffee Jelly", prices: { Grande: 75, Venti: 85 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Nutella", prices: { Grande: 75, Venti: 85 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
     ],
   },
 
@@ -343,16 +149,16 @@ const MENU = {
     label: "Non-Coffee Frappe",
     description: "Grande 16oz / Venti 22oz",
     items: [
-      { name: "Cookies & Cream", sizes: { grande: 70, venti: 80 }, addons: commonSinkers() },
-      { name: "Milo Cream", sizes: { grande: 70, venti: 80 }, addons: commonSinkers() },
-      { name: "Strawberry", sizes: { grande: 70, venti: 80 }, addons: commonSinkers() },
-      { name: "Blueberry", sizes: { grande: 70, venti: 80 }, addons: commonSinkers() },
-      { name: "Purple Yam", sizes: { grande: 70, venti: 80 }, addons: commonSinkers() },
-      { name: "Matcha Oreo", sizes: { grande: 70, venti: 80 }, addons: commonSinkers() },
-      { name: "Matcha Strawberry", sizes: { grande: 70, venti: 80 }, addons: commonSinkers() },
-      { name: "Ube Oreo", sizes: { grande: 70, venti: 80 }, addons: commonSinkers() },
-      { name: "Chocolate Chip Cream", sizes: { grande: 70, venti: 80 }, addons: commonSinkers() },
-      { name: "Nutella Cream", sizes: { grande: 70, venti: 80 }, addons: commonSinkers() },
+      { name: "Cookies & Cream", prices: { Grande: 70, Venti: 80 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Milo Cream", prices: { Grande: 70, Venti: 80 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Strawberry", prices: { Grande: 70, Venti: 80 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Blueberry", prices: { Grande: 70, Venti: 80 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Purple Yam", prices: { Grande: 70, Venti: 80 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Matcha Oreo", prices: { Grande: 70, Venti: 80 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Matcha Strawberry", prices: { Grande: 70, Venti: 80 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Ube Oreo", prices: { Grande: 70, Venti: 80 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Chocolate Chip Cream", prices: { Grande: 70, Venti: 80 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
+      { name: "Nutella Cream", prices: { Grande: 70, Venti: 80 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
     ],
   },
 
@@ -360,13 +166,13 @@ const MENU = {
     label: "Cà Phê Espresso",
     description: "Grande 16oz / Venti 22oz",
     items: [
-      { name: "Americano", sizes: { grande: 38, venti: 48 }, addons: coffeeAddons() },
-      { name: "Cà Phê Español", sizes: { grande: 38, venti: 48 }, addons: coffeeAddons() },
-      { name: "Iced Latte", sizes: { grande: 38, venti: 48 }, addons: coffeeAddons() },
-      { name: "Matcha Latte", sizes: { grande: 38, venti: 48 }, addons: coffeeAddons() },
-      { name: "Salted Caramel", sizes: { grande: 38, venti: 48 }, addons: coffeeAddons() },
-      { name: "Oreo Latte", sizes: { grande: 38, venti: 48 }, addons: coffeeAddons() },
-      { name: "Dark Mocha Latte", sizes: { grande: 38, venti: 48 }, addons: coffeeAddons() },
+      { name: "Americano", prices: { Grande: 38, Venti: 48 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Cà Phê Español", prices: { Grande: 38, Venti: 48 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Iced Latte", prices: { Grande: 38, Venti: 48 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Matcha Latte", prices: { Grande: 38, Venti: 48 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Salted Caramel", prices: { Grande: 38, Venti: 48 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Oreo Latte", prices: { Grande: 38, Venti: 48 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Dark Mocha Latte", prices: { Grande: 38, Venti: 48 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
     ],
   },
 
@@ -374,525 +180,318 @@ const MENU = {
     label: "Premium",
     description: "Grande 16oz / Venti 22oz",
     items: [
-      { name: "Strawberry Latte", sizes: { grande: 45, venti: 55 }, addons: coffeeAddons() },
-      { name: "Matcha Espresso", sizes: { grande: 45, venti: 55 }, addons: coffeeAddons() },
-      { name: "Salty Cream Latte", sizes: { grande: 45, venti: 55 }, addons: coffeeAddons() },
-      { name: "Sea Salt Latte", sizes: { grande: 45, venti: 55 }, addons: coffeeAddons() },
-      { name: "Barista’s Drink", sizes: { grande: 45, venti: 55 }, addons: coffeeAddons() },
-      { name: "Dulce De Leche", sizes: { grande: 55, venti: 65 }, addons: coffeeAddons() },
-      { name: "Velvet Cream Latte", sizes: { grande: 55, venti: 65 }, addons: coffeeAddons() },
-      { name: "White Mocha Latte", sizes: { grande: 55, venti: 65 }, addons: coffeeAddons() },
-      { name: "Vanilla Sweet Cream", sizes: { grande: 55, venti: 65 }, addons: coffeeAddons() },
-      { name: "Toffee Nut Latte", sizes: { grande: 55, venti: 65 }, addons: coffeeAddons() },
-      { name: "Almond Latte", sizes: { grande: 55, venti: 65 }, addons: coffeeAddons() },
-      { name: "Peanut Butter Latte", sizes: { grande: 70, venti: 80 }, addons: coffeeAddons() },
-      { name: "Biscoff Latte", sizes: { grande: 70, venti: 80 }, addons: coffeeAddons() },
-      { name: "Nutella Latte", sizes: { grande: 70, venti: 80 }, addons: coffeeAddons() },
+      { name: "Strawberry Latte", prices: { Grande: 45, Venti: 55 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Matcha Espresso", prices: { Grande: 45, Venti: 55 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Salty Cream Latte", prices: { Grande: 45, Venti: 55 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Sea Salt Latte", prices: { Grande: 45, Venti: 55 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Barista’s Drink", prices: { Grande: 45, Venti: 55 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Dulce De Leche", prices: { Grande: 55, Venti: 65 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Velvet Cream Latte", prices: { Grande: 55, Venti: 65 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "White Mocha Latte", prices: { Grande: 55, Venti: 65 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Vanilla Sweet Cream", prices: { Grande: 55, Venti: 65 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Toffee Nut Latte", prices: { Grande: 55, Venti: 65 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Almond Latte", prices: { Grande: 55, Venti: 65 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Peanut Butter Latte", prices: { Grande: 70, Venti: 80 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Biscoff Latte", prices: { Grande: 70, Venti: 80 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Nutella Latte", prices: { Grande: 70, Venti: 80 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
     ],
   },
 };
 
-function formatSizeLabel(sizeKey) {
-  const labels = {
-    regular: "Regular",
-    grande: "Grande 16oz",
-    venti: "Venti 22oz",
-    small: "Small",
-    medium: "Medium",
-    large: "Large",
-  };
-  return labels[sizeKey] || sizeKey;
-}
-
-function Orders() {
-  const categoryKeys = Object.keys(MENU);
-  const [activeCategory, setActiveCategory] = useState(categoryKeys[0]);
-  const [cart, setCart] = useState([]);
-  const [cash, setCash] = useState("");
+export default function Orders() {
+  const [selectedCategory, setSelectedCategory] = useState("lemonade");
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedAddons, setSelectedAddons] = useState([]);
+  const [cart, setCart] = useState([]);
+  const [cash, setCash] = useState("");
   const [table, setTable] = useState("Walk-in");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const activeCategoryData = MENU[activeCategory];
+  const currentCategory = menuData[selectedCategory];
 
-  const openItem = (item) => {
-    setSelectedItem(item);
-    const sizeKeys = Object.keys(item.sizes);
-    setSelectedSize(sizeKeys.length === 1 ? sizeKeys[0] : "");
+  const total = useMemo(() => {
+    return cart.reduce((sum, item) => sum + item.line_total, 0);
+  }, [cart]);
+
+  const cashValue = Number(cash) || 0;
+  const change = cashValue - total;
+
+  const openItemModal = (item) => {
+    setSelectedItem({
+      ...item,
+      category: currentCategory.label,
+    });
+    const firstSize = Object.keys(item.prices)[0];
+    setSelectedSize(firstSize);
     setSelectedAddons([]);
   };
 
-  const closeModal = () => {
+  const closeItemModal = () => {
     setSelectedItem(null);
     setSelectedSize("");
     setSelectedAddons([]);
   };
 
   const toggleAddon = (addon) => {
-    const exists = selectedAddons.some((a) => a.name === addon.name);
-    if (exists) {
-      setSelectedAddons(selectedAddons.filter((a) => a.name !== addon.name));
-    } else {
-      setSelectedAddons([...selectedAddons, addon]);
-    }
-  };
-
-  // 🔥 UPDATED: Packages the items perfectly for your SQLite backend and Recipe logic
-  const confirmAddToCart = () => {
-    if (!selectedItem || !selectedSize) return;
-
-    const basePrice = selectedItem.sizes[selectedSize];
-    const addonsTotal = selectedAddons.reduce((sum, addon) => sum + addon.price, 0);
-
-    const newItem = {
-      id: `${selectedItem.name}-${selectedSize}-${Date.now()}`,
-      item_name: selectedItem.name,                 // Matches Python expected key
-      category: activeCategoryData.label,           // Now tracks the category for your Sales DB
-      size: formatSizeLabel(selectedSize),
-      addons: selectedAddons.length > 0 ? selectedAddons.map(a => a.name).join(", ") : "None", // Saves as a clean string!
-      addons_total: addonsTotal,                    // Added for your DB
-      unit_price: basePrice,                        // Matches Python expected key
-      line_total: basePrice + addonsTotal,          // Matches Python expected key
-      qty: 1,
-    };
-
-    setCart((prev) => [...prev, newItem]);
-    closeModal();
-  };
-
-  const updateQty = (id, change) => {
-    setCart((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? { ...item, qty: Math.max(1, item.qty + change) }
-          : item
-      )
+    setSelectedAddons((prev) =>
+      prev.includes(addon)
+        ? prev.filter((a) => a !== addon)
+        : [...prev, addon]
     );
   };
 
-  const removeItem = (id) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+  const addToCart = () => {
+    if (!selectedItem || !selectedSize) return;
+
+    const unitPrice = selectedItem.prices[selectedSize];
+
+    const newItem = {
+      category: selectedItem.category,
+      item_name: selectedItem.name,
+      size: selectedSize,
+      qty: 1,
+      unit_price: unitPrice,
+      addons: selectedAddons,
+      addons_text: selectedAddons.length ? selectedAddons.join(", ") : "None",
+      line_total: unitPrice,
+    };
+
+    setCart((prev) => [...prev, newItem]);
+    closeItemModal();
   };
 
-  const totalItems = useMemo(
-    () => cart.reduce((sum, item) => sum + item.qty, 0),
-    [cart]
-  );
+  const updateCartQty = (index, delta) => {
+    setCart((prev) =>
+      prev
+        .map((item, i) => {
+          if (i !== index) return item;
+          const newQty = item.qty + delta;
+          if (newQty <= 0) return null;
+          return {
+            ...item,
+            qty: newQty,
+            line_total: item.unit_price * newQty,
+          };
+        })
+        .filter(Boolean)
+    );
+  };
 
-  const total = useMemo(
-    () => cart.reduce((sum, item) => sum + item.line_total * item.qty, 0),
-    [cart]
-  );
+  const removeCartItem = (index) => {
+    setCart((prev) => prev.filter((_, i) => i !== index));
+  };
 
-  const cashValue = parseFloat(cash || "0");
-  const change = Math.max(0, cashValue - total);
-  const insufficientCash = cash !== "" && cashValue < total;
-
-  const cancelOrder = () => {
+  const clearCart = () => {
     setCart([]);
     setCash("");
+    setTable("Walk-in");
   };
 
   const handlePayAndPrint = async () => {
-    if (cart.length === 0 || cashValue < total) return;
+    if (cart.length === 0) {
+      alert("Cart is empty.");
+      return;
+    }
+
+    if (cashValue < total) {
+      alert("Insufficient cash.");
+      return;
+    }
 
     setIsSubmitting(true);
 
     try {
-      const res = await fetch(`${API_BASE_URL}/orders/`, {
+      const token = localStorage.getItem("token");
+
+      const payload = {
+        items: cart.map((item) => ({
+          name: item.item_name,
+          category: item.category,
+          size: item.size,
+          qty: item.qty,
+          unitPrice: item.unit_price,
+          addons: item.addons.map((addonName) => ({ name: addonName })),
+        })),
+        total,
+        cash: cashValue,
+        change,
+        table,
+        payment_method: "Cash",
+      };
+
+      const response = await fetch(`${API_BASE_URL}/orders/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
-        body: JSON.stringify({
-          items: cart.map(item => ({
-            name: item.item_name,          // ✅ map correctly
-            qty: item.qty,
-            unitPrice: item.unit_price,    // ✅ map correctly
-          })),
-          total,
-          cash: cashValue,
-          change,
-          table,
-          payment_method: "Cash",
-        }),
+        body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
+      const data = await response.json();
+      console.log("Order saved:", data);
 
-      if (!res.ok) {
-        console.error("Order error:", data);
-        alert(data.error || "Failed to save order");
+      if (!response.ok) {
+        alert(data.error || "Failed to process order.");
         return;
       }
 
-      console.log("Order saved:", data);
-      alert(`Order #${data.order_id} completed! Inventory Deducted!`);
+      let message = `Order #${data.order_id} processed successfully.`;
 
-      setCart([]);
-      setCash("");
-      setTable("Walk-in");
-    } catch (err) {
-      console.error("Order request failed:", err);
-      alert("Network error while saving order");
+      if (data.inventory_warnings && data.inventory_warnings.length > 0) {
+        message += `\n\nInventory warnings:\n- ${data.inventory_warnings.join("\n- ")}`;
+      }
+
+      alert(message);
+      clearCart();
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("Network error while processing order.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="app-body">
-      <div className="app-shell">
-        <Sidebar role="Employee" />
+    <div className="orders-page">
+      <Sidebar />
+      <div className="orders-content">
+        <h1>Orders</h1>
 
-        <main className="main-content">
-          <header className="topbar">
-            <div>
-              <h2 className="page-title">New Order</h2>
-              <p className="page-subtitle">
-                Employees can create and complete cash orders.
-              </p>
+        <div className="category-tabs">
+          {Object.entries(menuData).map(([key, category]) => (
+            <button
+              key={key}
+              className={selectedCategory === key ? "active" : ""}
+              onClick={() => setSelectedCategory(key)}
+            >
+              {category.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="menu-grid">
+          {currentCategory.items.map((item, index) => (
+            <div key={index} className="menu-card">
+              <h3>{item.name}</h3>
+              <p>{currentCategory.description}</p>
+              <button onClick={() => openItemModal(item)}>Add Item</button>
             </div>
+          ))}
+        </div>
 
-            <div className="topbar-right">
-              <div className="order-meta">
-                <span>Table</span>
-                <select value={table} onChange={(e) => setTable(e.target.value)}>
-                  <option>Walk-in</option>
-                  <option>Table 1</option>
-                  <option>Table 2</option>
-                  <option>Table 3</option>
-                </select>
-              </div>
+        <div className="cart-section">
+          <h2>Cart</h2>
 
-              <div className="user-pill">
-                <span className="user-avatar">EM</span>
-                <span className="user-name">Employee</span>
-              </div>
-            </div>
-          </header>
-
-          <section className="orders-layout">
-            <div className="menu-panel">
-              <div className="menu-panel-top">
-                <div>
-                  <h3 className="panel-title">Menu</h3>
-                  <p className="panel-subtitle">
-                    Select a category, then choose an item.
-                  </p>
-                </div>
-              </div>
-
-              <div className="menu-tabs">
-                {categoryKeys.map((key) => (
-                  <button
-                    key={key}
-                    type="button"
-                    className={`tab ${activeCategory === key ? "active" : ""}`}
-                    onClick={() => setActiveCategory(key)}
-                  >
-                    {MENU[key].label}
-                  </button>
+          {cart.length === 0 ? (
+            <p>No items in cart.</p>
+          ) : (
+            <table className="cart-table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Size</th>
+                  <th>Add-ons</th>
+                  <th>Qty</th>
+                  <th>Price</th>
+                  <th>Total</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cart.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.item_name}</td>
+                    <td>{item.size}</td>
+                    <td>{item.addons_text}</td>
+                    <td>
+                      <button onClick={() => updateCartQty(index, -1)}>-</button>
+                      <span style={{ margin: "0 10px" }}>{item.qty}</span>
+                      <button onClick={() => updateCartQty(index, 1)}>+</button>
+                    </td>
+                    <td>₱{item.unit_price.toFixed(2)}</td>
+                    <td>₱{item.line_total.toFixed(2)}</td>
+                    <td>
+                      <button onClick={() => removeCartItem(index)}>Remove</button>
+                    </td>
+                  </tr>
                 ))}
-              </div>
+              </tbody>
+            </table>
+          )}
 
-              <div className="category-banner">
-                <div>
-                  <div className="category-label">{activeCategoryData.label}</div>
-                  <div className="category-description">
-                    {activeCategoryData.description}
-                  </div>
-                </div>
-                <div className="category-count">
-                  {activeCategoryData.items.length} items
-                </div>
-              </div>
+          <div className="payment-panel">
+            <h3>Total: ₱{total.toFixed(2)}</h3>
 
-              <div className="menu-grid">
-                {activeCategoryData.items.map((item) => {
-                  const sizeValues = Object.values(item.sizes);
-                  const minPrice = Math.min(...sizeValues);
-                  const maxPrice = Math.max(...sizeValues);
+            <label>Table / Customer Type</label>
+            <select value={table} onChange={(e) => setTable(e.target.value)}>
+              <option value="Walk-in">Walk-in</option>
+              <option value="Takeout">Takeout</option>
+            </select>
 
-                  return (
-                    <button
-                      key={item.name}
-                      type="button"
-                      className="menu-item"
-                      onClick={() => openItem(item)}
-                    >
-                      <div className="menu-item-top">
-                        <span className="menu-name">{item.name}</span>
-                        <span className="menu-price">
-                          ₱{minPrice}
-                          {minPrice !== maxPrice ? ` - ₱${maxPrice}` : ""}
-                        </span>
-                      </div>
+            <label>Cash</label>
+            <input
+              type="number"
+              value={cash}
+              onChange={(e) => setCash(e.target.value)}
+              placeholder="Enter cash"
+            />
 
-                      <div className="menu-meta">
-                        {Object.keys(item.sizes)
-                          .map((size) => formatSizeLabel(size))
-                          .join(" • ")}
-                      </div>
+            <h4>Change: ₱{change >= 0 ? change.toFixed(2) : "0.00"}</h4>
 
-                      {item.addons?.length > 0 && (
-                        <div className="menu-addon-note">
-                          + {item.addons.length} add-ons available
-                        </div>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
+            <div className="payment-actions">
+              <button onClick={clearCart}>Cancel</button>
+              <button onClick={handlePayAndPrint} disabled={isSubmitting}>
+                {isSubmitting ? "Processing..." : "Pay & Print Receipt"}
+              </button>
             </div>
+          </div>
+        </div>
 
-            <aside className="cart-panel">
-              <div className="panel-header">
-                <div>
-                  <h3>Current Order</h3>
-                  <span className="order-id">Live ticket</span>
-                </div>
-                <span className="cart-badge">{totalItems} items</span>
-              </div>
+        {selectedItem && (
+          <div className="modal-overlay">
+            <div className="modal">
+              <h2>{selectedItem.name}</h2>
 
-              <div className="cart-scroll">
-                <table className="table cart-table">
-                  <thead>
-                    <tr>
-                      <th>Item</th>
-                      <th>Qty</th>
-                      <th className="num-cell">Price</th>
-                      <th className="num-cell">Subtotal</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {cart.length === 0 ? (
-                      <tr>
-                        <td colSpan="4" className="empty-cart">
-                          No items yet.
-                        </td>
-                      </tr>
-                    ) : (
-                      cart.map((item) => (
-                        <tr key={item.id}>
-                          <td>
-                            <div className="cart-item-head">
-                              {/* 🔥 Render the new item_name */}
-                              <div className="cart-item-name">{item.item_name}</div>
-                              <button
-                                type="button"
-                                className="remove-btn"
-                                onClick={() => removeItem(item.id)}
-                                aria-label={`Remove ${item.item_name}`}
-                                title="Remove item"
-                              >
-                                ×
-                              </button>
-                            </div>
-
-                            <div className="cart-item-meta">
-                              {item.size}
-                            </div>
-
-                            {item.addons !== "None" && (
-                              <div className="cart-item-addons">
-                                + {item.addons}
-                              </div>
-                            )}
-                          </td>
-
-                          <td>
-                            <div className="qty-control">
-                              <button
-                                type="button"
-                                onClick={() => updateQty(item.id, -1)}
-                              >
-                                -
-                              </button>
-                              <span>{item.qty}</span>
-                              <button
-                                type="button"
-                                onClick={() => updateQty(item.id, 1)}
-                              >
-                                +
-                              </button>
-                            </div>
-                          </td>
-
-                          <td className="num-cell">₱ {item.line_total}</td>
-                          <td className="num-cell">₱ {item.line_total * item.qty}</td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="cart-footer">
-                <div className="totals">
-                  <div className="totals-row">
-                    <span>Items</span>
-                    <span>{totalItems}</span>
-                  </div>
-
-                  <div className="totals-row">
-                    <span>Subtotal</span>
-                    <span>₱ {total}</span>
-                  </div>
-
-                  <div className="totals-row grand">
-                    <span>Total</span>
-                    <span>₱ {total}</span>
-                  </div>
-                </div>
-
-                <div className="payment-actions">
-                  <div className="cash-input">
-                    <label htmlFor="cash">Cash received</label>
-                    <input
-                      id="cash"
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      value={cash}
-                      onChange={(e) => setCash(e.target.value)}
-                      placeholder="Enter amount"
-                    />
-                    <span className={`change-label ${insufficientCash ? "error-text" : ""}`}>
-                      {insufficientCash
-                        ? `Insufficient cash: ₱ ${Math.abs(cashValue - total).toFixed(2)} short`
-                        : `Change: ₱ ${change.toFixed(2)}`}
-                    </span>
-                  </div>
-
-                  <button
-                    type="button"
-                    className="btn-pay"
-                    disabled={cart.length === 0 || cashValue < total || isSubmitting}
-                    onClick={handlePayAndPrint}
-                  >
-                    {isSubmitting ? "Processing..." : "Pay and Print Receipt"}
-                  </button>
-
-                  <button
-                    type="button"
-                    className="btn-cancel"
-                    onClick={cancelOrder}
-                    disabled={isSubmitting}
-                  >
-                    Cancel Order
-                  </button>
-                </div>
-              </div>
-            </aside>
-          </section>
-
-          {selectedItem && (
-            <div className="modal" onClick={closeModal}>
-              <div
-                className="modal-content"
-                onClick={(e) => e.stopPropagation()}
+              <label>Size</label>
+              <select
+                value={selectedSize}
+                onChange={(e) => setSelectedSize(e.target.value)}
               >
-                <div className="modal-head">
-                  <div>
-                    <h3>{selectedItem.name}</h3>
-                    <p className="modal-subtitle">
-                      Choose size and optional add-ons.
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    className="modal-close"
-                    onClick={closeModal}
-                  >
-                    ×
-                  </button>
-                </div>
+                {Object.entries(selectedItem.prices).map(([size, price]) => (
+                  <option key={size} value={size}>
+                    {size} - ₱{price}
+                  </option>
+                ))}
+              </select>
 
-                <div>
-                  <div className="modal-section-title">Size</div>
-                  <div className="size-list">
-                    {Object.keys(selectedItem.sizes).map((size) => (
-                      <button
-                        key={size}
-                        type="button"
-                        className={`size-chip ${selectedSize === size ? "selected" : ""}`}
-                        onClick={() => setSelectedSize(size)}
-                      >
-                        <span>{formatSizeLabel(size)}</span>
-                        <span className="price">₱{selectedItem.sizes[size]}</span>
-                      </button>
+              {selectedItem.addons.length > 0 && (
+                <>
+                  <label>Add-ons</label>
+                  <div className="addons-list">
+                    {selectedItem.addons.map((addon, index) => (
+                      <label key={index} className="addon-option">
+                        <input
+                          type="checkbox"
+                          checked={selectedAddons.includes(addon)}
+                          onChange={() => toggleAddon(addon)}
+                        />
+                        {addon}
+                      </label>
                     ))}
                   </div>
-                </div>
+                </>
+              )}
 
-                <div>
-                  <div className="modal-section-title">Add-ons</div>
-                  <div className="addons-list">
-                    {selectedItem.addons?.length > 0 ? (
-                      selectedItem.addons.map((addon) => {
-                        const checked = selectedAddons.some(
-                          (a) => a.name === addon.name
-                        );
-
-                        return (
-                          <div className="addon-row" key={addon.name}>
-                            <label>
-                              <input
-                                type="checkbox"
-                                checked={checked}
-                                onChange={() => toggleAddon(addon)}
-                              />
-                              <span>{addon.name}</span>
-                            </label>
-                            <span className="addon-price">+₱{addon.price}</span>
-                          </div>
-                        );
-                      })
-                    ) : (
-                      <div className="empty-addon">No add-ons available.</div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="modal-summary">
-                  <span>Selected total</span>
-                  <strong>
-                    ₱
-                    {selectedSize
-                      ? selectedItem.sizes[selectedSize] +
-                        selectedAddons.reduce((sum, addon) => sum + addon.price, 0)
-                      : 0}
-                  </strong>
-                </div>
-
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn-secondary"
-                    onClick={closeModal}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-primary"
-                    onClick={confirmAddToCart}
-                    disabled={!selectedSize}
-                  >
-                    Add to cart
-                  </button>
-                </div>
+              <div className="modal-actions">
+                <button onClick={closeItemModal}>Close</button>
+                <button onClick={addToCart}>Add to Cart</button>
               </div>
             </div>
-          )}
-        </main>
+          </div>
+        )}
       </div>
     </div>
   );
 }
-
-export default Orders;

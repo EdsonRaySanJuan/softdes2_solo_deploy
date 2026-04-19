@@ -1,0 +1,1039 @@
+menu_category,menu_item,size,ingredient_name,qty_used,unit,recipe_type
+Lemonade,Lemonade (Regular),regular,Lemonade Base,30,ml,base
+Lemonade,Lemonade (Regular),regular,Water,170,ml,base
+Lemonade,Lemonade (Regular),regular,Ice,250,g,base
+Lemonade,Lemonade (Regular),regular,Cup 22oz,1,pc,base
+Lemonade,Lemonade (Regular),regular,Sealing Film,1,pc,base
+Lemonade,Green Apple Lemonade,regular,Lemonade Base,30,ml,base
+Lemonade,Green Apple Lemonade,regular,Water,170,ml,base
+Lemonade,Green Apple Lemonade,regular,Ice,250,g,base
+Lemonade,Green Apple Lemonade,regular,Cup 22oz,1,pc,base
+Lemonade,Green Apple Lemonade,regular,Sealing Film,1,pc,base
+Lemonade,Green Apple Lemonade,regular,Green Apple Syrup,20,ml,base
+Lemonade,Strawberry Lemonade,regular,Lemonade Base,30,ml,base
+Lemonade,Strawberry Lemonade,regular,Water,170,ml,base
+Lemonade,Strawberry Lemonade,regular,Ice,250,g,base
+Lemonade,Strawberry Lemonade,regular,Cup 22oz,1,pc,base
+Lemonade,Strawberry Lemonade,regular,Sealing Film,1,pc,base
+Lemonade,Strawberry Lemonade,regular,Strawberry Syrup,20,ml,base
+Lemonade,Blueberry Lemonade,regular,Lemonade Base,30,ml,base
+Lemonade,Blueberry Lemonade,regular,Water,170,ml,base
+Lemonade,Blueberry Lemonade,regular,Ice,250,g,base
+Lemonade,Blueberry Lemonade,regular,Cup 22oz,1,pc,base
+Lemonade,Blueberry Lemonade,regular,Sealing Film,1,pc,base
+Lemonade,Blueberry Lemonade,regular,Blueberry Syrup,20,ml,base
+Lemonade,Peach Lemonade,regular,Lemonade Base,30,ml,base
+Lemonade,Peach Lemonade,regular,Water,170,ml,base
+Lemonade,Peach Lemonade,regular,Ice,250,g,base
+Lemonade,Peach Lemonade,regular,Cup 22oz,1,pc,base
+Lemonade,Peach Lemonade,regular,Sealing Film,1,pc,base
+Lemonade,Peach Lemonade,regular,Peach Syrup,20,ml,base
+Lemonade,Lychee Lemonade,regular,Lemonade Base,30,ml,base
+Lemonade,Lychee Lemonade,regular,Water,170,ml,base
+Lemonade,Lychee Lemonade,regular,Ice,250,g,base
+Lemonade,Lychee Lemonade,regular,Cup 22oz,1,pc,base
+Lemonade,Lychee Lemonade,regular,Sealing Film,1,pc,base
+Lemonade,Lychee Lemonade,regular,Lychee Syrup,20,ml,base
+Lemonade,Strawberry Lemon,regular,Lemonade Base,30,ml,base
+Lemonade,Strawberry Lemon,regular,Water,170,ml,base
+Lemonade,Strawberry Lemon,regular,Ice,250,g,base
+Lemonade,Strawberry Lemon,regular,Cup 22oz,1,pc,base
+Lemonade,Strawberry Lemon,regular,Sealing Film,1,pc,base
+Lemonade,Strawberry Lemon,regular,Strawberry Syrup,20,ml,base
+Lemonade,Blue Lemonade,regular,Lemonade Base,30,ml,base
+Lemonade,Blue Lemonade,regular,Water,170,ml,base
+Lemonade,Blue Lemonade,regular,Ice,250,g,base
+Lemonade,Blue Lemonade,regular,Cup 22oz,1,pc,base
+Lemonade,Blue Lemonade,regular,Sealing Film,1,pc,base
+Lemonade,Blue Lemonade,regular,Blueberry Syrup,20,ml,base
+Lemonade,Red Fizz Lemonade,regular,Lemonade Base,30,ml,base
+Lemonade,Red Fizz Lemonade,regular,Water,170,ml,base
+Lemonade,Red Fizz Lemonade,regular,Ice,250,g,base
+Lemonade,Red Fizz Lemonade,regular,Cup 22oz,1,pc,base
+Lemonade,Red Fizz Lemonade,regular,Sealing Film,1,pc,base
+Lemonade,Red Fizz Lemonade,regular,Red Fizz Syrup,20,ml,base
+Lemonade,Cucumber Lemonade,regular,Lemonade Base,30,ml,base
+Lemonade,Cucumber Lemonade,regular,Water,170,ml,base
+Lemonade,Cucumber Lemonade,regular,Ice,250,g,base
+Lemonade,Cucumber Lemonade,regular,Cup 22oz,1,pc,base
+Lemonade,Cucumber Lemonade,regular,Sealing Film,1,pc,base
+Lemonade,Cucumber Lemonade,regular,Cucumber Syrup,20,ml,base
+Lemonade,Honey Ginger,regular,Lemonade Base,30,ml,base
+Lemonade,Honey Ginger,regular,Water,170,ml,base
+Lemonade,Honey Ginger,regular,Ice,250,g,base
+Lemonade,Honey Ginger,regular,Cup 22oz,1,pc,base
+Lemonade,Honey Ginger,regular,Sealing Film,1,pc,base
+Lemonade,Honey Ginger,regular,Honey Ginger Syrup,25,ml,base
+Yogurt Smoothies,Strawberry,grande,Yogurt Base,120,ml,base
+Yogurt Smoothies,Strawberry,grande,Ice,180,g,base
+Yogurt Smoothies,Strawberry,grande,Cup 16oz,1,pc,base
+Yogurt Smoothies,Strawberry,grande,Sealing Film,1,pc,base
+Yogurt Smoothies,Strawberry,grande,Strawberry Syrup,20,ml,base
+Yogurt Smoothies,Strawberry,venti,Yogurt Base,170,ml,base
+Yogurt Smoothies,Strawberry,venti,Ice,250,g,base
+Yogurt Smoothies,Strawberry,venti,Cup 22oz,1,pc,base
+Yogurt Smoothies,Strawberry,venti,Sealing Film,1,pc,base
+Yogurt Smoothies,Strawberry,venti,Strawberry Syrup,30,ml,base
+Yogurt Smoothies,Blueberry,grande,Yogurt Base,120,ml,base
+Yogurt Smoothies,Blueberry,grande,Ice,180,g,base
+Yogurt Smoothies,Blueberry,grande,Cup 16oz,1,pc,base
+Yogurt Smoothies,Blueberry,grande,Sealing Film,1,pc,base
+Yogurt Smoothies,Blueberry,grande,Blueberry Syrup,20,ml,base
+Yogurt Smoothies,Blueberry,venti,Yogurt Base,170,ml,base
+Yogurt Smoothies,Blueberry,venti,Ice,250,g,base
+Yogurt Smoothies,Blueberry,venti,Cup 22oz,1,pc,base
+Yogurt Smoothies,Blueberry,venti,Sealing Film,1,pc,base
+Yogurt Smoothies,Blueberry,venti,Blueberry Syrup,30,ml,base
+Yogurt Smoothies,Passion Fruit,grande,Yogurt Base,120,ml,base
+Yogurt Smoothies,Passion Fruit,grande,Ice,180,g,base
+Yogurt Smoothies,Passion Fruit,grande,Cup 16oz,1,pc,base
+Yogurt Smoothies,Passion Fruit,grande,Sealing Film,1,pc,base
+Yogurt Smoothies,Passion Fruit,grande,Passion Fruit Syrup,20,ml,base
+Yogurt Smoothies,Passion Fruit,venti,Yogurt Base,170,ml,base
+Yogurt Smoothies,Passion Fruit,venti,Ice,250,g,base
+Yogurt Smoothies,Passion Fruit,venti,Cup 22oz,1,pc,base
+Yogurt Smoothies,Passion Fruit,venti,Sealing Film,1,pc,base
+Yogurt Smoothies,Passion Fruit,venti,Passion Fruit Syrup,30,ml,base
+Yogurt Smoothies,Biscoff,grande,Yogurt Base,120,ml,base
+Yogurt Smoothies,Biscoff,grande,Ice,180,g,base
+Yogurt Smoothies,Biscoff,grande,Cup 16oz,1,pc,base
+Yogurt Smoothies,Biscoff,grande,Sealing Film,1,pc,base
+Yogurt Smoothies,Biscoff,grande,Biscoff Spread,25,g,base
+Yogurt Smoothies,Biscoff,venti,Yogurt Base,170,ml,base
+Yogurt Smoothies,Biscoff,venti,Ice,250,g,base
+Yogurt Smoothies,Biscoff,venti,Cup 22oz,1,pc,base
+Yogurt Smoothies,Biscoff,venti,Sealing Film,1,pc,base
+Yogurt Smoothies,Biscoff,venti,Biscoff Spread,35,g,base
+Fruit Soda,Green Apple,grande,Soda Water,120,ml,base
+Fruit Soda,Green Apple,grande,Ice,180,g,base
+Fruit Soda,Green Apple,grande,Cup 16oz,1,pc,base
+Fruit Soda,Green Apple,grande,Sealing Film,1,pc,base
+Fruit Soda,Green Apple,grande,Green Apple Syrup,20,ml,base
+Fruit Soda,Green Apple,venti,Soda Water,170,ml,base
+Fruit Soda,Green Apple,venti,Ice,250,g,base
+Fruit Soda,Green Apple,venti,Cup 22oz,1,pc,base
+Fruit Soda,Green Apple,venti,Sealing Film,1,pc,base
+Fruit Soda,Green Apple,venti,Green Apple Syrup,30,ml,base
+Fruit Soda,Strawberry,grande,Soda Water,120,ml,base
+Fruit Soda,Strawberry,grande,Ice,180,g,base
+Fruit Soda,Strawberry,grande,Cup 16oz,1,pc,base
+Fruit Soda,Strawberry,grande,Sealing Film,1,pc,base
+Fruit Soda,Strawberry,grande,Strawberry Syrup,20,ml,base
+Fruit Soda,Strawberry,venti,Soda Water,170,ml,base
+Fruit Soda,Strawberry,venti,Ice,250,g,base
+Fruit Soda,Strawberry,venti,Cup 22oz,1,pc,base
+Fruit Soda,Strawberry,venti,Sealing Film,1,pc,base
+Fruit Soda,Strawberry,venti,Strawberry Syrup,30,ml,base
+Fruit Soda,Blueberry,grande,Soda Water,120,ml,base
+Fruit Soda,Blueberry,grande,Ice,180,g,base
+Fruit Soda,Blueberry,grande,Cup 16oz,1,pc,base
+Fruit Soda,Blueberry,grande,Sealing Film,1,pc,base
+Fruit Soda,Blueberry,grande,Blueberry Syrup,20,ml,base
+Fruit Soda,Blueberry,venti,Soda Water,170,ml,base
+Fruit Soda,Blueberry,venti,Ice,250,g,base
+Fruit Soda,Blueberry,venti,Cup 22oz,1,pc,base
+Fruit Soda,Blueberry,venti,Sealing Film,1,pc,base
+Fruit Soda,Blueberry,venti,Blueberry Syrup,30,ml,base
+Fruit Soda,Peach,grande,Soda Water,120,ml,base
+Fruit Soda,Peach,grande,Ice,180,g,base
+Fruit Soda,Peach,grande,Cup 16oz,1,pc,base
+Fruit Soda,Peach,grande,Sealing Film,1,pc,base
+Fruit Soda,Peach,grande,Peach Syrup,20,ml,base
+Fruit Soda,Peach,venti,Soda Water,170,ml,base
+Fruit Soda,Peach,venti,Ice,250,g,base
+Fruit Soda,Peach,venti,Cup 22oz,1,pc,base
+Fruit Soda,Peach,venti,Sealing Film,1,pc,base
+Fruit Soda,Peach,venti,Peach Syrup,30,ml,base
+Fruit Soda,Lychee,grande,Soda Water,120,ml,base
+Fruit Soda,Lychee,grande,Ice,180,g,base
+Fruit Soda,Lychee,grande,Cup 16oz,1,pc,base
+Fruit Soda,Lychee,grande,Sealing Film,1,pc,base
+Fruit Soda,Lychee,grande,Lychee Syrup,20,ml,base
+Fruit Soda,Lychee,venti,Soda Water,170,ml,base
+Fruit Soda,Lychee,venti,Ice,250,g,base
+Fruit Soda,Lychee,venti,Cup 22oz,1,pc,base
+Fruit Soda,Lychee,venti,Sealing Film,1,pc,base
+Fruit Soda,Lychee,venti,Lychee Syrup,30,ml,base
+Fruit Soda,Lemon,grande,Soda Water,120,ml,base
+Fruit Soda,Lemon,grande,Ice,180,g,base
+Fruit Soda,Lemon,grande,Cup 16oz,1,pc,base
+Fruit Soda,Lemon,grande,Sealing Film,1,pc,base
+Fruit Soda,Lemon,grande,Lemon Syrup,20,ml,base
+Fruit Soda,Lemon,venti,Soda Water,170,ml,base
+Fruit Soda,Lemon,venti,Ice,250,g,base
+Fruit Soda,Lemon,venti,Cup 22oz,1,pc,base
+Fruit Soda,Lemon,venti,Sealing Film,1,pc,base
+Fruit Soda,Lemon,venti,Lemon Syrup,30,ml,base
+Fruit Soda,Ginger Ale,grande,Soda Water,120,ml,base
+Fruit Soda,Ginger Ale,grande,Ice,180,g,base
+Fruit Soda,Ginger Ale,grande,Cup 16oz,1,pc,base
+Fruit Soda,Ginger Ale,grande,Sealing Film,1,pc,base
+Fruit Soda,Ginger Ale,grande,Ginger Ale Syrup,20,ml,base
+Fruit Soda,Ginger Ale,venti,Soda Water,170,ml,base
+Fruit Soda,Ginger Ale,venti,Ice,250,g,base
+Fruit Soda,Ginger Ale,venti,Cup 22oz,1,pc,base
+Fruit Soda,Ginger Ale,venti,Sealing Film,1,pc,base
+Fruit Soda,Ginger Ale,venti,Ginger Ale Syrup,30,ml,base
+Hot Coffee,Americano,regular,Espresso Shot,1,shot,base
+Hot Coffee,Americano,regular,Hot Water,180,ml,base
+Hot Coffee,Americano,regular,Cup 12oz Hot,1,pc,base
+Hot Coffee,Americano,regular,Hot Lid,1,pc,base
+Hot Coffee,Cà Phê Español,regular,Espresso Shot,1,shot,base
+Hot Coffee,Cà Phê Español,regular,Hot Water,180,ml,base
+Hot Coffee,Cà Phê Español,regular,Cup 12oz Hot,1,pc,base
+Hot Coffee,Cà Phê Español,regular,Hot Lid,1,pc,base
+Hot Coffee,Cà Phê Español,regular,Condensed Milk,25,ml,base
+Hot Coffee,Hot Latte,regular,Espresso Shot,1,shot,base
+Hot Coffee,Hot Latte,regular,Hot Water,180,ml,base
+Hot Coffee,Hot Latte,regular,Cup 12oz Hot,1,pc,base
+Hot Coffee,Hot Latte,regular,Hot Lid,1,pc,base
+Hot Coffee,Hot Latte,regular,Milk,120,ml,base
+Hot Coffee,Caramel Macchiato,regular,Espresso Shot,1,shot,base
+Hot Coffee,Caramel Macchiato,regular,Hot Water,180,ml,base
+Hot Coffee,Caramel Macchiato,regular,Cup 12oz Hot,1,pc,base
+Hot Coffee,Caramel Macchiato,regular,Hot Lid,1,pc,base
+Hot Coffee,Caramel Macchiato,regular,Milk,120,ml,base
+Hot Coffee,Caramel Macchiato,regular,Caramel Syrup,20,ml,base
+Hot Coffee,Salted Caramel,regular,Espresso Shot,1,shot,base
+Hot Coffee,Salted Caramel,regular,Hot Water,180,ml,base
+Hot Coffee,Salted Caramel,regular,Cup 12oz Hot,1,pc,base
+Hot Coffee,Salted Caramel,regular,Hot Lid,1,pc,base
+Hot Coffee,Salted Caramel,regular,Milk,120,ml,base
+Hot Coffee,Salted Caramel,regular,Caramel Syrup,20,ml,base
+Hot Coffee,Salted Caramel,regular,Salted Caramel Syrup,20,ml,base
+Hot Coffee,Matcha Espresso,regular,Espresso Shot,1,shot,base
+Hot Coffee,Matcha Espresso,regular,Hot Water,180,ml,base
+Hot Coffee,Matcha Espresso,regular,Cup 12oz Hot,1,pc,base
+Hot Coffee,Matcha Espresso,regular,Hot Lid,1,pc,base
+Hot Coffee,Matcha Espresso,regular,Milk,120,ml,base
+Hot Coffee,Matcha Espresso,regular,Matcha Powder,15,g,base
+Hot Tea,Green Tea,regular,Green Tea Tea Bag,1,pc,base
+Hot Tea,Green Tea,regular,Hot Water,220,ml,base
+Hot Tea,Green Tea,regular,Cup 12oz Hot,1,pc,base
+Hot Tea,Green Tea,regular,Hot Lid,1,pc,base
+Hot Tea,Spearmint Tea,regular,Spearmint Tea Tea Bag,1,pc,base
+Hot Tea,Spearmint Tea,regular,Hot Water,220,ml,base
+Hot Tea,Spearmint Tea,regular,Cup 12oz Hot,1,pc,base
+Hot Tea,Spearmint Tea,regular,Hot Lid,1,pc,base
+Hot Tea,Chamomile Tea,regular,Chamomile Tea Tea Bag,1,pc,base
+Hot Tea,Chamomile Tea,regular,Hot Water,220,ml,base
+Hot Tea,Chamomile Tea,regular,Cup 12oz Hot,1,pc,base
+Hot Tea,Chamomile Tea,regular,Hot Lid,1,pc,base
+Hot Tea,Hibiscus Tea,regular,Hibiscus Tea Tea Bag,1,pc,base
+Hot Tea,Hibiscus Tea,regular,Hot Water,220,ml,base
+Hot Tea,Hibiscus Tea,regular,Cup 12oz Hot,1,pc,base
+Hot Tea,Hibiscus Tea,regular,Hot Lid,1,pc,base
+Hot Tea,Butterfly Pea Tea,regular,Butterfly Pea Tea Tea Bag,1,pc,base
+Hot Tea,Butterfly Pea Tea,regular,Hot Water,220,ml,base
+Hot Tea,Butterfly Pea Tea,regular,Cup 12oz Hot,1,pc,base
+Hot Tea,Butterfly Pea Tea,regular,Hot Lid,1,pc,base
+Milk Tea,Matcha,grande,Black Tea Base,100,ml,base
+Milk Tea,Matcha,grande,Milk,60,ml,base
+Milk Tea,Matcha,grande,Fructose,15,ml,base
+Milk Tea,Matcha,grande,Ice,180,g,base
+Milk Tea,Matcha,grande,Cup 16oz,1,pc,base
+Milk Tea,Matcha,grande,Sealing Film,1,pc,base
+Milk Tea,Matcha,grande,Matcha Powder,20,g,base
+Milk Tea,Matcha,venti,Black Tea Base,140,ml,base
+Milk Tea,Matcha,venti,Milk,85,ml,base
+Milk Tea,Matcha,venti,Fructose,20,ml,base
+Milk Tea,Matcha,venti,Ice,250,g,base
+Milk Tea,Matcha,venti,Cup 22oz,1,pc,base
+Milk Tea,Matcha,venti,Sealing Film,1,pc,base
+Milk Tea,Matcha,venti,Matcha Powder,28,g,base
+Milk Tea,Wintermelon,grande,Black Tea Base,100,ml,base
+Milk Tea,Wintermelon,grande,Milk,60,ml,base
+Milk Tea,Wintermelon,grande,Fructose,15,ml,base
+Milk Tea,Wintermelon,grande,Ice,180,g,base
+Milk Tea,Wintermelon,grande,Cup 16oz,1,pc,base
+Milk Tea,Wintermelon,grande,Sealing Film,1,pc,base
+Milk Tea,Wintermelon,grande,Wintermelon Syrup,20,ml,base
+Milk Tea,Wintermelon,venti,Black Tea Base,140,ml,base
+Milk Tea,Wintermelon,venti,Milk,85,ml,base
+Milk Tea,Wintermelon,venti,Fructose,20,ml,base
+Milk Tea,Wintermelon,venti,Ice,250,g,base
+Milk Tea,Wintermelon,venti,Cup 22oz,1,pc,base
+Milk Tea,Wintermelon,venti,Sealing Film,1,pc,base
+Milk Tea,Wintermelon,venti,Wintermelon Syrup,30,ml,base
+Milk Tea,Oreo,grande,Black Tea Base,100,ml,base
+Milk Tea,Oreo,grande,Milk,60,ml,base
+Milk Tea,Oreo,grande,Fructose,15,ml,base
+Milk Tea,Oreo,grande,Ice,180,g,base
+Milk Tea,Oreo,grande,Cup 16oz,1,pc,base
+Milk Tea,Oreo,grande,Sealing Film,1,pc,base
+Milk Tea,Oreo,grande,Oreo Crumbs,20,g,base
+Milk Tea,Oreo,venti,Black Tea Base,140,ml,base
+Milk Tea,Oreo,venti,Milk,85,ml,base
+Milk Tea,Oreo,venti,Fructose,20,ml,base
+Milk Tea,Oreo,venti,Ice,250,g,base
+Milk Tea,Oreo,venti,Cup 22oz,1,pc,base
+Milk Tea,Oreo,venti,Sealing Film,1,pc,base
+Milk Tea,Oreo,venti,Oreo Crumbs,28,g,base
+Milk Tea,Red Velvet,grande,Black Tea Base,100,ml,base
+Milk Tea,Red Velvet,grande,Milk,60,ml,base
+Milk Tea,Red Velvet,grande,Fructose,15,ml,base
+Milk Tea,Red Velvet,grande,Ice,180,g,base
+Milk Tea,Red Velvet,grande,Cup 16oz,1,pc,base
+Milk Tea,Red Velvet,grande,Sealing Film,1,pc,base
+Milk Tea,Red Velvet,grande,Red Velvet Powder,20,g,base
+Milk Tea,Red Velvet,venti,Black Tea Base,140,ml,base
+Milk Tea,Red Velvet,venti,Milk,85,ml,base
+Milk Tea,Red Velvet,venti,Fructose,20,ml,base
+Milk Tea,Red Velvet,venti,Ice,250,g,base
+Milk Tea,Red Velvet,venti,Cup 22oz,1,pc,base
+Milk Tea,Red Velvet,venti,Sealing Film,1,pc,base
+Milk Tea,Red Velvet,venti,Red Velvet Powder,28,g,base
+Milk Tea,Dark Choco,grande,Black Tea Base,100,ml,base
+Milk Tea,Dark Choco,grande,Milk,60,ml,base
+Milk Tea,Dark Choco,grande,Fructose,15,ml,base
+Milk Tea,Dark Choco,grande,Ice,180,g,base
+Milk Tea,Dark Choco,grande,Cup 16oz,1,pc,base
+Milk Tea,Dark Choco,grande,Sealing Film,1,pc,base
+Milk Tea,Dark Choco,grande,Dark Chocolate Powder,20,g,base
+Milk Tea,Dark Choco,venti,Black Tea Base,140,ml,base
+Milk Tea,Dark Choco,venti,Milk,85,ml,base
+Milk Tea,Dark Choco,venti,Fructose,20,ml,base
+Milk Tea,Dark Choco,venti,Ice,250,g,base
+Milk Tea,Dark Choco,venti,Cup 22oz,1,pc,base
+Milk Tea,Dark Choco,venti,Sealing Film,1,pc,base
+Milk Tea,Dark Choco,venti,Dark Chocolate Powder,28,g,base
+Milk Tea,Sugar Jelly Milk Tea,grande,Black Tea Base,100,ml,base
+Milk Tea,Sugar Jelly Milk Tea,grande,Milk,60,ml,base
+Milk Tea,Sugar Jelly Milk Tea,grande,Fructose,15,ml,base
+Milk Tea,Sugar Jelly Milk Tea,grande,Ice,180,g,base
+Milk Tea,Sugar Jelly Milk Tea,grande,Cup 16oz,1,pc,base
+Milk Tea,Sugar Jelly Milk Tea,grande,Sealing Film,1,pc,base
+Milk Tea,Sugar Jelly Milk Tea,grande,Sugar Jelly,50,g,base
+Milk Tea,Sugar Jelly Milk Tea,venti,Black Tea Base,140,ml,base
+Milk Tea,Sugar Jelly Milk Tea,venti,Milk,85,ml,base
+Milk Tea,Sugar Jelly Milk Tea,venti,Fructose,20,ml,base
+Milk Tea,Sugar Jelly Milk Tea,venti,Ice,250,g,base
+Milk Tea,Sugar Jelly Milk Tea,venti,Cup 22oz,1,pc,base
+Milk Tea,Sugar Jelly Milk Tea,venti,Sealing Film,1,pc,base
+Milk Tea,Sugar Jelly Milk Tea,venti,Sugar Jelly,70,g,base
+Oolong Tea,Lychee,grande,Oolong Tea Base,120,ml,base
+Oolong Tea,Lychee,grande,Ice,180,g,base
+Oolong Tea,Lychee,grande,Cup 16oz,1,pc,base
+Oolong Tea,Lychee,grande,Sealing Film,1,pc,base
+Oolong Tea,Lychee,grande,Lychee Syrup,20,ml,base
+Oolong Tea,Lychee,venti,Oolong Tea Base,170,ml,base
+Oolong Tea,Lychee,venti,Ice,250,g,base
+Oolong Tea,Lychee,venti,Cup 22oz,1,pc,base
+Oolong Tea,Lychee,venti,Sealing Film,1,pc,base
+Oolong Tea,Lychee,venti,Lychee Syrup,30,ml,base
+Oolong Tea,Peach,grande,Oolong Tea Base,120,ml,base
+Oolong Tea,Peach,grande,Ice,180,g,base
+Oolong Tea,Peach,grande,Cup 16oz,1,pc,base
+Oolong Tea,Peach,grande,Sealing Film,1,pc,base
+Oolong Tea,Peach,grande,Peach Syrup,20,ml,base
+Oolong Tea,Peach,venti,Oolong Tea Base,170,ml,base
+Oolong Tea,Peach,venti,Ice,250,g,base
+Oolong Tea,Peach,venti,Cup 22oz,1,pc,base
+Oolong Tea,Peach,venti,Sealing Film,1,pc,base
+Oolong Tea,Peach,venti,Peach Syrup,30,ml,base
+Oolong Tea,Lemon,grande,Oolong Tea Base,120,ml,base
+Oolong Tea,Lemon,grande,Ice,180,g,base
+Oolong Tea,Lemon,grande,Cup 16oz,1,pc,base
+Oolong Tea,Lemon,grande,Sealing Film,1,pc,base
+Oolong Tea,Lemon,grande,Lemon Syrup,20,ml,base
+Oolong Tea,Lemon,venti,Oolong Tea Base,170,ml,base
+Oolong Tea,Lemon,venti,Ice,250,g,base
+Oolong Tea,Lemon,venti,Cup 22oz,1,pc,base
+Oolong Tea,Lemon,venti,Sealing Film,1,pc,base
+Oolong Tea,Lemon,venti,Lemon Syrup,30,ml,base
+Oolong Tea,Calamansi,grande,Oolong Tea Base,120,ml,base
+Oolong Tea,Calamansi,grande,Ice,180,g,base
+Oolong Tea,Calamansi,grande,Cup 16oz,1,pc,base
+Oolong Tea,Calamansi,grande,Sealing Film,1,pc,base
+Oolong Tea,Calamansi,grande,Calamansi Syrup,20,ml,base
+Oolong Tea,Calamansi,venti,Oolong Tea Base,170,ml,base
+Oolong Tea,Calamansi,venti,Ice,250,g,base
+Oolong Tea,Calamansi,venti,Cup 22oz,1,pc,base
+Oolong Tea,Calamansi,venti,Sealing Film,1,pc,base
+Oolong Tea,Calamansi,venti,Calamansi Syrup,30,ml,base
+Oolong Tea,Passion Fruit,grande,Oolong Tea Base,120,ml,base
+Oolong Tea,Passion Fruit,grande,Ice,180,g,base
+Oolong Tea,Passion Fruit,grande,Cup 16oz,1,pc,base
+Oolong Tea,Passion Fruit,grande,Sealing Film,1,pc,base
+Oolong Tea,Passion Fruit,grande,Passion Fruit Syrup,20,ml,base
+Oolong Tea,Passion Fruit,venti,Oolong Tea Base,170,ml,base
+Oolong Tea,Passion Fruit,venti,Ice,250,g,base
+Oolong Tea,Passion Fruit,venti,Cup 22oz,1,pc,base
+Oolong Tea,Passion Fruit,venti,Sealing Film,1,pc,base
+Oolong Tea,Passion Fruit,venti,Passion Fruit Syrup,30,ml,base
+Green Tea,Strawberry Lychee,grande,Green Tea Base,120,ml,base
+Green Tea,Strawberry Lychee,grande,Ice,180,g,base
+Green Tea,Strawberry Lychee,grande,Cup 16oz,1,pc,base
+Green Tea,Strawberry Lychee,grande,Sealing Film,1,pc,base
+Green Tea,Strawberry Lychee,grande,Strawberry Syrup,15,ml,base
+Green Tea,Strawberry Lychee,grande,Lychee Syrup,15,ml,base
+Green Tea,Strawberry Lychee,venti,Green Tea Base,170,ml,base
+Green Tea,Strawberry Lychee,venti,Ice,250,g,base
+Green Tea,Strawberry Lychee,venti,Cup 22oz,1,pc,base
+Green Tea,Strawberry Lychee,venti,Sealing Film,1,pc,base
+Green Tea,Strawberry Lychee,venti,Strawberry Syrup,20,ml,base
+Green Tea,Strawberry Lychee,venti,Lychee Syrup,20,ml,base
+Green Tea,Strawberry,grande,Green Tea Base,120,ml,base
+Green Tea,Strawberry,grande,Ice,180,g,base
+Green Tea,Strawberry,grande,Cup 16oz,1,pc,base
+Green Tea,Strawberry,grande,Sealing Film,1,pc,base
+Green Tea,Strawberry,grande,Strawberry Syrup,20,ml,base
+Green Tea,Strawberry,venti,Green Tea Base,170,ml,base
+Green Tea,Strawberry,venti,Ice,250,g,base
+Green Tea,Strawberry,venti,Cup 22oz,1,pc,base
+Green Tea,Strawberry,venti,Sealing Film,1,pc,base
+Green Tea,Strawberry,venti,Strawberry Syrup,30,ml,base
+Green Tea,Lychee,grande,Green Tea Base,120,ml,base
+Green Tea,Lychee,grande,Ice,180,g,base
+Green Tea,Lychee,grande,Cup 16oz,1,pc,base
+Green Tea,Lychee,grande,Sealing Film,1,pc,base
+Green Tea,Lychee,grande,Lychee Syrup,20,ml,base
+Green Tea,Lychee,venti,Green Tea Base,170,ml,base
+Green Tea,Lychee,venti,Ice,250,g,base
+Green Tea,Lychee,venti,Cup 22oz,1,pc,base
+Green Tea,Lychee,venti,Sealing Film,1,pc,base
+Green Tea,Lychee,venti,Lychee Syrup,30,ml,base
+Green Tea,Peach,grande,Green Tea Base,120,ml,base
+Green Tea,Peach,grande,Ice,180,g,base
+Green Tea,Peach,grande,Cup 16oz,1,pc,base
+Green Tea,Peach,grande,Sealing Film,1,pc,base
+Green Tea,Peach,grande,Peach Syrup,20,ml,base
+Green Tea,Peach,venti,Green Tea Base,170,ml,base
+Green Tea,Peach,venti,Ice,250,g,base
+Green Tea,Peach,venti,Cup 22oz,1,pc,base
+Green Tea,Peach,venti,Sealing Film,1,pc,base
+Green Tea,Peach,venti,Peach Syrup,30,ml,base
+Green Tea,Calamansi,grande,Green Tea Base,120,ml,base
+Green Tea,Calamansi,grande,Ice,180,g,base
+Green Tea,Calamansi,grande,Cup 16oz,1,pc,base
+Green Tea,Calamansi,grande,Sealing Film,1,pc,base
+Green Tea,Calamansi,grande,Calamansi Syrup,20,ml,base
+Green Tea,Calamansi,venti,Green Tea Base,170,ml,base
+Green Tea,Calamansi,venti,Ice,250,g,base
+Green Tea,Calamansi,venti,Cup 22oz,1,pc,base
+Green Tea,Calamansi,venti,Sealing Film,1,pc,base
+Green Tea,Calamansi,venti,Calamansi Syrup,30,ml,base
+Green Tea,Passion Fruit,grande,Green Tea Base,120,ml,base
+Green Tea,Passion Fruit,grande,Ice,180,g,base
+Green Tea,Passion Fruit,grande,Cup 16oz,1,pc,base
+Green Tea,Passion Fruit,grande,Sealing Film,1,pc,base
+Green Tea,Passion Fruit,grande,Passion Fruit Syrup,20,ml,base
+Green Tea,Passion Fruit,venti,Green Tea Base,170,ml,base
+Green Tea,Passion Fruit,venti,Ice,250,g,base
+Green Tea,Passion Fruit,venti,Cup 22oz,1,pc,base
+Green Tea,Passion Fruit,venti,Sealing Film,1,pc,base
+Green Tea,Passion Fruit,venti,Passion Fruit Syrup,30,ml,base
+Non-Coffee,Strawberry Milk,grande,Milk,120,ml,base
+Non-Coffee,Strawberry Milk,grande,Ice,180,g,base
+Non-Coffee,Strawberry Milk,grande,Cup 16oz,1,pc,base
+Non-Coffee,Strawberry Milk,grande,Sealing Film,1,pc,base
+Non-Coffee,Strawberry Milk,grande,Strawberry Syrup,20,ml,base
+Non-Coffee,Strawberry Milk,venti,Milk,170,ml,base
+Non-Coffee,Strawberry Milk,venti,Ice,250,g,base
+Non-Coffee,Strawberry Milk,venti,Cup 22oz,1,pc,base
+Non-Coffee,Strawberry Milk,venti,Sealing Film,1,pc,base
+Non-Coffee,Strawberry Milk,venti,Strawberry Syrup,30,ml,base
+Non-Coffee,Blueberry Milk,grande,Milk,120,ml,base
+Non-Coffee,Blueberry Milk,grande,Ice,180,g,base
+Non-Coffee,Blueberry Milk,grande,Cup 16oz,1,pc,base
+Non-Coffee,Blueberry Milk,grande,Sealing Film,1,pc,base
+Non-Coffee,Blueberry Milk,grande,Blueberry Syrup,20,ml,base
+Non-Coffee,Blueberry Milk,venti,Milk,170,ml,base
+Non-Coffee,Blueberry Milk,venti,Ice,250,g,base
+Non-Coffee,Blueberry Milk,venti,Cup 22oz,1,pc,base
+Non-Coffee,Blueberry Milk,venti,Sealing Film,1,pc,base
+Non-Coffee,Blueberry Milk,venti,Blueberry Syrup,30,ml,base
+Non-Coffee,Oreo Milk,grande,Milk,120,ml,base
+Non-Coffee,Oreo Milk,grande,Ice,180,g,base
+Non-Coffee,Oreo Milk,grande,Cup 16oz,1,pc,base
+Non-Coffee,Oreo Milk,grande,Sealing Film,1,pc,base
+Non-Coffee,Oreo Milk,grande,Oreo Crumbs,20,g,base
+Non-Coffee,Oreo Milk,venti,Milk,170,ml,base
+Non-Coffee,Oreo Milk,venti,Ice,250,g,base
+Non-Coffee,Oreo Milk,venti,Cup 22oz,1,pc,base
+Non-Coffee,Oreo Milk,venti,Sealing Film,1,pc,base
+Non-Coffee,Oreo Milk,venti,Oreo Crumbs,28,g,base
+Non-Coffee,Swissmiss,grande,Milk,120,ml,base
+Non-Coffee,Swissmiss,grande,Ice,180,g,base
+Non-Coffee,Swissmiss,grande,Cup 16oz,1,pc,base
+Non-Coffee,Swissmiss,grande,Sealing Film,1,pc,base
+Non-Coffee,Swissmiss,grande,Swiss Miss Powder,20,g,base
+Non-Coffee,Swissmiss,venti,Milk,170,ml,base
+Non-Coffee,Swissmiss,venti,Ice,250,g,base
+Non-Coffee,Swissmiss,venti,Cup 22oz,1,pc,base
+Non-Coffee,Swissmiss,venti,Sealing Film,1,pc,base
+Non-Coffee,Swissmiss,venti,Swiss Miss Powder,28,g,base
+Non-Coffee,Strawberry Oreo,grande,Milk,120,ml,base
+Non-Coffee,Strawberry Oreo,grande,Ice,180,g,base
+Non-Coffee,Strawberry Oreo,grande,Cup 16oz,1,pc,base
+Non-Coffee,Strawberry Oreo,grande,Sealing Film,1,pc,base
+Non-Coffee,Strawberry Oreo,grande,Strawberry Syrup,20,ml,base
+Non-Coffee,Strawberry Oreo,grande,Oreo Crumbs,20,g,base
+Non-Coffee,Strawberry Oreo,venti,Milk,170,ml,base
+Non-Coffee,Strawberry Oreo,venti,Ice,250,g,base
+Non-Coffee,Strawberry Oreo,venti,Cup 22oz,1,pc,base
+Non-Coffee,Strawberry Oreo,venti,Sealing Film,1,pc,base
+Non-Coffee,Strawberry Oreo,venti,Strawberry Syrup,30,ml,base
+Non-Coffee,Strawberry Oreo,venti,Oreo Crumbs,28,g,base
+Non-Coffee,Strawberry Matcha,grande,Milk,120,ml,base
+Non-Coffee,Strawberry Matcha,grande,Ice,180,g,base
+Non-Coffee,Strawberry Matcha,grande,Cup 16oz,1,pc,base
+Non-Coffee,Strawberry Matcha,grande,Sealing Film,1,pc,base
+Non-Coffee,Strawberry Matcha,grande,Strawberry Syrup,20,ml,base
+Non-Coffee,Strawberry Matcha,grande,Matcha Powder,20,g,base
+Non-Coffee,Strawberry Matcha,venti,Milk,170,ml,base
+Non-Coffee,Strawberry Matcha,venti,Ice,250,g,base
+Non-Coffee,Strawberry Matcha,venti,Cup 22oz,1,pc,base
+Non-Coffee,Strawberry Matcha,venti,Sealing Film,1,pc,base
+Non-Coffee,Strawberry Matcha,venti,Strawberry Syrup,30,ml,base
+Non-Coffee,Strawberry Matcha,venti,Matcha Powder,28,g,base
+Non-Coffee,Ube Milk,grande,Milk,120,ml,base
+Non-Coffee,Ube Milk,grande,Ice,180,g,base
+Non-Coffee,Ube Milk,grande,Cup 16oz,1,pc,base
+Non-Coffee,Ube Milk,grande,Sealing Film,1,pc,base
+Non-Coffee,Ube Milk,grande,Ube Powder,20,g,base
+Non-Coffee,Ube Milk,venti,Milk,170,ml,base
+Non-Coffee,Ube Milk,venti,Ice,250,g,base
+Non-Coffee,Ube Milk,venti,Cup 22oz,1,pc,base
+Non-Coffee,Ube Milk,venti,Sealing Film,1,pc,base
+Non-Coffee,Ube Milk,venti,Ube Powder,28,g,base
+Non-Coffee,Sea Salt Cocoa,grande,Milk,120,ml,base
+Non-Coffee,Sea Salt Cocoa,grande,Ice,180,g,base
+Non-Coffee,Sea Salt Cocoa,grande,Cup 16oz,1,pc,base
+Non-Coffee,Sea Salt Cocoa,grande,Sealing Film,1,pc,base
+Non-Coffee,Sea Salt Cocoa,grande,Cocoa Powder,20,g,base
+Non-Coffee,Sea Salt Cocoa,venti,Milk,170,ml,base
+Non-Coffee,Sea Salt Cocoa,venti,Ice,250,g,base
+Non-Coffee,Sea Salt Cocoa,venti,Cup 22oz,1,pc,base
+Non-Coffee,Sea Salt Cocoa,venti,Sealing Film,1,pc,base
+Non-Coffee,Sea Salt Cocoa,venti,Cocoa Powder,28,g,base
+Non-Coffee,Choco Salt Cocoa,grande,Milk,120,ml,base
+Non-Coffee,Choco Salt Cocoa,grande,Ice,180,g,base
+Non-Coffee,Choco Salt Cocoa,grande,Cup 16oz,1,pc,base
+Non-Coffee,Choco Salt Cocoa,grande,Sealing Film,1,pc,base
+Non-Coffee,Choco Salt Cocoa,grande,Cocoa Powder,20,g,base
+Non-Coffee,Choco Salt Cocoa,venti,Milk,170,ml,base
+Non-Coffee,Choco Salt Cocoa,venti,Ice,250,g,base
+Non-Coffee,Choco Salt Cocoa,venti,Cup 22oz,1,pc,base
+Non-Coffee,Choco Salt Cocoa,venti,Sealing Film,1,pc,base
+Non-Coffee,Choco Salt Cocoa,venti,Cocoa Powder,28,g,base
+Non-Coffee,Choco-Berry,grande,Milk,120,ml,base
+Non-Coffee,Choco-Berry,grande,Ice,180,g,base
+Non-Coffee,Choco-Berry,grande,Cup 16oz,1,pc,base
+Non-Coffee,Choco-Berry,grande,Sealing Film,1,pc,base
+Non-Coffee,Choco-Berry,grande,Cocoa Powder,20,g,base
+Non-Coffee,Choco-Berry,venti,Milk,170,ml,base
+Non-Coffee,Choco-Berry,venti,Ice,250,g,base
+Non-Coffee,Choco-Berry,venti,Cup 22oz,1,pc,base
+Non-Coffee,Choco-Berry,venti,Sealing Film,1,pc,base
+Non-Coffee,Choco-Berry,venti,Cocoa Powder,28,g,base
+Non-Coffee,Milky Biscoff,grande,Milk,120,ml,base
+Non-Coffee,Milky Biscoff,grande,Ice,180,g,base
+Non-Coffee,Milky Biscoff,grande,Cup 16oz,1,pc,base
+Non-Coffee,Milky Biscoff,grande,Sealing Film,1,pc,base
+Non-Coffee,Milky Biscoff,grande,Biscoff Spread,25,g,base
+Non-Coffee,Milky Biscoff,venti,Milk,170,ml,base
+Non-Coffee,Milky Biscoff,venti,Ice,250,g,base
+Non-Coffee,Milky Biscoff,venti,Cup 22oz,1,pc,base
+Non-Coffee,Milky Biscoff,venti,Sealing Film,1,pc,base
+Non-Coffee,Milky Biscoff,venti,Biscoff Spread,35,g,base
+Non-Coffee,Nutella,grande,Milk,120,ml,base
+Non-Coffee,Nutella,grande,Ice,180,g,base
+Non-Coffee,Nutella,grande,Cup 16oz,1,pc,base
+Non-Coffee,Nutella,grande,Sealing Film,1,pc,base
+Non-Coffee,Nutella,grande,Nutella Spread,25,g,base
+Non-Coffee,Nutella,venti,Milk,170,ml,base
+Non-Coffee,Nutella,venti,Ice,250,g,base
+Non-Coffee,Nutella,venti,Cup 22oz,1,pc,base
+Non-Coffee,Nutella,venti,Sealing Film,1,pc,base
+Non-Coffee,Nutella,venti,Nutella Spread,35,g,base
+Frappuccino,Macchiato,grande,Frappe Base,30,ml,base
+Frappuccino,Macchiato,grande,Milk,100,ml,base
+Frappuccino,Macchiato,grande,Ice,220,g,base
+Frappuccino,Macchiato,grande,Cup 16oz,1,pc,base
+Frappuccino,Macchiato,grande,Sealing Film,1,pc,base
+Frappuccino,Macchiato,grande,Espresso Shot,1,shot,base
+Frappuccino,Macchiato,venti,Frappe Base,40,ml,base
+Frappuccino,Macchiato,venti,Milk,140,ml,base
+Frappuccino,Macchiato,venti,Ice,300,g,base
+Frappuccino,Macchiato,venti,Cup 22oz,1,pc,base
+Frappuccino,Macchiato,venti,Sealing Film,1,pc,base
+Frappuccino,Macchiato,venti,Espresso Shot,2,shot,base
+Frappuccino,Caramel,grande,Frappe Base,30,ml,base
+Frappuccino,Caramel,grande,Milk,100,ml,base
+Frappuccino,Caramel,grande,Ice,220,g,base
+Frappuccino,Caramel,grande,Cup 16oz,1,pc,base
+Frappuccino,Caramel,grande,Sealing Film,1,pc,base
+Frappuccino,Caramel,grande,Caramel Syrup,20,ml,base
+Frappuccino,Caramel,venti,Frappe Base,40,ml,base
+Frappuccino,Caramel,venti,Milk,140,ml,base
+Frappuccino,Caramel,venti,Ice,300,g,base
+Frappuccino,Caramel,venti,Cup 22oz,1,pc,base
+Frappuccino,Caramel,venti,Sealing Film,1,pc,base
+Frappuccino,Caramel,venti,Caramel Syrup,30,ml,base
+Frappuccino,Dark Mocha,grande,Frappe Base,30,ml,base
+Frappuccino,Dark Mocha,grande,Milk,100,ml,base
+Frappuccino,Dark Mocha,grande,Ice,220,g,base
+Frappuccino,Dark Mocha,grande,Cup 16oz,1,pc,base
+Frappuccino,Dark Mocha,grande,Sealing Film,1,pc,base
+Frappuccino,Dark Mocha,grande,Chocolate Syrup,20,ml,base
+Frappuccino,Dark Mocha,venti,Frappe Base,40,ml,base
+Frappuccino,Dark Mocha,venti,Milk,140,ml,base
+Frappuccino,Dark Mocha,venti,Ice,300,g,base
+Frappuccino,Dark Mocha,venti,Cup 22oz,1,pc,base
+Frappuccino,Dark Mocha,venti,Sealing Film,1,pc,base
+Frappuccino,Dark Mocha,venti,Chocolate Syrup,30,ml,base
+Frappuccino,Coffee Crumble,grande,Frappe Base,30,ml,base
+Frappuccino,Coffee Crumble,grande,Milk,100,ml,base
+Frappuccino,Coffee Crumble,grande,Ice,220,g,base
+Frappuccino,Coffee Crumble,grande,Cup 16oz,1,pc,base
+Frappuccino,Coffee Crumble,grande,Sealing Film,1,pc,base
+Frappuccino,Coffee Crumble,grande,Espresso Shot,1,shot,base
+Frappuccino,Coffee Crumble,venti,Frappe Base,40,ml,base
+Frappuccino,Coffee Crumble,venti,Milk,140,ml,base
+Frappuccino,Coffee Crumble,venti,Ice,300,g,base
+Frappuccino,Coffee Crumble,venti,Cup 22oz,1,pc,base
+Frappuccino,Coffee Crumble,venti,Sealing Film,1,pc,base
+Frappuccino,Coffee Crumble,venti,Espresso Shot,2,shot,base
+Frappuccino,Coffee Fudge,grande,Frappe Base,30,ml,base
+Frappuccino,Coffee Fudge,grande,Milk,100,ml,base
+Frappuccino,Coffee Fudge,grande,Ice,220,g,base
+Frappuccino,Coffee Fudge,grande,Cup 16oz,1,pc,base
+Frappuccino,Coffee Fudge,grande,Sealing Film,1,pc,base
+Frappuccino,Coffee Fudge,grande,Espresso Shot,1,shot,base
+Frappuccino,Coffee Fudge,grande,Chocolate Syrup,20,ml,base
+Frappuccino,Coffee Fudge,venti,Frappe Base,40,ml,base
+Frappuccino,Coffee Fudge,venti,Milk,140,ml,base
+Frappuccino,Coffee Fudge,venti,Ice,300,g,base
+Frappuccino,Coffee Fudge,venti,Cup 22oz,1,pc,base
+Frappuccino,Coffee Fudge,venti,Sealing Film,1,pc,base
+Frappuccino,Coffee Fudge,venti,Espresso Shot,2,shot,base
+Frappuccino,Coffee Fudge,venti,Chocolate Syrup,30,ml,base
+Frappuccino,Almond Fudge,grande,Frappe Base,30,ml,base
+Frappuccino,Almond Fudge,grande,Milk,100,ml,base
+Frappuccino,Almond Fudge,grande,Ice,220,g,base
+Frappuccino,Almond Fudge,grande,Cup 16oz,1,pc,base
+Frappuccino,Almond Fudge,grande,Sealing Film,1,pc,base
+Frappuccino,Almond Fudge,grande,Chocolate Syrup,20,ml,base
+Frappuccino,Almond Fudge,grande,Almond Syrup,20,ml,base
+Frappuccino,Almond Fudge,venti,Frappe Base,40,ml,base
+Frappuccino,Almond Fudge,venti,Milk,140,ml,base
+Frappuccino,Almond Fudge,venti,Ice,300,g,base
+Frappuccino,Almond Fudge,venti,Cup 22oz,1,pc,base
+Frappuccino,Almond Fudge,venti,Sealing Film,1,pc,base
+Frappuccino,Almond Fudge,venti,Chocolate Syrup,30,ml,base
+Frappuccino,Almond Fudge,venti,Almond Syrup,30,ml,base
+Frappuccino,Mocha Jelly,grande,Frappe Base,30,ml,base
+Frappuccino,Mocha Jelly,grande,Milk,100,ml,base
+Frappuccino,Mocha Jelly,grande,Ice,220,g,base
+Frappuccino,Mocha Jelly,grande,Cup 16oz,1,pc,base
+Frappuccino,Mocha Jelly,grande,Sealing Film,1,pc,base
+Frappuccino,Mocha Jelly,grande,Chocolate Syrup,20,ml,base
+Frappuccino,Mocha Jelly,grande,Coffee Jelly,50,g,base
+Frappuccino,Mocha Jelly,venti,Frappe Base,40,ml,base
+Frappuccino,Mocha Jelly,venti,Milk,140,ml,base
+Frappuccino,Mocha Jelly,venti,Ice,300,g,base
+Frappuccino,Mocha Jelly,venti,Cup 22oz,1,pc,base
+Frappuccino,Mocha Jelly,venti,Sealing Film,1,pc,base
+Frappuccino,Mocha Jelly,venti,Chocolate Syrup,30,ml,base
+Frappuccino,Mocha Jelly,venti,Coffee Jelly,70,g,base
+Frappuccino,Coffee Jelly,grande,Frappe Base,30,ml,base
+Frappuccino,Coffee Jelly,grande,Milk,100,ml,base
+Frappuccino,Coffee Jelly,grande,Ice,220,g,base
+Frappuccino,Coffee Jelly,grande,Cup 16oz,1,pc,base
+Frappuccino,Coffee Jelly,grande,Sealing Film,1,pc,base
+Frappuccino,Coffee Jelly,grande,Espresso Shot,1,shot,base
+Frappuccino,Coffee Jelly,grande,Coffee Jelly,50,g,base
+Frappuccino,Coffee Jelly,venti,Frappe Base,40,ml,base
+Frappuccino,Coffee Jelly,venti,Milk,140,ml,base
+Frappuccino,Coffee Jelly,venti,Ice,300,g,base
+Frappuccino,Coffee Jelly,venti,Cup 22oz,1,pc,base
+Frappuccino,Coffee Jelly,venti,Sealing Film,1,pc,base
+Frappuccino,Coffee Jelly,venti,Espresso Shot,2,shot,base
+Frappuccino,Coffee Jelly,venti,Coffee Jelly,70,g,base
+Frappuccino,Nutella,grande,Frappe Base,30,ml,base
+Frappuccino,Nutella,grande,Milk,100,ml,base
+Frappuccino,Nutella,grande,Ice,220,g,base
+Frappuccino,Nutella,grande,Cup 16oz,1,pc,base
+Frappuccino,Nutella,grande,Sealing Film,1,pc,base
+Frappuccino,Nutella,grande,Nutella Spread,25,g,base
+Frappuccino,Nutella,venti,Frappe Base,40,ml,base
+Frappuccino,Nutella,venti,Milk,140,ml,base
+Frappuccino,Nutella,venti,Ice,300,g,base
+Frappuccino,Nutella,venti,Cup 22oz,1,pc,base
+Frappuccino,Nutella,venti,Sealing Film,1,pc,base
+Frappuccino,Nutella,venti,Nutella Spread,35,g,base
+Non-Coffee Frappe,Cookies & Cream,grande,Frappe Base,30,ml,base
+Non-Coffee Frappe,Cookies & Cream,grande,Milk,100,ml,base
+Non-Coffee Frappe,Cookies & Cream,grande,Ice,220,g,base
+Non-Coffee Frappe,Cookies & Cream,grande,Cup 16oz,1,pc,base
+Non-Coffee Frappe,Cookies & Cream,grande,Sealing Film,1,pc,base
+Non-Coffee Frappe,Cookies & Cream,grande,Oreo Crumbs,20,g,base
+Non-Coffee Frappe,Cookies & Cream,venti,Frappe Base,40,ml,base
+Non-Coffee Frappe,Cookies & Cream,venti,Milk,140,ml,base
+Non-Coffee Frappe,Cookies & Cream,venti,Ice,300,g,base
+Non-Coffee Frappe,Cookies & Cream,venti,Cup 22oz,1,pc,base
+Non-Coffee Frappe,Cookies & Cream,venti,Sealing Film,1,pc,base
+Non-Coffee Frappe,Cookies & Cream,venti,Oreo Crumbs,28,g,base
+Non-Coffee Frappe,Milo Cream,grande,Frappe Base,30,ml,base
+Non-Coffee Frappe,Milo Cream,grande,Milk,100,ml,base
+Non-Coffee Frappe,Milo Cream,grande,Ice,220,g,base
+Non-Coffee Frappe,Milo Cream,grande,Cup 16oz,1,pc,base
+Non-Coffee Frappe,Milo Cream,grande,Sealing Film,1,pc,base
+Non-Coffee Frappe,Milo Cream,grande,Milo Powder,20,g,base
+Non-Coffee Frappe,Milo Cream,venti,Frappe Base,40,ml,base
+Non-Coffee Frappe,Milo Cream,venti,Milk,140,ml,base
+Non-Coffee Frappe,Milo Cream,venti,Ice,300,g,base
+Non-Coffee Frappe,Milo Cream,venti,Cup 22oz,1,pc,base
+Non-Coffee Frappe,Milo Cream,venti,Sealing Film,1,pc,base
+Non-Coffee Frappe,Milo Cream,venti,Milo Powder,28,g,base
+Non-Coffee Frappe,Strawberry,grande,Frappe Base,30,ml,base
+Non-Coffee Frappe,Strawberry,grande,Milk,100,ml,base
+Non-Coffee Frappe,Strawberry,grande,Ice,220,g,base
+Non-Coffee Frappe,Strawberry,grande,Cup 16oz,1,pc,base
+Non-Coffee Frappe,Strawberry,grande,Sealing Film,1,pc,base
+Non-Coffee Frappe,Strawberry,grande,Strawberry Syrup,20,ml,base
+Non-Coffee Frappe,Strawberry,venti,Frappe Base,40,ml,base
+Non-Coffee Frappe,Strawberry,venti,Milk,140,ml,base
+Non-Coffee Frappe,Strawberry,venti,Ice,300,g,base
+Non-Coffee Frappe,Strawberry,venti,Cup 22oz,1,pc,base
+Non-Coffee Frappe,Strawberry,venti,Sealing Film,1,pc,base
+Non-Coffee Frappe,Strawberry,venti,Strawberry Syrup,30,ml,base
+Non-Coffee Frappe,Blueberry,grande,Frappe Base,30,ml,base
+Non-Coffee Frappe,Blueberry,grande,Milk,100,ml,base
+Non-Coffee Frappe,Blueberry,grande,Ice,220,g,base
+Non-Coffee Frappe,Blueberry,grande,Cup 16oz,1,pc,base
+Non-Coffee Frappe,Blueberry,grande,Sealing Film,1,pc,base
+Non-Coffee Frappe,Blueberry,grande,Blueberry Syrup,20,ml,base
+Non-Coffee Frappe,Blueberry,venti,Frappe Base,40,ml,base
+Non-Coffee Frappe,Blueberry,venti,Milk,140,ml,base
+Non-Coffee Frappe,Blueberry,venti,Ice,300,g,base
+Non-Coffee Frappe,Blueberry,venti,Cup 22oz,1,pc,base
+Non-Coffee Frappe,Blueberry,venti,Sealing Film,1,pc,base
+Non-Coffee Frappe,Blueberry,venti,Blueberry Syrup,30,ml,base
+Non-Coffee Frappe,Purple Yam,grande,Frappe Base,30,ml,base
+Non-Coffee Frappe,Purple Yam,grande,Milk,100,ml,base
+Non-Coffee Frappe,Purple Yam,grande,Ice,220,g,base
+Non-Coffee Frappe,Purple Yam,grande,Cup 16oz,1,pc,base
+Non-Coffee Frappe,Purple Yam,grande,Sealing Film,1,pc,base
+Non-Coffee Frappe,Purple Yam,grande,Ube Powder,20,g,base
+Non-Coffee Frappe,Purple Yam,venti,Frappe Base,40,ml,base
+Non-Coffee Frappe,Purple Yam,venti,Milk,140,ml,base
+Non-Coffee Frappe,Purple Yam,venti,Ice,300,g,base
+Non-Coffee Frappe,Purple Yam,venti,Cup 22oz,1,pc,base
+Non-Coffee Frappe,Purple Yam,venti,Sealing Film,1,pc,base
+Non-Coffee Frappe,Purple Yam,venti,Ube Powder,28,g,base
+Non-Coffee Frappe,Matcha Oreo,grande,Frappe Base,30,ml,base
+Non-Coffee Frappe,Matcha Oreo,grande,Milk,100,ml,base
+Non-Coffee Frappe,Matcha Oreo,grande,Ice,220,g,base
+Non-Coffee Frappe,Matcha Oreo,grande,Cup 16oz,1,pc,base
+Non-Coffee Frappe,Matcha Oreo,grande,Sealing Film,1,pc,base
+Non-Coffee Frappe,Matcha Oreo,grande,Oreo Crumbs,20,g,base
+Non-Coffee Frappe,Matcha Oreo,grande,Matcha Powder,20,g,base
+Non-Coffee Frappe,Matcha Oreo,venti,Frappe Base,40,ml,base
+Non-Coffee Frappe,Matcha Oreo,venti,Milk,140,ml,base
+Non-Coffee Frappe,Matcha Oreo,venti,Ice,300,g,base
+Non-Coffee Frappe,Matcha Oreo,venti,Cup 22oz,1,pc,base
+Non-Coffee Frappe,Matcha Oreo,venti,Sealing Film,1,pc,base
+Non-Coffee Frappe,Matcha Oreo,venti,Oreo Crumbs,28,g,base
+Non-Coffee Frappe,Matcha Oreo,venti,Matcha Powder,28,g,base
+Non-Coffee Frappe,Matcha Strawberry,grande,Frappe Base,30,ml,base
+Non-Coffee Frappe,Matcha Strawberry,grande,Milk,100,ml,base
+Non-Coffee Frappe,Matcha Strawberry,grande,Ice,220,g,base
+Non-Coffee Frappe,Matcha Strawberry,grande,Cup 16oz,1,pc,base
+Non-Coffee Frappe,Matcha Strawberry,grande,Sealing Film,1,pc,base
+Non-Coffee Frappe,Matcha Strawberry,grande,Strawberry Syrup,20,ml,base
+Non-Coffee Frappe,Matcha Strawberry,grande,Matcha Powder,20,g,base
+Non-Coffee Frappe,Matcha Strawberry,venti,Frappe Base,40,ml,base
+Non-Coffee Frappe,Matcha Strawberry,venti,Milk,140,ml,base
+Non-Coffee Frappe,Matcha Strawberry,venti,Ice,300,g,base
+Non-Coffee Frappe,Matcha Strawberry,venti,Cup 22oz,1,pc,base
+Non-Coffee Frappe,Matcha Strawberry,venti,Sealing Film,1,pc,base
+Non-Coffee Frappe,Matcha Strawberry,venti,Strawberry Syrup,30,ml,base
+Non-Coffee Frappe,Matcha Strawberry,venti,Matcha Powder,28,g,base
+Non-Coffee Frappe,Ube Oreo,grande,Frappe Base,30,ml,base
+Non-Coffee Frappe,Ube Oreo,grande,Milk,100,ml,base
+Non-Coffee Frappe,Ube Oreo,grande,Ice,220,g,base
+Non-Coffee Frappe,Ube Oreo,grande,Cup 16oz,1,pc,base
+Non-Coffee Frappe,Ube Oreo,grande,Sealing Film,1,pc,base
+Non-Coffee Frappe,Ube Oreo,grande,Oreo Crumbs,20,g,base
+Non-Coffee Frappe,Ube Oreo,grande,Ube Powder,20,g,base
+Non-Coffee Frappe,Ube Oreo,venti,Frappe Base,40,ml,base
+Non-Coffee Frappe,Ube Oreo,venti,Milk,140,ml,base
+Non-Coffee Frappe,Ube Oreo,venti,Ice,300,g,base
+Non-Coffee Frappe,Ube Oreo,venti,Cup 22oz,1,pc,base
+Non-Coffee Frappe,Ube Oreo,venti,Sealing Film,1,pc,base
+Non-Coffee Frappe,Ube Oreo,venti,Oreo Crumbs,28,g,base
+Non-Coffee Frappe,Ube Oreo,venti,Ube Powder,28,g,base
+Non-Coffee Frappe,Chocolate Chip Cream,grande,Frappe Base,30,ml,base
+Non-Coffee Frappe,Chocolate Chip Cream,grande,Milk,100,ml,base
+Non-Coffee Frappe,Chocolate Chip Cream,grande,Ice,220,g,base
+Non-Coffee Frappe,Chocolate Chip Cream,grande,Cup 16oz,1,pc,base
+Non-Coffee Frappe,Chocolate Chip Cream,grande,Sealing Film,1,pc,base
+Non-Coffee Frappe,Chocolate Chip Cream,grande,Chocolate Chips,20,g,base
+Non-Coffee Frappe,Chocolate Chip Cream,venti,Frappe Base,40,ml,base
+Non-Coffee Frappe,Chocolate Chip Cream,venti,Milk,140,ml,base
+Non-Coffee Frappe,Chocolate Chip Cream,venti,Ice,300,g,base
+Non-Coffee Frappe,Chocolate Chip Cream,venti,Cup 22oz,1,pc,base
+Non-Coffee Frappe,Chocolate Chip Cream,venti,Sealing Film,1,pc,base
+Non-Coffee Frappe,Chocolate Chip Cream,venti,Chocolate Chips,28,g,base
+Non-Coffee Frappe,Nutella Cream,grande,Frappe Base,30,ml,base
+Non-Coffee Frappe,Nutella Cream,grande,Milk,100,ml,base
+Non-Coffee Frappe,Nutella Cream,grande,Ice,220,g,base
+Non-Coffee Frappe,Nutella Cream,grande,Cup 16oz,1,pc,base
+Non-Coffee Frappe,Nutella Cream,grande,Sealing Film,1,pc,base
+Non-Coffee Frappe,Nutella Cream,grande,Nutella Spread,25,g,base
+Non-Coffee Frappe,Nutella Cream,venti,Frappe Base,40,ml,base
+Non-Coffee Frappe,Nutella Cream,venti,Milk,140,ml,base
+Non-Coffee Frappe,Nutella Cream,venti,Ice,300,g,base
+Non-Coffee Frappe,Nutella Cream,venti,Cup 22oz,1,pc,base
+Non-Coffee Frappe,Nutella Cream,venti,Sealing Film,1,pc,base
+Non-Coffee Frappe,Nutella Cream,venti,Nutella Spread,35,g,base
+Cà Phê Espresso,Americano,grande,Espresso Shot,1,shot,base
+Cà Phê Espresso,Americano,grande,Ice,180,g,base
+Cà Phê Espresso,Americano,grande,Cup 16oz,1,pc,base
+Cà Phê Espresso,Americano,grande,Sealing Film,1,pc,base
+Cà Phê Espresso,Americano,grande,Water,120,ml,base
+Cà Phê Espresso,Americano,venti,Espresso Shot,2,shot,base
+Cà Phê Espresso,Americano,venti,Ice,250,g,base
+Cà Phê Espresso,Americano,venti,Cup 22oz,1,pc,base
+Cà Phê Espresso,Americano,venti,Sealing Film,1,pc,base
+Cà Phê Espresso,Americano,venti,Water,170,ml,base
+Cà Phê Espresso,Cà Phê Español,grande,Espresso Shot,1,shot,base
+Cà Phê Espresso,Cà Phê Español,grande,Ice,180,g,base
+Cà Phê Espresso,Cà Phê Español,grande,Cup 16oz,1,pc,base
+Cà Phê Espresso,Cà Phê Español,grande,Sealing Film,1,pc,base
+Cà Phê Espresso,Cà Phê Español,grande,Milk,100,ml,base
+Cà Phê Espresso,Cà Phê Español,grande,Condensed Milk,25,ml,base
+Cà Phê Espresso,Cà Phê Español,venti,Espresso Shot,2,shot,base
+Cà Phê Espresso,Cà Phê Español,venti,Ice,250,g,base
+Cà Phê Espresso,Cà Phê Español,venti,Cup 22oz,1,pc,base
+Cà Phê Espresso,Cà Phê Español,venti,Sealing Film,1,pc,base
+Cà Phê Espresso,Cà Phê Español,venti,Milk,140,ml,base
+Cà Phê Espresso,Cà Phê Español,venti,Condensed Milk,35,ml,base
+Cà Phê Espresso,Iced Latte,grande,Espresso Shot,1,shot,base
+Cà Phê Espresso,Iced Latte,grande,Ice,180,g,base
+Cà Phê Espresso,Iced Latte,grande,Cup 16oz,1,pc,base
+Cà Phê Espresso,Iced Latte,grande,Sealing Film,1,pc,base
+Cà Phê Espresso,Iced Latte,grande,Milk,100,ml,base
+Cà Phê Espresso,Iced Latte,venti,Espresso Shot,2,shot,base
+Cà Phê Espresso,Iced Latte,venti,Ice,250,g,base
+Cà Phê Espresso,Iced Latte,venti,Cup 22oz,1,pc,base
+Cà Phê Espresso,Iced Latte,venti,Sealing Film,1,pc,base
+Cà Phê Espresso,Iced Latte,venti,Milk,140,ml,base
+Cà Phê Espresso,Matcha Latte,grande,Espresso Shot,1,shot,base
+Cà Phê Espresso,Matcha Latte,grande,Ice,180,g,base
+Cà Phê Espresso,Matcha Latte,grande,Cup 16oz,1,pc,base
+Cà Phê Espresso,Matcha Latte,grande,Sealing Film,1,pc,base
+Cà Phê Espresso,Matcha Latte,grande,Milk,100,ml,base
+Cà Phê Espresso,Matcha Latte,grande,Matcha Powder,20,g,base
+Cà Phê Espresso,Matcha Latte,venti,Espresso Shot,2,shot,base
+Cà Phê Espresso,Matcha Latte,venti,Ice,250,g,base
+Cà Phê Espresso,Matcha Latte,venti,Cup 22oz,1,pc,base
+Cà Phê Espresso,Matcha Latte,venti,Sealing Film,1,pc,base
+Cà Phê Espresso,Matcha Latte,venti,Milk,140,ml,base
+Cà Phê Espresso,Matcha Latte,venti,Matcha Powder,28,g,base
+Cà Phê Espresso,Salted Caramel,grande,Espresso Shot,1,shot,base
+Cà Phê Espresso,Salted Caramel,grande,Ice,180,g,base
+Cà Phê Espresso,Salted Caramel,grande,Cup 16oz,1,pc,base
+Cà Phê Espresso,Salted Caramel,grande,Sealing Film,1,pc,base
+Cà Phê Espresso,Salted Caramel,grande,Milk,100,ml,base
+Cà Phê Espresso,Salted Caramel,grande,Salted Caramel Syrup,20,ml,base
+Cà Phê Espresso,Salted Caramel,venti,Espresso Shot,2,shot,base
+Cà Phê Espresso,Salted Caramel,venti,Ice,250,g,base
+Cà Phê Espresso,Salted Caramel,venti,Cup 22oz,1,pc,base
+Cà Phê Espresso,Salted Caramel,venti,Sealing Film,1,pc,base
+Cà Phê Espresso,Salted Caramel,venti,Milk,140,ml,base
+Cà Phê Espresso,Salted Caramel,venti,Salted Caramel Syrup,30,ml,base
+Cà Phê Espresso,Oreo Latte,grande,Espresso Shot,1,shot,base
+Cà Phê Espresso,Oreo Latte,grande,Ice,180,g,base
+Cà Phê Espresso,Oreo Latte,grande,Cup 16oz,1,pc,base
+Cà Phê Espresso,Oreo Latte,grande,Sealing Film,1,pc,base
+Cà Phê Espresso,Oreo Latte,grande,Milk,100,ml,base
+Cà Phê Espresso,Oreo Latte,grande,Oreo Crumbs,20,g,base
+Cà Phê Espresso,Oreo Latte,venti,Espresso Shot,2,shot,base
+Cà Phê Espresso,Oreo Latte,venti,Ice,250,g,base
+Cà Phê Espresso,Oreo Latte,venti,Cup 22oz,1,pc,base
+Cà Phê Espresso,Oreo Latte,venti,Sealing Film,1,pc,base
+Cà Phê Espresso,Oreo Latte,venti,Milk,140,ml,base
+Cà Phê Espresso,Oreo Latte,venti,Oreo Crumbs,28,g,base
+Cà Phê Espresso,Dark Mocha Latte,grande,Espresso Shot,1,shot,base
+Cà Phê Espresso,Dark Mocha Latte,grande,Ice,180,g,base
+Cà Phê Espresso,Dark Mocha Latte,grande,Cup 16oz,1,pc,base
+Cà Phê Espresso,Dark Mocha Latte,grande,Sealing Film,1,pc,base
+Cà Phê Espresso,Dark Mocha Latte,grande,Milk,100,ml,base
+Cà Phê Espresso,Dark Mocha Latte,grande,Chocolate Syrup,20,ml,base
+Cà Phê Espresso,Dark Mocha Latte,venti,Espresso Shot,2,shot,base
+Cà Phê Espresso,Dark Mocha Latte,venti,Ice,250,g,base
+Cà Phê Espresso,Dark Mocha Latte,venti,Cup 22oz,1,pc,base
+Cà Phê Espresso,Dark Mocha Latte,venti,Sealing Film,1,pc,base
+Cà Phê Espresso,Dark Mocha Latte,venti,Milk,140,ml,base
+Cà Phê Espresso,Dark Mocha Latte,venti,Chocolate Syrup,30,ml,base
+Premium,Strawberry Latte,grande,Espresso Shot,1,shot,base
+Premium,Strawberry Latte,grande,Milk,100,ml,base
+Premium,Strawberry Latte,grande,Ice,180,g,base
+Premium,Strawberry Latte,grande,Cup 16oz,1,pc,base
+Premium,Strawberry Latte,grande,Sealing Film,1,pc,base
+Premium,Strawberry Latte,grande,Strawberry Syrup,20,ml,base
+Premium,Strawberry Latte,venti,Espresso Shot,2,shot,base
+Premium,Strawberry Latte,venti,Milk,140,ml,base
+Premium,Strawberry Latte,venti,Ice,250,g,base
+Premium,Strawberry Latte,venti,Cup 22oz,1,pc,base
+Premium,Strawberry Latte,venti,Sealing Film,1,pc,base
+Premium,Strawberry Latte,venti,Strawberry Syrup,30,ml,base
+Premium,Matcha Espresso,grande,Espresso Shot,1,shot,base
+Premium,Matcha Espresso,grande,Milk,100,ml,base
+Premium,Matcha Espresso,grande,Ice,180,g,base
+Premium,Matcha Espresso,grande,Cup 16oz,1,pc,base
+Premium,Matcha Espresso,grande,Sealing Film,1,pc,base
+Premium,Matcha Espresso,grande,Matcha Powder,20,g,base
+Premium,Matcha Espresso,venti,Espresso Shot,2,shot,base
+Premium,Matcha Espresso,venti,Milk,140,ml,base
+Premium,Matcha Espresso,venti,Ice,250,g,base
+Premium,Matcha Espresso,venti,Cup 22oz,1,pc,base
+Premium,Matcha Espresso,venti,Sealing Film,1,pc,base
+Premium,Matcha Espresso,venti,Matcha Powder,28,g,base
+Premium,Salty Cream Latte,grande,Espresso Shot,1,shot,base
+Premium,Salty Cream Latte,grande,Milk,100,ml,base
+Premium,Salty Cream Latte,grande,Ice,180,g,base
+Premium,Salty Cream Latte,grande,Cup 16oz,1,pc,base
+Premium,Salty Cream Latte,grande,Sealing Film,1,pc,base
+Premium,Salty Cream Latte,grande,Cream Base,40,ml,base
+Premium,Salty Cream Latte,venti,Espresso Shot,2,shot,base
+Premium,Salty Cream Latte,venti,Milk,140,ml,base
+Premium,Salty Cream Latte,venti,Ice,250,g,base
+Premium,Salty Cream Latte,venti,Cup 22oz,1,pc,base
+Premium,Salty Cream Latte,venti,Sealing Film,1,pc,base
+Premium,Salty Cream Latte,venti,Cream Base,55,ml,base
+Premium,Sea Salt Latte,grande,Espresso Shot,1,shot,base
+Premium,Sea Salt Latte,grande,Milk,100,ml,base
+Premium,Sea Salt Latte,grande,Ice,180,g,base
+Premium,Sea Salt Latte,grande,Cup 16oz,1,pc,base
+Premium,Sea Salt Latte,grande,Sealing Film,1,pc,base
+Premium,Sea Salt Latte,grande,Sea Salt Cream,40,ml,base
+Premium,Sea Salt Latte,venti,Espresso Shot,2,shot,base
+Premium,Sea Salt Latte,venti,Milk,140,ml,base
+Premium,Sea Salt Latte,venti,Ice,250,g,base
+Premium,Sea Salt Latte,venti,Cup 22oz,1,pc,base
+Premium,Sea Salt Latte,venti,Sealing Film,1,pc,base
+Premium,Sea Salt Latte,venti,Sea Salt Cream,55,ml,base
+Premium,Barista’s Drink,grande,Espresso Shot,1,shot,base
+Premium,Barista’s Drink,grande,Milk,100,ml,base
+Premium,Barista’s Drink,grande,Ice,180,g,base
+Premium,Barista’s Drink,grande,Cup 16oz,1,pc,base
+Premium,Barista’s Drink,grande,Sealing Film,1,pc,base
+Premium,Barista’s Drink,grande,Brown Sugar Syrup,20,ml,base
+Premium,Barista’s Drink,venti,Espresso Shot,2,shot,base
+Premium,Barista’s Drink,venti,Milk,140,ml,base
+Premium,Barista’s Drink,venti,Ice,250,g,base
+Premium,Barista’s Drink,venti,Cup 22oz,1,pc,base
+Premium,Barista’s Drink,venti,Sealing Film,1,pc,base
+Premium,Barista’s Drink,venti,Brown Sugar Syrup,30,ml,base
+Premium,Dulce De Leche,grande,Espresso Shot,1,shot,base
+Premium,Dulce De Leche,grande,Milk,100,ml,base
+Premium,Dulce De Leche,grande,Ice,180,g,base
+Premium,Dulce De Leche,grande,Cup 16oz,1,pc,base
+Premium,Dulce De Leche,grande,Sealing Film,1,pc,base
+Premium,Dulce De Leche,grande,Dulce De Leche Syrup,20,ml,base
+Premium,Dulce De Leche,venti,Espresso Shot,2,shot,base
+Premium,Dulce De Leche,venti,Milk,140,ml,base
+Premium,Dulce De Leche,venti,Ice,250,g,base
+Premium,Dulce De Leche,venti,Cup 22oz,1,pc,base
+Premium,Dulce De Leche,venti,Sealing Film,1,pc,base
+Premium,Dulce De Leche,venti,Dulce De Leche Syrup,30,ml,base
+Premium,Velvet Cream Latte,grande,Espresso Shot,1,shot,base
+Premium,Velvet Cream Latte,grande,Milk,100,ml,base
+Premium,Velvet Cream Latte,grande,Ice,180,g,base
+Premium,Velvet Cream Latte,grande,Cup 16oz,1,pc,base
+Premium,Velvet Cream Latte,grande,Sealing Film,1,pc,base
+Premium,Velvet Cream Latte,grande,Cream Base,40,ml,base
+Premium,Velvet Cream Latte,venti,Espresso Shot,2,shot,base
+Premium,Velvet Cream Latte,venti,Milk,140,ml,base
+Premium,Velvet Cream Latte,venti,Ice,250,g,base
+Premium,Velvet Cream Latte,venti,Cup 22oz,1,pc,base
+Premium,Velvet Cream Latte,venti,Sealing Film,1,pc,base
+Premium,Velvet Cream Latte,venti,Cream Base,55,ml,base
+Premium,White Mocha Latte,grande,Espresso Shot,1,shot,base
+Premium,White Mocha Latte,grande,Milk,100,ml,base
+Premium,White Mocha Latte,grande,Ice,180,g,base
+Premium,White Mocha Latte,grande,Cup 16oz,1,pc,base
+Premium,White Mocha Latte,grande,Sealing Film,1,pc,base
+Premium,White Mocha Latte,grande,White Mocha Syrup,20,ml,base
+Premium,White Mocha Latte,venti,Espresso Shot,2,shot,base
+Premium,White Mocha Latte,venti,Milk,140,ml,base
+Premium,White Mocha Latte,venti,Ice,250,g,base
+Premium,White Mocha Latte,venti,Cup 22oz,1,pc,base
+Premium,White Mocha Latte,venti,Sealing Film,1,pc,base
+Premium,White Mocha Latte,venti,White Mocha Syrup,30,ml,base
+Premium,Vanilla Sweet Cream,grande,Espresso Shot,1,shot,base
+Premium,Vanilla Sweet Cream,grande,Milk,100,ml,base
+Premium,Vanilla Sweet Cream,grande,Ice,180,g,base
+Premium,Vanilla Sweet Cream,grande,Cup 16oz,1,pc,base
+Premium,Vanilla Sweet Cream,grande,Sealing Film,1,pc,base
+Premium,Vanilla Sweet Cream,grande,Cream Base,40,ml,base
+Premium,Vanilla Sweet Cream,venti,Espresso Shot,2,shot,base
+Premium,Vanilla Sweet Cream,venti,Milk,140,ml,base
+Premium,Vanilla Sweet Cream,venti,Ice,250,g,base
+Premium,Vanilla Sweet Cream,venti,Cup 22oz,1,pc,base
+Premium,Vanilla Sweet Cream,venti,Sealing Film,1,pc,base
+Premium,Vanilla Sweet Cream,venti,Cream Base,55,ml,base
+Premium,Toffee Nut Latte,grande,Espresso Shot,1,shot,base
+Premium,Toffee Nut Latte,grande,Milk,100,ml,base
+Premium,Toffee Nut Latte,grande,Ice,180,g,base
+Premium,Toffee Nut Latte,grande,Cup 16oz,1,pc,base
+Premium,Toffee Nut Latte,grande,Sealing Film,1,pc,base
+Premium,Toffee Nut Latte,grande,Toffee Nut Syrup,20,ml,base
+Premium,Toffee Nut Latte,venti,Espresso Shot,2,shot,base
+Premium,Toffee Nut Latte,venti,Milk,140,ml,base
+Premium,Toffee Nut Latte,venti,Ice,250,g,base
+Premium,Toffee Nut Latte,venti,Cup 22oz,1,pc,base
+Premium,Toffee Nut Latte,venti,Sealing Film,1,pc,base
+Premium,Toffee Nut Latte,venti,Toffee Nut Syrup,30,ml,base
+Premium,Almond Latte,grande,Espresso Shot,1,shot,base
+Premium,Almond Latte,grande,Milk,100,ml,base
+Premium,Almond Latte,grande,Ice,180,g,base
+Premium,Almond Latte,grande,Cup 16oz,1,pc,base
+Premium,Almond Latte,grande,Sealing Film,1,pc,base
+Premium,Almond Latte,grande,Almond Syrup,20,ml,base
+Premium,Almond Latte,venti,Espresso Shot,2,shot,base
+Premium,Almond Latte,venti,Milk,140,ml,base
+Premium,Almond Latte,venti,Ice,250,g,base
+Premium,Almond Latte,venti,Cup 22oz,1,pc,base
+Premium,Almond Latte,venti,Sealing Film,1,pc,base
+Premium,Almond Latte,venti,Almond Syrup,30,ml,base
+Premium,Peanut Butter Latte,grande,Espresso Shot,1,shot,base
+Premium,Peanut Butter Latte,grande,Milk,100,ml,base
+Premium,Peanut Butter Latte,grande,Ice,180,g,base
+Premium,Peanut Butter Latte,grande,Cup 16oz,1,pc,base
+Premium,Peanut Butter Latte,grande,Sealing Film,1,pc,base
+Premium,Peanut Butter Latte,grande,Peanut Butter,25,g,base
+Premium,Peanut Butter Latte,venti,Espresso Shot,2,shot,base
+Premium,Peanut Butter Latte,venti,Milk,140,ml,base
+Premium,Peanut Butter Latte,venti,Ice,250,g,base
+Premium,Peanut Butter Latte,venti,Cup 22oz,1,pc,base
+Premium,Peanut Butter Latte,venti,Sealing Film,1,pc,base
+Premium,Peanut Butter Latte,venti,Peanut Butter,35,g,base
+Premium,Biscoff Latte,grande,Espresso Shot,1,shot,base
+Premium,Biscoff Latte,grande,Milk,100,ml,base
+Premium,Biscoff Latte,grande,Ice,180,g,base
+Premium,Biscoff Latte,grande,Cup 16oz,1,pc,base
+Premium,Biscoff Latte,grande,Sealing Film,1,pc,base
+Premium,Biscoff Latte,grande,Biscoff Spread,25,g,base
+Premium,Biscoff Latte,venti,Espresso Shot,2,shot,base
+Premium,Biscoff Latte,venti,Milk,140,ml,base
+Premium,Biscoff Latte,venti,Ice,250,g,base
+Premium,Biscoff Latte,venti,Cup 22oz,1,pc,base
+Premium,Biscoff Latte,venti,Sealing Film,1,pc,base
+Premium,Biscoff Latte,venti,Biscoff Spread,35,g,base
+Premium,Nutella Latte,grande,Espresso Shot,1,shot,base
+Premium,Nutella Latte,grande,Milk,100,ml,base
+Premium,Nutella Latte,grande,Ice,180,g,base
+Premium,Nutella Latte,grande,Cup 16oz,1,pc,base
+Premium,Nutella Latte,grande,Sealing Film,1,pc,base
+Premium,Nutella Latte,grande,Nutella Spread,25,g,base
+Premium,Nutella Latte,venti,Espresso Shot,2,shot,base
+Premium,Nutella Latte,venti,Milk,140,ml,base
+Premium,Nutella Latte,venti,Ice,250,g,base
+Premium,Nutella Latte,venti,Cup 22oz,1,pc,base
+Premium,Nutella Latte,venti,Sealing Film,1,pc,base
+Premium,Nutella Latte,venti,Nutella Spread,35,g,base
