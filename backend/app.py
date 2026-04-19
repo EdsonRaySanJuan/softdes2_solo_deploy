@@ -2,7 +2,7 @@ import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from db import init_db
+from db import init_db, get_db_connection, is_postgres
 from routes.report_routes import report_bp
 from routes.dashboard_routes import dashboard_bp
 from routes.order_routes import order_bp
@@ -66,6 +66,32 @@ CORS(
 
 init_db()
 
+@app.route("/api/debug/db-check", methods=["GET"])
+def debug_db_check():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT COUNT(*) AS user_count FROM users")
+        row = cursor.fetchone()
+        conn.close()
+
+        if isinstance(row, dict):
+            user_count = row["user_count"]
+        else:
+            user_count = row["user_count"] if "user_count" in row.keys() else row[0]
+
+        return jsonify({
+            "using_postgres": is_postgres(),
+            "user_count": int(user_count)
+        }), 200
+
+    except Exception as e:
+        return jsonify({
+            "using_postgres": is_postgres(),
+            "error": str(e)
+        }), 500
+
 app.register_blueprint(report_bp, url_prefix="/api/reports")
 app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
 app.register_blueprint(order_bp, url_prefix="/api/orders")
@@ -74,16 +100,13 @@ app.register_blueprint(auth_bp, url_prefix="/api/auth")
 app.register_blueprint(user_bp, url_prefix="/api/users")
 app.register_blueprint(rpa_bp, url_prefix="/api/rpa")
 
-
 @app.route("/")
 def home():
     return {"message": "Cafe POS Backend is running", "status": "online"}
 
-
 @app.route("/api/health", methods=["GET"])
 def health():
     return jsonify({"ok": True}), 200
-
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
