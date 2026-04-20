@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Sidebar from "../components/Sidebar";
 import API_BASE_URL from "../config";
 import "../styles/dashboard.css";
@@ -14,7 +14,7 @@ function Automation() {
     return [];
   };
 
-  const fetchLogs = async () => {
+  const fetchLogs = useCallback(async () => {
     setIsRefreshing(true);
     try {
       const res = await fetch(`${API_BASE_URL}/rpa/logs`);
@@ -31,7 +31,7 @@ function Automation() {
     } finally {
       setIsRefreshing(false);
     }
-  };
+  }, []);
 
   const runBotNow = async () => {
     setIsRunningBot(true);
@@ -62,7 +62,7 @@ function Automation() {
     fetchLogs();
     const interval = setInterval(fetchLogs, 10000);
     return () => clearInterval(interval);
-  }, []);
+  }, [fetchLogs]);
 
   const safeLogs = Array.isArray(logs) ? logs : [];
 

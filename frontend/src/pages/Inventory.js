@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Sidebar from "../components/Sidebar";
 import API_BASE_URL from "../config";
 import "../styles/inventory.css";
@@ -24,11 +24,7 @@ function Inventory() {
     return [];
   };
 
-  useEffect(() => {
-    fetchInventory();
-  }, []);
-
-  const fetchInventory = async () => {
+  const fetchInventory = useCallback(async () => {
     try {
       const res = await fetch(`${API_BASE_URL}/inventory/`);
 
@@ -45,7 +41,11 @@ function Inventory() {
       console.error("Failed to fetch inventory:", err);
       setItems([]);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchInventory();
+  }, [fetchInventory]);
 
   const handleAddItem = async (e) => {
     e.preventDefault();
@@ -291,7 +291,10 @@ function Inventory() {
                             </td>
                             <td className="actions-cell">
                               <button className="btn-edit" onClick={() => startEdit(item)}>Edit</button>
-                              <button className="btn-danger-small" onClick={() => handleDeleteItem(item.id, item.item_name)}>
+                              <button
+                                className="btn-danger-small"
+                                onClick={() => handleDeleteItem(item.id, item.item_name)}
+                              >
                                 Delete
                               </button>
                             </td>
