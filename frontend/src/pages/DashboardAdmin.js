@@ -163,48 +163,50 @@ function DashboardAdmin() {
                 </button>
               </div>
 
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Time</th>
-                    <th>Order ID</th>
-                    <th>Item(s)</th>
-                    <th>Total</th>
-                    <th>Payment</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {orders.length === 0 ? (
+              <div className="panel-scrollable">
+                <table className="table">
+                  <thead style={{ position: "sticky", top: 0, background: "#0b2620", zIndex: 1 }}>
                     <tr>
-                      <td colSpan="5" style={{ textAlign: "center" }}>
-                        No data available
-                      </td>
+                      <th>Time</th>
+                      <th>Order ID</th>
+                      <th>Item(s)</th>
+                      <th>Total</th>
+                      <th>Payment</th>
                     </tr>
-                  ) : (
-                    orders.map((order, index) => (
-                      <tr key={`${order.order_id || index}-${index}`}>
-                        <td style={{ fontWeight: "bold" }}>
-                          {order.datetime || order.timestamp || "—"}
-                        </td>
-                        <td>#{order.order_id || "—"}</td>
-                        <td>
-                          {order.item_name || "—"}{" "}
-                          <span style={{ color: "#888" }}>x{order.qty || 0}</span>
-                        </td>
-                        <td style={{ color: "#4ade80" }}>
-                          ₱ {Number(order.line_total || 0).toFixed(2)}
-                        </td>
-                        <td>
-                          <span className="badge badge-ok">
-                            {order.payment_method || "N/A"}
-                          </span>
+                  </thead>
+
+                  <tbody>
+                    {orders.length === 0 ? (
+                      <tr>
+                        <td colSpan="5" style={{ textAlign: "center" }}>
+                          No data available
                         </td>
                       </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
+                    ) : (
+                      orders.map((order, index) => (
+                        <tr key={`${order.order_id || index}-${index}`}>
+                          <td style={{ fontWeight: "bold" }}>
+                            {order.datetime || order.timestamp || "—"}
+                          </td>
+                          <td>#{order.order_id || "—"}</td>
+                          <td>
+                            {order.item_name || "—"}{" "}
+                            <span style={{ color: "#888" }}>x{order.qty || 0}</span>
+                          </td>
+                          <td style={{ color: "#4ade80" }}>
+                            ₱ {Number(order.line_total || 0).toFixed(2)}
+                          </td>
+                          <td>
+                            <span className="badge badge-ok">
+                              {order.payment_method || "N/A"}
+                            </span>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <div className="panel">
