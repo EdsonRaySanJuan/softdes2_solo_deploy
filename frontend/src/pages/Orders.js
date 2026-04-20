@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "../styles/orders.css";
-import  API_BASE_URL  from "../config";
+import API_BASE_URL from "../config";
 
 const menuData = {
   lemonade: {
@@ -21,7 +21,6 @@ const menuData = {
       { name: "Honey Ginger", prices: { Regular: 65 }, addons: ["Yakult", "Dutchmill", "Nata", "Chia Seeds"] },
     ],
   },
-
   yogurtSmoothies: {
     label: "Yogurt Smoothies",
     description: "Grande 16oz / Venti 22oz",
@@ -32,7 +31,6 @@ const menuData = {
       { name: "Biscoff", prices: { Grande: 70, Venti: 80 }, addons: [] },
     ],
   },
-
   fruitSoda: {
     label: "Fruit Soda",
     description: "Grande 16oz / Venti 22oz",
@@ -46,7 +44,6 @@ const menuData = {
       { name: "Ginger Ale", prices: { Grande: 58, Venti: 68 }, addons: ["Yakult"] },
     ],
   },
-
   hotCoffee: {
     label: "Hot Coffee",
     description: "12oz hot coffee",
@@ -59,7 +56,6 @@ const menuData = {
       { name: "Matcha Espresso", prices: { Regular: 58 }, addons: ["Premium Upgrade"] },
     ],
   },
-
   hotTea: {
     label: "Hot Tea",
     description: "12oz hot tea",
@@ -71,7 +67,6 @@ const menuData = {
       { name: "Butterfly Pea Tea", prices: { Regular: 50 }, addons: ["Extra Bag"] },
     ],
   },
-
   milkTea: {
     label: "Milk Tea",
     description: "Grande 16oz / Venti 22oz",
@@ -84,7 +79,6 @@ const menuData = {
       { name: "Sugar Jelly Milk Tea", prices: { Grande: 38, Venti: 48 }, addons: ["Salty Cream", "Cream Cheese", "Oreo", "Coffee Jelly", "Boba Pearl", "Nata"] },
     ],
   },
-
   oolongTea: {
     label: "Oolong Tea",
     description: "Grande 16oz / Venti 22oz",
@@ -96,7 +90,6 @@ const menuData = {
       { name: "Passion Fruit", prices: { Grande: 45, Venti: 55 }, addons: ["Lemon Grass Oolong Upgrade"] },
     ],
   },
-
   greenTea: {
     label: "Green Tea",
     description: "Grande 16oz / Venti 22oz",
@@ -109,7 +102,6 @@ const menuData = {
       { name: "Passion Fruit", prices: { Grande: 55, Venti: 65 }, addons: [] },
     ],
   },
-
   nonCoffee: {
     label: "Non-Coffee",
     description: "Grande 16oz / Venti 22oz",
@@ -128,7 +120,6 @@ const menuData = {
       { name: "Nutella", prices: { Grande: 65, Venti: 75 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
     ],
   },
-
   frappuccino: {
     label: "Frappuccino",
     description: "Grande 16oz / Venti 22oz",
@@ -144,7 +135,6 @@ const menuData = {
       { name: "Nutella", prices: { Grande: 75, Venti: 85 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
     ],
   },
-
   nonCoffeeFrappe: {
     label: "Non-Coffee Frappe",
     description: "Grande 16oz / Venti 22oz",
@@ -161,7 +151,6 @@ const menuData = {
       { name: "Nutella Cream", prices: { Grande: 70, Venti: 80 }, addons: ["Oreo", "Coffee Jelly", "Extra Shot", "Boba Pearl", "Sugar Jelly", "Nata", "Milk", "Whip Cream", "Salty Cream"] },
     ],
   },
-
   vietnameseCoffee: {
     label: "Cà Phê Espresso",
     description: "Grande 16oz / Venti 22oz",
@@ -175,7 +164,6 @@ const menuData = {
       { name: "Dark Mocha Latte", prices: { Grande: 38, Venti: 48 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
     ],
   },
-
   premium: {
     label: "Premium",
     description: "Grande 16oz / Venti 22oz",
@@ -184,7 +172,7 @@ const menuData = {
       { name: "Matcha Espresso", prices: { Grande: 45, Venti: 55 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
       { name: "Salty Cream Latte", prices: { Grande: 45, Venti: 55 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
       { name: "Sea Salt Latte", prices: { Grande: 45, Venti: 55 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
-      { name: "Barista’s Drink", prices: { Grande: 45, Venti: 55 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
+      { name: "Barista's Drink", prices: { Grande: 45, Venti: 55 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
       { name: "Dulce De Leche", prices: { Grande: 55, Venti: 65 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
       { name: "Velvet Cream Latte", prices: { Grande: 55, Venti: 65 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
       { name: "White Mocha Latte", prices: { Grande: 55, Venti: 65 }, addons: ["Extra Shot", "Milk", "Whip Cream", "Salty Cream", "Coffee Jelly", "Oreo"] },
@@ -209,7 +197,7 @@ export default function Orders() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const currentCategory = menuData[selectedCategory];
-    
+
   const total = useMemo(() => {
     return cart.reduce((sum, item) => sum + item.line_total, 0);
   }, [cart]);
@@ -218,10 +206,7 @@ export default function Orders() {
   const change = cashValue - total;
 
   const openItemModal = (item) => {
-    setSelectedItem({
-      ...item,
-      category: currentCategory.label,
-    });
+    setSelectedItem({ ...item, category: currentCategory.label });
     const firstSize = Object.keys(item.prices)[0];
     setSelectedSize(firstSize);
     setSelectedAddons([]);
@@ -235,17 +220,13 @@ export default function Orders() {
 
   const toggleAddon = (addon) => {
     setSelectedAddons((prev) =>
-      prev.includes(addon)
-        ? prev.filter((a) => a !== addon)
-        : [...prev, addon]
+      prev.includes(addon) ? prev.filter((a) => a !== addon) : [...prev, addon]
     );
   };
 
   const addToCart = () => {
     if (!selectedItem || !selectedSize) return;
-
     const unitPrice = selectedItem.prices[selectedSize];
-
     const newItem = {
       category: selectedItem.category,
       item_name: selectedItem.name,
@@ -256,7 +237,6 @@ export default function Orders() {
       addons_text: selectedAddons.length ? selectedAddons.join(", ") : "None",
       line_total: unitPrice,
     };
-
     setCart((prev) => [...prev, newItem]);
     closeItemModal();
   };
@@ -268,11 +248,7 @@ export default function Orders() {
           if (i !== index) return item;
           const newQty = item.qty + delta;
           if (newQty <= 0) return null;
-          return {
-            ...item,
-            qty: newQty,
-            line_total: item.unit_price * newQty,
-          };
+          return { ...item, qty: newQty, line_total: item.unit_price * newQty };
         })
         .filter(Boolean)
     );
@@ -289,21 +265,12 @@ export default function Orders() {
   };
 
   const handlePayAndPrint = async () => {
-    if (cart.length === 0) {
-      alert("Cart is empty.");
-      return;
-    }
-
-    if (cashValue < total) {
-      alert("Insufficient cash.");
-      return;
-    }
+    if (cart.length === 0) { alert("Cart is empty."); return; }
+    if (cashValue < total) { alert("Insufficient cash."); return; }
 
     setIsSubmitting(true);
-
     try {
       const token = localStorage.getItem("token");
-
       const payload = {
         items: cart.map((item) => ({
           name: item.item_name,
@@ -330,19 +297,12 @@ export default function Orders() {
       });
 
       const data = await response.json();
-      console.log("Order saved:", data);
-
-      if (!response.ok) {
-        alert(data.error || "Failed to process order.");
-        return;
-      }
+      if (!response.ok) { alert(data.error || "Failed to process order."); return; }
 
       let message = `Order #${data.order_id} processed successfully.`;
-
-      if (data.inventory_warnings && data.inventory_warnings.length > 0) {
+      if (data.inventory_warnings?.length > 0) {
         message += `\n\nInventory warnings:\n- ${data.inventory_warnings.join("\n- ")}`;
       }
-
       alert(message);
       clearCart();
     } catch (error) {
@@ -353,129 +313,219 @@ export default function Orders() {
     }
   };
 
+  const lowestPrice = (prices) => Math.min(...Object.values(prices));
+
   return (
-  <div className="app-body">
-    <div className="app-shell">
-      <Sidebar role="Employee" />
+    <div className="app-body">
+      <div className="app-shell">
+        <Sidebar role="Employee" />
 
-      <main className="main-content">
-        <h1>Orders</h1>
+        <main className="main-content">
+          {/* ── Layout ── */}
+          <div className="orders-layout">
 
-        <div className="category-tabs">
-          {Object.entries(menuData).map(([key, category]) => (
-            <button
-              key={key}
-              className={selectedCategory === key ? "active" : ""}
-              onClick={() => setSelectedCategory(key)}
-            >
-              {category.label}
-            </button>
-          ))}
-        </div>
+            {/* ── LEFT: Menu Panel ── */}
+            <div className="menu-panel">
+              <div className="menu-panel-top">
+                <p className="panel-title">Menu</p>
+                <p className="panel-subtitle">Select a category then tap an item to add it</p>
+              </div>
 
-        <div className="menu-grid">
-          {currentCategory?.items?.map((item, index) => (
-            <div key={index} className="menu-card">
-              <h3>{item.name}</h3>
-              <p>{currentCategory.description}</p>
-              <button onClick={() => openItemModal(item)}>
-                Add Item
-              </button>
-            </div>
-          ))}
-        </div>
-
-        <div className="cart-section">
-          <h2>Cart</h2>
-
-          {cart.length === 0 ? (
-            <p>No items in cart.</p>
-          ) : (
-            <table className="cart-table">
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Size</th>
-                  <th>Add-ons</th>
-                  <th>Qty</th>
-                  <th>Price</th>
-                  <th>Total</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {cart.map((item, index) => (
-                  <tr key={index}>
-                    <td>{item.item_name}</td>
-                    <td>{item.size}</td>
-                    <td>{item.addons_text}</td>
-                    <td>
-                      <button onClick={() => updateCartQty(index, -1)}>-</button>
-                      <span style={{ margin: "0 10px" }}>{item.qty}</span>
-                      <button onClick={() => updateCartQty(index, 1)}>+</button>
-                    </td>
-                    <td>₱{item.unit_price.toFixed(2)}</td>
-                    <td>₱{item.line_total.toFixed(2)}</td>
-                    <td>
-                      <button onClick={() => removeCartItem(index)}>Remove</button>
-                    </td>
-                  </tr>
+              {/* Category tabs */}
+              <div className="menu-tabs">
+                {Object.entries(menuData).map(([key, category]) => (
+                  <button
+                    key={key}
+                    className={`tab${selectedCategory === key ? " active" : ""}`}
+                    onClick={() => setSelectedCategory(key)}
+                  >
+                    {category.label}
+                  </button>
                 ))}
-              </tbody>
-            </table>
-          )}
+              </div>
 
-          <div className="payment-panel">
-            <h3>Total: ₱{total.toFixed(2)}</h3>
+              {/* Category banner */}
+              <div className="category-banner">
+                <div>
+                  <div className="category-label">{currentCategory.label}</div>
+                  <div className="category-description">{currentCategory.description}</div>
+                </div>
+                <span className="category-count">
+                  {currentCategory.items.length} items
+                </span>
+              </div>
 
-            <label>Table / Customer Type</label>
-            <select value={table} onChange={(e) => setTable(e.target.value)}>
-              <option value="Walk-in">Walk-in</option>
-              <option value="Takeout">Takeout</option>
-            </select>
+              {/* Menu grid */}
+              <div className="menu-grid">
+                {currentCategory.items.map((item, index) => (
+                  <button
+                    key={index}
+                    className="menu-item"
+                    onClick={() => openItemModal(item)}
+                  >
+                    <div className="menu-item-top">
+                      <span className="menu-name">{item.name}</span>
+                      <span className="menu-price">
+                        from ₱{lowestPrice(item.prices)}
+                      </span>
+                      <span className="menu-meta">{currentCategory.description}</span>
+                    </div>
+                    {item.addons.length > 0 && (
+                      <span className="menu-addon-note">+ add-ons available</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-            <label>Cash</label>
-            <input
-              type="number"
-              value={cash}
-              onChange={(e) => setCash(e.target.value)}
-              placeholder="Enter cash"
-            />
+            {/* ── RIGHT: Cart Panel ── */}
+            <div className="cart-panel">
+              <div className="panel-header">
+                <div>
+                  <h3>Cart</h3>
+                  <span className="order-id">Current Order</span>
+                </div>
+                <span className="cart-badge">{cart.length} item{cart.length !== 1 ? "s" : ""}</span>
+              </div>
 
-            <h4>Change: ₱{change >= 0 ? change.toFixed(2) : "0.00"}</h4>
+              <div className="cart-scroll">
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Item</th>
+                      <th>Qty</th>
+                      <th className="num-cell">Total</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cart.length === 0 ? (
+                      <tr>
+                        <td colSpan={4} className="empty-cart">No items yet — tap a menu item to add</td>
+                      </tr>
+                    ) : (
+                      cart.map((item, index) => (
+                        <tr key={index}>
+                          <td>
+                            <div className="cart-item-head">
+                              <div>
+                                <div className="cart-item-name">{item.item_name}</div>
+                                <div className="cart-item-meta">{item.size} · ₱{item.unit_price.toFixed(2)}</div>
+                                {item.addons.length > 0 && (
+                                  <div className="cart-item-addons">+{item.addons_text}</div>
+                                )}
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="qty-control">
+                              <button onClick={() => updateCartQty(index, -1)}>−</button>
+                              <span>{item.qty}</span>
+                              <button onClick={() => updateCartQty(index, 1)}>+</button>
+                            </div>
+                          </td>
+                          <td className="num-cell">₱{item.line_total.toFixed(2)}</td>
+                          <td>
+                            <button className="remove-btn" onClick={() => removeCartItem(index)}>×</button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
 
-            <div className="payment-actions">
-              <button onClick={clearCart}>Cancel</button>
-              <button onClick={handlePayAndPrint} disabled={isSubmitting}>
-                {isSubmitting ? "Processing..." : "Pay & Print Receipt"}
-              </button>
+              {/* Footer: totals + payment */}
+              <div className="cart-footer">
+                <div className="totals">
+                  <div className="totals-row">
+                    <span>Subtotal</span>
+                    <span>₱{total.toFixed(2)}</span>
+                  </div>
+                  <div className="totals-row">
+                    <span>Cash</span>
+                    <span>₱{cashValue.toFixed(2)}</span>
+                  </div>
+                  <div className="totals-row grand">
+                    <span>Change</span>
+                    <span className={change < 0 ? "error-text" : ""}>
+                      ₱{change >= 0 ? change.toFixed(2) : "0.00"}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="payment-actions">
+                  <div className="cash-input">
+                    <label>Table / Type</label>
+                    <select value={table} onChange={(e) => setTable(e.target.value)}>
+                      <option value="Walk-in">Walk-in</option>
+                      <option value="Takeout">Takeout</option>
+                    </select>
+                  </div>
+
+                  <div className="cash-input">
+                    <label>Cash Received</label>
+                    <input
+                      type="number"
+                      value={cash}
+                      onChange={(e) => setCash(e.target.value)}
+                      placeholder="Enter cash amount"
+                    />
+                  </div>
+
+                  <button className="btn-cancel" onClick={clearCart}>
+                    Cancel Order
+                  </button>
+                  <button
+                    className="btn-pay"
+                    onClick={handlePayAndPrint}
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Processing…" : "Pay & Print Receipt"}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </main>
+      </div>
 
-        {selectedItem && (
-          <div className="modal-overlay">
-            <div className="modal">
-              <h2>{selectedItem.name}</h2>
+      {/* ── Modal ── */}
+      {selectedItem && (
+        <div className="modal">
+          <div className="modal-content">
+            <div className="modal-head">
+              <div>
+                <h3>{selectedItem.name}</h3>
+                <span className="modal-subtitle">{selectedItem.category}</span>
+              </div>
+              <button className="modal-close" onClick={closeItemModal}>×</button>
+            </div>
 
-              <label>Size</label>
-              <select
-                value={selectedSize}
-                onChange={(e) => setSelectedSize(e.target.value)}
-              >
+            {/* Size */}
+            <div>
+              <p className="modal-section-title">Size</p>
+              <div className="size-list">
                 {Object.entries(selectedItem.prices).map(([size, price]) => (
-                  <option key={size} value={size}>
-                    {size} - ₱{price}
-                  </option>
+                  <button
+                    key={size}
+                    className={`size-chip${selectedSize === size ? " selected" : ""}`}
+                    onClick={() => setSelectedSize(size)}
+                  >
+                    {size} <span className="price">₱{price}</span>
+                  </button>
                 ))}
-              </select>
+              </div>
+            </div>
 
-              {selectedItem.addons.length > 0 && (
-                <>
-                  <label>Add-ons</label>
-                  <div className="addons-list">
-                    {selectedItem.addons.map((addon, index) => (
-                      <label key={index} className="addon-option">
+            {/* Add-ons */}
+            {selectedItem.addons.length > 0 ? (
+              <div>
+                <p className="modal-section-title">Add-ons</p>
+                <div className="addons-list">
+                  {selectedItem.addons.map((addon, index) => (
+                    <div key={index} className="addon-row">
+                      <label>
                         <input
                           type="checkbox"
                           checked={selectedAddons.includes(addon)}
@@ -483,20 +533,28 @@ export default function Orders() {
                         />
                         {addon}
                       </label>
-                    ))}
-                  </div>
-                </>
-              )}
-
-              <div className="modal-actions">
-                <button onClick={closeItemModal}>Close</button>
-                <button onClick={addToCart}>Add to Cart</button>
+                    </div>
+                  ))}
+                </div>
               </div>
+            ) : (
+              <p className="empty-addon">No add-ons available for this item.</p>
+            )}
+
+            {/* Summary */}
+            <div className="modal-summary">
+              <span>Selected: {selectedSize}</span>
+              <span>₱{selectedItem.prices[selectedSize]}</span>
+            </div>
+
+            {/* Actions */}
+            <div className="modal-footer">
+              <button className="btn-secondary" onClick={closeItemModal}>Cancel</button>
+              <button className="btn-primary" onClick={addToCart}>Add to Cart</button>
             </div>
           </div>
-        )}
-      </main>
+        </div>
+      )}
     </div>
-  </div>
-);
+  );
 }
