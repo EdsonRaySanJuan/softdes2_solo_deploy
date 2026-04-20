@@ -32,7 +32,7 @@ def add_user():
     cursor = conn.cursor()
 
     try:
-        if is_postgres():
+        if is_postgres(conn):
             cursor.execute("""
                 INSERT INTO users (user_id, full_name, username, password, role, status)
                 VALUES (%s, %s, %s, %s, %s, %s)
@@ -77,7 +77,7 @@ def delete_user(user_id):
     cursor = conn.cursor()
 
     try:
-        if is_postgres():
+        if is_postgres(conn):
             cursor.execute("DELETE FROM users WHERE user_id = %s", (user_id,))
         else:
             cursor.execute("DELETE FROM users WHERE user_id = ?", (user_id,))

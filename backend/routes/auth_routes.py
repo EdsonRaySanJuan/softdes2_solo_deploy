@@ -34,7 +34,7 @@ def login():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    if is_postgres():
+    if is_postgres(conn):
         cursor.execute("""
             SELECT * FROM users
             WHERE (LOWER(username) = LOWER(%s) OR LOWER(user_id) = LOWER(%s))

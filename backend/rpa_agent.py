@@ -1,41 +1,97 @@
-import requests
+import os
 import time
+import requests
 
-API_URL = "http://127.0.0.1:5000/api"
+API_URL = os.getenv("API_BASE_URL", "http://127.0.0.1:5000/api").rstrip("/")
+BOT_NAME = os.getenv("RPA_BOT_NAME", "Inventory-Master-V1")
+SLEEP_SECONDS = int(os.getenv("RPA_INTERVAL_SECONDS", "60"))
+
 
 def run_automation_cycle():
-    print("🤖 Bot: Checking inventory levels...")
-    
-    # 1. Ask the POS for the low-stock list
+    results = {
+        "success": True,
+        "bot_name": BOT_NAME,
+        "checked_items": 0,
+        "processed_items": 0,
+        "logs_sent": 0,
+        "items": [],
+        "message": ""
+    }
+
     try:
-        response = requests.get(f"{API_URL}/inventory/reorder-list")
-        reorder_list = response.json()
-        
+        response = requests.get(f"{API_URL}/inventory/reorder-list", timeout=15)
+        response.raise_for_status()
+
+        payload = response.json()
+        reorder_list = payload.get("items", []) if isinstance(payload, dict) else []
+        results["checked_items"] = len(reorder_list)
+
         if not reorder_list:
-            print("🤖 Bot: Everything looks good. No reorders needed.")
-            return
+            results["message"] = "Everything looks good. No reorders needed."
+            return results
 
         for item in reorder_list:
-            print(f"🤖 Bot: Starting reorder for {item['item_name']}...")
-            
-            # 2. SIMULATE THE WORK (In real life, this would use Selenium to log into a website)
-            # We will simulate a "Supplier Email" being sent
-            task_msg = f"Automatically sent PO to {item['supplier']} for {item['reorder_qty']} {item['unit']} of {item['item_name']}."
-            
-            # 3. REPORT BACK TO THE DASHBOARD
-            requests.post(f"{API_URL}/rpa/log", json={
-                "bot_name": "Inventory-Master-V1",
-                "task_description": task_msg,
-                "status": "Completed"
-            })
-            
-            print(f"✅ Bot: Successfully reordered {item['item_name']}")
+            item_name = item.get("item_name", "Unknown Item")
+            supplier = item.get("supplier") or "N/A"
+            reorder_qty = item.get("reorder_qty", 0)
+            unit = item.get("unit", "")
+            current_stock = item.get("current_stock", 0)
+            status = item.get("status", "Unknown")
 
+            task_msg = (
+                f"Automatically sent PO to {supplier} for {reorder_qty} {unit} "
+                f"of {item_name}. Current stock: {current_stock}. Status: {status}."
+            )
+
+            log_res = requests.post(
+                f"{API_URL}/rpa/log",
+                json={
+                    "bot_name": BOT_NAME,
+                    "task_description": task_msg,
+                    "status": "Completed"
+                },
+                timeout=15
+            )
+            log_res.raise_for_status()
+
+            results["processed_items"] += 1
+            results["logs_sent"] += 1
+            results["items"].append({
+                "item_name": item_name,
+                "supplier": supplier,
+                "reorder_qty": reorder_qty,
+                "unit": unit,
+                "current_stock": current_stock,
+                "status": status
+            })
+
+        results["message"] = f"Processed {results['processed_items']} reorder item(s)."
+        return results
+
+    except requests.exceptions.RequestException as e:
+        return {
+            "success": False,
+            "bot_name": BOT_NAME,
+            "checked_items": results["checked_items"],
+            "processed_items": results["processed_items"],
+            "logs_sent": results["logs_sent"],
+            "items": results["items"],
+            "message": f"HTTP error: {str(e)}"
+        }
     except Exception as e:
-        print(f"❌ Bot Error: {e}")
+        return {
+            "success": False,
+            "bot_name": BOT_NAME,
+            "checked_items": results["checked_items"],
+            "processed_items": results["processed_items"],
+            "logs_sent": results["logs_sent"],
+            "items": results["items"],
+            "message": f"Bot error: {str(e)}"
+        }
+
 
 if __name__ == "__main__":
-    # Run once every 60 seconds (for testing)
     while True:
-        run_automation_cycle()
-        time.sleep(60)
+        result = run_automation_cycle()
+        print(result)
+        time.sleep(SLEEP_SECONDS)

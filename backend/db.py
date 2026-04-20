@@ -4,27 +4,18 @@ import psycopg2
 import psycopg2.extras
 
 
-def get_database_url():
-    return os.getenv("DATABASE_URL")
-
-
-def is_postgres():
-    db_url = get_database_url()
-    return bool(db_url and db_url.startswith(("postgres://", "postgresql://")))
-
-
 def get_db_connection():
-    db_url = get_database_url()
+    db_url = os.getenv("DATABASE_URL")
 
-    if db_url:
-        if db_url.startswith("postgres://"):
-            db_url = db_url.replace("postgres://", "postgresql://", 1)
-
-        conn = psycopg2.connect(
-            db_url,
-            cursor_factory=psycopg2.extras.RealDictCursor
-        )
-        return conn
+    if db_url and db_url.startswith("postgresql://"):
+        try:
+            conn = psycopg2.connect(
+                db_url,
+                cursor_factory=psycopg2.extras.RealDictCursor
+            )
+            return conn
+        except Exception as e:
+            print("⚠️ Postgres failed, fallback to SQLite:", e)
 
     base_dir = os.path.abspath(os.path.dirname(__file__))
     db_path = os.path.join(base_dir, "data", "cafe.db")
@@ -35,11 +26,15 @@ def get_db_connection():
     return conn
 
 
+def is_postgres(conn):
+    return isinstance(conn, psycopg2.extensions.connection)
+
+
 def init_db():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    if is_postgres():
+    if is_postgres(conn):
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS sales (
                 id SERIAL PRIMARY KEY,

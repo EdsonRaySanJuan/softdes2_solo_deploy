@@ -2,7 +2,6 @@ from flask import Blueprint, jsonify, request
 from datetime import timedelta, datetime
 from db import get_db_connection, is_postgres
 
-
 dashboard_bp = Blueprint("dashboard", __name__)
 
 
@@ -18,6 +17,7 @@ def dict_rows(rows):
 
 @dashboard_bp.route("/stats", methods=["GET"])
 def get_stats():
+    conn = None
     try:
         range_days = int(request.args.get("range", 1))
         if range_days < 1:
@@ -29,7 +29,7 @@ def get_stats():
         end_date = datetime.now().date()
         start_date = end_date - timedelta(days=range_days - 1)
 
-        if is_postgres():
+        if is_postgres(conn):
             cursor.execute("""
                 SELECT
                     COALESCE(SUM(line_total), 0) AS total_revenue,
@@ -51,7 +51,7 @@ def get_stats():
         stats = cursor.fetchone()
         stats = stats if isinstance(stats, dict) else dict(stats)
 
-        if is_postgres():
+        if is_postgres(conn):
             cursor.execute("""
                 SELECT timestamp, order_id, item_name, qty, line_total, payment_method
                 FROM sales
@@ -91,5 +91,7 @@ def get_stats():
         }), 200
 
     except Exception as e:
+        if conn:
+            conn.close()
         print(f"Dashboard Error: {e}")
         return jsonify({"success": False, "error": str(e)}), 500

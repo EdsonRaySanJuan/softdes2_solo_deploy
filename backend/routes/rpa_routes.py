@@ -1,8 +1,9 @@
 from datetime import datetime
 from flask import Blueprint, request, jsonify
 from db import get_db_connection, is_postgres
+from rpa_agent import run_automation_cycle
 
-rpa_bp = Blueprint('rpa', __name__)
+rpa_bp = Blueprint("rpa", __name__)
 
 
 def rows_to_dicts(rows):
@@ -15,19 +16,47 @@ def rows_to_dicts(rows):
     return result
 
 
+@rpa_bp.route("/run-bot", methods=["POST"])
+def run_bot():
+    try:
+        result = run_automation_cycle()
+
+        return jsonify({
+            "success": result.get("success", False),
+            "message": result.get("message", ""),
+            "bot_name": result.get("bot_name", "Unknown Bot"),
+            "checked_items": result.get("checked_items", 0),
+            "processed_items": result.get("processed_items", 0),
+            "logs_sent": result.get("logs_sent", 0),
+            "items": result.get("items", [])
+        }), 200 if result.get("success") else 500
+
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "message": str(e),
+            "bot_name": "Unknown Bot",
+            "checked_items": 0,
+            "processed_items": 0,
+            "logs_sent": 0,
+            "items": []
+        }), 500
+
+
 @rpa_bp.route("/log", methods=["POST"])
 def add_log():
     data = request.get_json() or {}
-    bot_name = data.get("bot_name", "Unknown Bot")
-    task = data.get("task_description", "No description provided")
-    status = data.get("status", "Info")
+    bot_name = str(data.get("bot_name", "Unknown Bot")).strip()
+    task = str(data.get("task_description", "No description provided")).strip()
+    status = str(data.get("status", "Info")).strip()
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+    conn = None
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        if is_postgres():
+        if is_postgres(conn):
             cursor.execute("""
                 INSERT INTO rpa_logs (timestamp, bot_name, task_description, status)
                 VALUES (%s, %s, %s, %s)
@@ -39,20 +68,58 @@ def add_log():
             """, (timestamp, bot_name, task, status))
 
         conn.commit()
-        conn.close()
-        return jsonify({"success": True}), 201
+
+        return jsonify({
+            "success": True,
+            "message": "Log added successfully"
+        }), 201
+
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        if conn:
+            try:
+                conn.rollback()
+            except Exception:
+                pass
+
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+    finally:
+        if conn:
+            conn.close()
 
 
 @rpa_bp.route("/logs", methods=["GET"])
 def get_logs():
+    conn = None
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM rpa_logs ORDER BY id DESC LIMIT 50")
+
+        cursor.execute("""
+            SELECT id, timestamp, bot_name, task_description, status
+            FROM rpa_logs
+            ORDER BY id DESC
+            LIMIT 50
+        """)
+
         logs = rows_to_dicts(cursor.fetchall())
-        conn.close()
-        return jsonify(logs)
-    except Exception:
-        return jsonify([])
+
+        return jsonify({
+            "success": True,
+            "count": len(logs),
+            "logs": logs
+        }), 200
+
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e),
+            "logs": []
+        }), 500
+
+    finally:
+        if conn:
+            conn.close()

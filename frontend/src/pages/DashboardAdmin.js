@@ -2,50 +2,57 @@ import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "../styles/dashboard.css";
 import { useNavigate } from "react-router-dom";
-import API_BASE_URL from "../config"; // ✅ NEW
+import API_BASE_URL from "../config";
 
 function DashboardAdmin() {
   const navigate = useNavigate();
 
-  // Stats States
   const [orders, setOrders] = useState([]);
   const [totalSales, setTotalSales] = useState(0);
   const [totalOrders, setTotalOrders] = useState(0);
   const [itemsSold, setItemsSold] = useState(0);
 
-  // Inventory States
   const [lowStockCount, setLowStockCount] = useState(0);
   const [lowStockItems, setLowStockItems] = useState([]);
 
-  // Range Filter
   const [range, setRange] = useState(1);
 
   useEffect(() => {
     async function fetchDashboardData() {
       try {
-        // ✅ FIX 1: Use config URL
-        const statsRes = await fetch(
-          `${API_BASE_URL}/dashboard/stats?range=${range}`
-        );
-
+        const statsRes = await fetch(`${API_BASE_URL}/dashboard/stats?range=${range}`);
         if (!statsRes.ok) throw new Error("Stats fetch failed");
 
         const statsData = await statsRes.json();
+        console.log("DASHBOARD STATS RESPONSE:", statsData);
 
-        setTotalSales(statsData.total_revenue || 0);
-        setTotalOrders(statsData.total_orders || 0);
-        setItemsSold(statsData.items_sold || 0);
-        setLowStockCount(statsData.alerts || 0);
-        setOrders(statsData.recent_orders || []);
+        setTotalSales(Number(statsData.total_revenue || statsData.total_sales || 0));
+        setTotalOrders(Number(statsData.total_orders || 0));
+        setItemsSold(Number(statsData.items_sold || 0));
 
-        // ✅ FIX 2: Inventory API also uses config
+        const recentOrders = Array.isArray(statsData.recent_orders)
+          ? statsData.recent_orders
+          : Array.isArray(statsData.orders)
+          ? statsData.orders
+          : [];
+
+        setOrders(recentOrders);
+
         const invRes = await fetch(`${API_BASE_URL}/inventory/`);
-
         if (!invRes.ok) throw new Error("Inventory fetch failed");
 
         const invData = await invRes.json();
+        console.log("INVENTORY RESPONSE:", invData);
 
-        const alerts = invData.filter(
+        const inventoryArray = Array.isArray(invData)
+          ? invData
+          : Array.isArray(invData.items)
+          ? invData.items
+          : Array.isArray(invData.data)
+          ? invData.data
+          : [];
+
+        const alerts = inventoryArray.filter(
           (item) =>
             item.status === "Low" ||
             item.status === "Critical" ||
@@ -53,10 +60,11 @@ function DashboardAdmin() {
         );
 
         setLowStockItems(alerts);
-
+        setLowStockCount(
+          Number(statsData.alerts || statsData.low_stock_count || alerts.length)
+        );
       } catch (err) {
         console.error("Dashboard fetch error:", err);
-
         setOrders([]);
         setTotalSales(0);
         setTotalOrders(0);
@@ -72,11 +80,9 @@ function DashboardAdmin() {
   return (
     <div className="app-body">
       <div className="app-shell">
-
         <Sidebar role="Admin" />
 
         <main className="main-content">
-
           <header className="topbar">
             <div>
               <h2 className="page-title">Dashboard</h2>
@@ -88,7 +94,7 @@ function DashboardAdmin() {
             <div className="topbar-right">
               <select
                 value={range}
-                onChange={(e) => setRange(e.target.value)}
+                onChange={(e) => setRange(Number(e.target.value))}
                 style={{
                   padding: "6px 10px",
                   borderRadius: "8px",
@@ -115,13 +121,13 @@ function DashboardAdmin() {
             </div>
           </header>
 
-          {/* KPI CARDS */}
           <section className="kpi-grid">
-
             <div className="kpi-card">
               <span className="kpi-label">Total Sales</span>
-              <span className="kpi-value" style={{ color: '#4ade80' }}>
-                ₱ {totalSales.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+              <span className="kpi-value" style={{ color: "#4ade80" }}>
+                ₱ {Number(totalSales || 0).toLocaleString(undefined, {
+                  minimumFractionDigits: 2
+                })}
               </span>
               <span className="kpi-extra">From monthly records</span>
             </div>
@@ -143,18 +149,14 @@ function DashboardAdmin() {
               <span className="kpi-value">{lowStockCount}</span>
               <span className="kpi-extra">Automatic RPA reorder pending</span>
             </div>
-
           </section>
 
-          {/* LOWER SECTION */}
           <section className="grid-two">
-
-            {/* RECENT ORDERS */}
             <div className="panel">
               <div className="panel-header">
                 <h3>Recent Orders</h3>
-                <button 
-                  className="btn-small" 
+                <button
+                  className="btn-small"
                   onClick={() => navigate("/reports")}
                 >
                   View all
@@ -181,16 +183,21 @@ function DashboardAdmin() {
                     </tr>
                   ) : (
                     orders.map((order, index) => (
-                      <tr key={index}>
-                        <td style={{ fontWeight: 'bold' }}>{order.datetime}</td>
-                        <td>#{order.order_id}</td>
-                        <td>{order.item_name} <span style={{color: '#888'}}>x{order.qty}</span></td>
-                        <td style={{ color: '#4ade80' }}>
-                          ₱ {order.line_total.toFixed(2)}
+                      <tr key={`${order.order_id || index}-${index}`}>
+                        <td style={{ fontWeight: "bold" }}>
+                          {order.datetime || order.timestamp || "—"}
+                        </td>
+                        <td>#{order.order_id || "—"}</td>
+                        <td>
+                          {order.item_name || "—"}{" "}
+                          <span style={{ color: "#888" }}>x{order.qty || 0}</span>
+                        </td>
+                        <td style={{ color: "#4ade80" }}>
+                          ₱ {Number(order.line_total || 0).toFixed(2)}
                         </td>
                         <td>
                           <span className="badge badge-ok">
-                            {order.payment_method}
+                            {order.payment_method || "N/A"}
                           </span>
                         </td>
                       </tr>
@@ -200,11 +207,10 @@ function DashboardAdmin() {
               </table>
             </div>
 
-            {/* LOW STOCK */}
             <div className="panel">
               <div className="panel-header">
                 <h3>Low Stock Alerts</h3>
-                <button 
+                <button
                   className="btn-small btn-outline"
                   onClick={() => navigate("/inventory")}
                 >
@@ -231,15 +237,23 @@ function DashboardAdmin() {
                     </tr>
                   ) : (
                     lowStockItems.slice(0, 7).map((item, index) => (
-                      <tr key={index}>
+                      <tr key={item.id || index}>
                         <td><strong>{item.item_name}</strong></td>
-                        <td>{item.category}</td>
-                        <td style={{ fontWeight: 'bold' }}>
-                          {item.current_stock} {item.unit}
+                        <td>{item.category || "N/A"}</td>
+                        <td style={{ fontWeight: "bold" }}>
+                          {item.current_stock} {item.unit || ""}
                         </td>
                         <td>
-                          <span className={`badge badge-${item.status === 'Low' ? 'warning' : 'danger'}`}>
-                            {item.status}
+                          <span
+                            className={`badge ${
+                              item.status === "Low"
+                                ? "badge-warning"
+                                : item.status === "Critical" || item.status === "Out of Stock"
+                                ? "badge-danger"
+                                : "badge-ok"
+                            }`}
+                          >
+                            {item.status || "N/A"}
                           </span>
                         </td>
                       </tr>
@@ -248,9 +262,7 @@ function DashboardAdmin() {
                 </tbody>
               </table>
             </div>
-
           </section>
-
         </main>
       </div>
     </div>

@@ -1,17 +1,17 @@
-addon_name,ingredient_name,qty_used,unit
-Yakult,yakult,1,bottle
-Dutchmill,dutchmill,1,bottle
-Nata,nata_de_coco,30,grams
-Chia Seeds,chia_seeds,10,grams
-Salty Cream,salt_foam,30,ml
-Cream Cheese,cream_cheese,30,grams
-Oreo,oreo_crush,20,grams
-Coffee Jelly,coffee_jelly,30,grams
-Boba Pearl,boba_pearl,30,grams
-Sugar Jelly,sugar_jelly,30,grams
-Extra Bag,tea_bag_extra,1,bag
-Premium Upgrade,espresso_shot,1,shot
-Lemon Grass Oolong Upgrade,lemongrass_syrup,20,ml
-Extra Shot,espresso_shot,1,shot
-Milk,milk,50,ml
-Whip Cream,whip_cream,30,ml
+addon_name,ingredient_name,qty_used,unit,stocks
+Yakult,yakult,1,bottle,100
+Dutchmill,dutchmill,1,bottle,100
+Nata,nata_de_coco,30,grams,1000
+Chia Seeds,chia_seeds,10,grams,500
+Salty Cream,salt_foam,30,ml,1000
+Cream Cheese,cream_cheese,30,grams,1000
+Oreo,oreo_crush,20,grams,1000
+Coffee Jelly,coffee_jelly,30,grams,1000
+Boba Pearl,boba_pearl,30,grams,1000
+Sugar Jelly,sugar_jelly,30,grams,1000
+Extra Bag,tea_bag_extra,1,bag,100
+Premium Upgrade,espresso_shot,1,shot,100
+Lemon Grass Oolong Upgrade,lemongrass_syrup,20,ml,1000
+Extra Shot,espresso_shot,1,shot,100
+Milk,milk,50,ml,2000
+Whip Cream,whip_cream,30,ml,1000

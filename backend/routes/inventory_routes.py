@@ -6,7 +6,6 @@ import sqlite3
 from flask import Blueprint, jsonify, request, Response
 from db import get_db_connection, is_postgres
 
-
 inventory_bp = Blueprint("inventory", __name__)
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -42,6 +41,7 @@ def compute_status(current_stock, reorder_level):
 
 @inventory_bp.route("/", methods=["GET"])
 def get_inventory():
+    conn = None
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -49,6 +49,8 @@ def get_inventory():
         search = str(request.args.get("search", "")).strip()
         category = str(request.args.get("category", "")).strip()
         status = str(request.args.get("status", "")).strip()
+
+        using_pg = is_postgres(conn)
 
         query = """
             SELECT
@@ -59,42 +61,70 @@ def get_inventory():
                 current_stock,
                 reorder_level,
                 reorder_qty,
-                status,
-                supplier
+                COALESCE(
+                    status,
+                    CASE
+                        WHEN current_stock <= 0 THEN 'Out of Stock'
+                        WHEN current_stock <= (reorder_level * 0.25) THEN 'Critical'
+                        WHEN current_stock <= reorder_level THEN 'Low'
+                        ELSE 'Normal'
+                    END
+                ) AS status,
+                COALESCE(supplier, 'N/A') AS supplier
             FROM inventory
             WHERE 1=1
         """
         params = []
 
         if search:
-            if is_postgres():
+            if using_pg:
                 query += " AND LOWER(item_name) LIKE %s"
-                params.append(f"%{search.lower()}%")
             else:
                 query += " AND LOWER(item_name) LIKE ?"
-                params.append(f"%{search.lower()}%")
+            params.append(f"%{search.lower()}%")
 
         if category:
-            if is_postgres():
+            if using_pg:
                 query += " AND LOWER(category) = %s"
-                params.append(category.lower())
             else:
                 query += " AND LOWER(category) = ?"
-                params.append(category.lower())
+            params.append(category.lower())
 
         if status:
-            if is_postgres():
-                query += " AND LOWER(status) = %s"
-                params.append(status.lower())
+            if using_pg:
+                query += """
+                    AND LOWER(
+                        COALESCE(
+                            status,
+                            CASE
+                                WHEN current_stock <= 0 THEN 'Out of Stock'
+                                WHEN current_stock <= (reorder_level * 0.25) THEN 'Critical'
+                                WHEN current_stock <= reorder_level THEN 'Low'
+                                ELSE 'Normal'
+                            END
+                        )
+                    ) = %s
+                """
             else:
-                query += " AND LOWER(status) = ?"
-                params.append(status.lower())
+                query += """
+                    AND LOWER(
+                        COALESCE(
+                            status,
+                            CASE
+                                WHEN current_stock <= 0 THEN 'Out of Stock'
+                                WHEN current_stock <= (reorder_level * 0.25) THEN 'Critical'
+                                WHEN current_stock <= reorder_level THEN 'Low'
+                                ELSE 'Normal'
+                            END
+                        )
+                    ) = ?
+                """
+            params.append(status.lower())
 
         query += " ORDER BY category ASC, item_name ASC"
 
-        cursor.execute(query, tuple(params) if is_postgres() else params)
+        cursor.execute(query, tuple(params) if using_pg else params)
         items = rows_to_dicts(cursor.fetchall())
-        conn.close()
 
         return jsonify({
             "success": True,
@@ -107,6 +137,72 @@ def get_inventory():
             "success": False,
             "error": str(e)
         }), 500
+
+    finally:
+        if conn:
+            conn.close()
+
+
+@inventory_bp.route("/recalculate-status", methods=["POST"])
+def recalculate_inventory_status():
+    conn = None
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            UPDATE inventory
+            SET status = CASE
+                WHEN current_stock <= 0 THEN 'Out of Stock'
+                WHEN current_stock <= (reorder_level * 0.25) THEN 'Critical'
+                WHEN current_stock <= reorder_level THEN 'Low'
+                ELSE 'Normal'
+            END
+        """)
+
+        conn.commit()
+
+        cursor.execute("""
+            SELECT
+                id,
+                item_name,
+                category,
+                unit,
+                current_stock,
+                reorder_level,
+                reorder_qty,
+                status,
+                COALESCE(supplier, 'N/A') AS supplier
+            FROM inventory
+            ORDER BY category ASC, item_name ASC
+        """)
+        items = rows_to_dicts(cursor.fetchall())
+
+        low_stock_items = [
+            item for item in items
+            if item["status"] in ["Low", "Critical", "Out of Stock"]
+        ]
+
+        return jsonify({
+            "success": True,
+            "message": "Inventory statuses recalculated successfully",
+            "count": len(items),
+            "low_stock_count": len(low_stock_items),
+            "items": items,
+            "low_stock_items": low_stock_items
+        }), 200
+
+    except Exception as e:
+        if conn:
+            conn.rollback()
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+    finally:
+        if conn:
+            conn.close()
 
 
 @inventory_bp.route("/csv-list", methods=["GET"])
@@ -161,6 +257,7 @@ def view_csv_file(filename):
 
 @inventory_bp.route("/export-db-csv", methods=["GET"])
 def export_inventory_db_to_csv():
+    conn = None
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -172,11 +269,9 @@ def export_inventory_db_to_csv():
         rows = cursor.fetchall()
 
         if not rows:
-            conn.close()
             return jsonify({"success": False, "error": "No inventory data found"}), 404
 
         rows = rows_to_dicts(rows)
-        conn.close()
 
         output = io.StringIO()
         writer = csv.DictWriter(output, fieldnames=list(rows[0].keys()))
@@ -198,9 +293,14 @@ def export_inventory_db_to_csv():
             "error": str(e)
         }), 500
 
+    finally:
+        if conn:
+            conn.close()
+
 
 @inventory_bp.route("/", methods=["POST"])
 def add_item():
+    conn = None
     try:
         data = request.get_json(force=True)
 
@@ -220,7 +320,7 @@ def add_item():
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        if is_postgres():
+        if is_postgres(conn):
             cursor.execute("""
                 INSERT INTO inventory (
                     item_name, category, unit, current_stock,
@@ -242,7 +342,6 @@ def add_item():
             ))
 
         conn.commit()
-        conn.close()
 
         return jsonify({
             "success": True,
@@ -254,29 +353,34 @@ def add_item():
             "success": False,
             "error": "Item already exists in inventory"
         }), 400
+
     except Exception as e:
         return jsonify({
             "success": False,
             "error": str(e)
         }), 500
 
+    finally:
+        if conn:
+            conn.close()
+
 
 @inventory_bp.route("/<int:item_id>", methods=["PUT"])
 def update_item(item_id):
+    conn = None
     try:
         data = request.get_json()
 
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        if is_postgres():
+        if is_postgres(conn):
             cursor.execute("SELECT * FROM inventory WHERE id = %s", (item_id,))
         else:
             cursor.execute("SELECT * FROM inventory WHERE id = ?", (item_id,))
 
         item = cursor.fetchone()
         if not item:
-            conn.close()
             return jsonify({"success": False, "error": "Item not found"}), 404
 
         item = item if isinstance(item, dict) else dict(item)
@@ -287,11 +391,11 @@ def update_item(item_id):
         new_stock = float(data.get("current_stock", item["current_stock"]))
         new_reorder_lvl = float(data.get("reorder_level", item["reorder_level"]))
         new_reorder_qty = float(data.get("reorder_qty", item.get("reorder_qty", 0)))
-        new_supplier = str(data.get("supplier", item["supplier"])).strip()
+        new_supplier = str(data.get("supplier", item.get("supplier", "N/A") or "N/A")).strip()
 
         status = compute_status(new_stock, new_reorder_lvl)
 
-        if is_postgres():
+        if is_postgres(conn):
             cursor.execute("""
                 UPDATE inventory
                 SET item_name = %s,
@@ -325,7 +429,6 @@ def update_item(item_id):
             ))
 
         conn.commit()
-        conn.close()
 
         return jsonify({
             "success": True,
@@ -338,30 +441,33 @@ def update_item(item_id):
             "error": str(e)
         }), 500
 
+    finally:
+        if conn:
+            conn.close()
+
 
 @inventory_bp.route("/<int:item_id>", methods=["DELETE"])
 def delete_item(item_id):
+    conn = None
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        if is_postgres():
+        if is_postgres(conn):
             cursor.execute("SELECT * FROM inventory WHERE id = %s", (item_id,))
         else:
             cursor.execute("SELECT * FROM inventory WHERE id = ?", (item_id,))
 
         item = cursor.fetchone()
         if not item:
-            conn.close()
             return jsonify({"success": False, "error": "Item not found"}), 404
 
-        if is_postgres():
+        if is_postgres(conn):
             cursor.execute("DELETE FROM inventory WHERE id = %s", (item_id,))
         else:
             cursor.execute("DELETE FROM inventory WHERE id = ?", (item_id,))
 
         conn.commit()
-        conn.close()
 
         return jsonify({
             "success": True,
@@ -374,9 +480,14 @@ def delete_item(item_id):
             "error": str(e)
         }), 500
 
+    finally:
+        if conn:
+            conn.close()
+
 
 @inventory_bp.route("/reorder-list", methods=["GET"])
 def get_reorder_list():
+    conn = None
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -390,15 +501,30 @@ def get_reorder_list():
                 current_stock,
                 reorder_level,
                 reorder_qty,
-                status,
-                supplier
+                COALESCE(
+                    status,
+                    CASE
+                        WHEN current_stock <= 0 THEN 'Out of Stock'
+                        WHEN current_stock <= (reorder_level * 0.25) THEN 'Critical'
+                        WHEN current_stock <= reorder_level THEN 'Low'
+                        ELSE 'Normal'
+                    END
+                ) AS status,
+                COALESCE(supplier, 'N/A') AS supplier
             FROM inventory
-            WHERE status IN ('Critical', 'Low', 'Out of Stock')
+            WHERE COALESCE(
+                status,
+                CASE
+                    WHEN current_stock <= 0 THEN 'Out of Stock'
+                    WHEN current_stock <= (reorder_level * 0.25) THEN 'Critical'
+                    WHEN current_stock <= reorder_level THEN 'Low'
+                    ELSE 'Normal'
+                END
+            ) IN ('Critical', 'Low', 'Out of Stock')
             ORDER BY current_stock ASC, item_name ASC
         """)
 
         items = rows_to_dicts(cursor.fetchall())
-        conn.close()
 
         return jsonify({
             "success": True,
@@ -412,9 +538,14 @@ def get_reorder_list():
             "error": str(e)
         }), 500
 
+    finally:
+        if conn:
+            conn.close()
+
 
 @inventory_bp.route("/debug/seed-inventory", methods=["GET"])
 def seed_inventory():
+    conn = None
     try:
         addon_path = os.path.join(DATA_DIR, "addon_recipes.csv")
 
@@ -432,21 +563,30 @@ def seed_inventory():
         cursor = conn.cursor()
 
         processed = 0
+        seen_ingredients = set()
 
         for row in rows:
             item_name = str(row.get("ingredient_name", "")).strip()
             if not item_name:
                 continue
 
+            normalized_name = item_name.lower()
+            if normalized_name in seen_ingredients:
+                continue
+            seen_ingredients.add(normalized_name)
+
             unit = str(row.get("unit", "pcs")).strip()
-            current_stock = float(row.get("stocks", 1000) or 1000)
+
+            stocks_value = str(row.get("stocks", "")).strip()
+            current_stock = float(stocks_value) if stocks_value else 1000.0
+
             reorder_level = max(current_stock * 0.2, 1)
             reorder_qty = max(current_stock * 0.3, 1)
             category = "general"
             supplier = "auto"
             status = compute_status(current_stock, reorder_level)
 
-            if is_postgres():
+            if is_postgres(conn):
                 cursor.execute("""
                     INSERT INTO inventory (
                         item_name, category, unit, current_stock,
@@ -481,7 +621,6 @@ def seed_inventory():
             processed += 1
 
         conn.commit()
-        conn.close()
 
         return jsonify({
             "success": True,
@@ -494,3 +633,7 @@ def seed_inventory():
             "success": False,
             "error": str(e)
         }), 500
+
+    finally:
+        if conn:
+            conn.close()

@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify
 from db import get_db_connection, is_postgres
 
-
 report_bp = Blueprint("reports", __name__)
 
 
@@ -17,6 +16,7 @@ def dict_rows(rows):
 
 @report_bp.route("/", methods=["GET"])
 def get_reports():
+    conn = None
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -54,11 +54,14 @@ def get_reports():
         })
 
     except Exception as e:
+        if conn:
+            conn.close()
         return jsonify({"success": False, "error": str(e)}), 500
 
 
 @report_bp.route("/range", methods=["GET"])
 def report_by_range():
+    conn = None
     try:
         start = request.args.get("start")
         end = request.args.get("end")
@@ -67,7 +70,7 @@ def report_by_range():
         cursor = conn.cursor()
 
         if start and end:
-            if is_postgres():
+            if is_postgres(conn):
                 cursor.execute("""
                     SELECT
                         COALESCE(SUM(line_total), 0) AS total_sales,
@@ -98,7 +101,7 @@ def report_by_range():
         stats = stats if isinstance(stats, dict) else dict(stats)
 
         if start and end:
-            if is_postgres():
+            if is_postgres(conn):
                 cursor.execute("""
                     SELECT category, COUNT(*) AS cnt
                     FROM sales
@@ -141,11 +144,14 @@ def report_by_range():
         })
 
     except Exception as e:
+        if conn:
+            conn.close()
         return jsonify({"success": False, "error": str(e)}), 500
 
 
 @report_bp.route("/daily", methods=["GET"])
 def daily_summary():
+    conn = None
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -179,11 +185,14 @@ def daily_summary():
         return jsonify(list(daily.values()))
 
     except Exception as e:
+        if conn:
+            conn.close()
         return jsonify({"success": False, "error": str(e)}), 500
 
 
 @report_bp.route("/chart", methods=["GET"])
 def chart_data():
+    conn = None
     try:
         range_type = request.args.get("range", "7")
         days_map = {"1": 1, "3": 3, "7": 7, "30": 30}
@@ -192,7 +201,7 @@ def chart_data():
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        if is_postgres():
+        if is_postgres(conn):
             cursor.execute("""
                 SELECT DATE(timestamp) AS date, COALESCE(SUM(line_total), 0) AS sales
                 FROM sales
@@ -216,4 +225,6 @@ def chart_data():
         return jsonify(result)
 
     except Exception as e:
+        if conn:
+            conn.close()
         return jsonify({"success": False, "error": str(e)}), 500

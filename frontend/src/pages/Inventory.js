@@ -25,10 +25,28 @@ function Inventory() {
   const fetchInventory = async () => {
     try {
       const res = await fetch(`${API_BASE_URL}/inventory/`);
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+
       const data = await res.json();
-      setItems(data);
+      console.log("Inventory API response:", data);
+      console.log("Is array?", Array.isArray(data));
+
+      if (Array.isArray(data)) {
+        setItems(data);
+      } else if (Array.isArray(data.items)) {
+        setItems(data.items);
+      } else if (Array.isArray(data.data)) {
+        setItems(data.data);
+      } else {
+        console.error("Inventory response is not an array:", data);
+        setItems([]);
+      }
     } catch (err) {
       console.error("Failed to fetch inventory:", err);
+      setItems([]);
     }
   };
 
@@ -40,6 +58,7 @@ function Inventory() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newItem)
       });
+
       if (res.ok) {
         alert("Item added!");
         setNewItem({
@@ -64,10 +83,12 @@ function Inventory() {
     if (!window.confirm(`Are you sure you want to delete "${name}"? This cannot be undone.`)) {
       return;
     }
+
     try {
       const res = await fetch(`${API_BASE_URL}/inventory/${id}`, {
         method: "DELETE"
       });
+
       if (res.ok) {
         alert("Item deleted successfully!");
         fetchInventory();
@@ -105,8 +126,8 @@ function Inventory() {
     }
   };
 
-  const filteredItems = items.filter((item) =>
-    item.item_name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredItems = (Array.isArray(items) ? items : []).filter((item) =>
+    String(item.item_name || "").toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -126,8 +147,17 @@ function Inventory() {
             <div className="panel add-item-form">
               <h3>Add New Ingredient</h3>
               <form onSubmit={handleAddItem}>
-                <input type="text" placeholder="Name" value={newItem.item_name} onChange={(e) => setNewItem({ ...newItem, item_name: e.target.value })} required />
-                <select value={newItem.category} onChange={(e) => setNewItem({ ...newItem, category: e.target.value })}>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={newItem.item_name}
+                  onChange={(e) => setNewItem({ ...newItem, item_name: e.target.value })}
+                  required
+                />
+                <select
+                  value={newItem.category}
+                  onChange={(e) => setNewItem({ ...newItem, category: e.target.value })}
+                >
                   <option>Coffee Base</option>
                   <option>Milk/Dairy</option>
                   <option>Syrups</option>
@@ -135,10 +165,32 @@ function Inventory() {
                   <option>Add-ons/Sinkers</option>
                   <option>Fruit/Lemonade</option>
                 </select>
-                <input type="text" placeholder="Unit (g, ml, pcs)" value={newItem.unit} onChange={(e) => setNewItem({ ...newItem, unit: e.target.value })} />
-                <input type="number" placeholder="Initial Stock" value={newItem.current_stock} onChange={(e) => setNewItem({ ...newItem, current_stock: e.target.value })} required />
-                <input type="number" placeholder="Reorder Level" value={newItem.reorder_level} onChange={(e) => setNewItem({ ...newItem, reorder_level: e.target.value })} required />
-                <input type="text" placeholder="Supplier" value={newItem.supplier} onChange={(e) => setNewItem({ ...newItem, supplier: e.target.value })} />
+                <input
+                  type="text"
+                  placeholder="Unit (g, ml, pcs)"
+                  value={newItem.unit}
+                  onChange={(e) => setNewItem({ ...newItem, unit: e.target.value })}
+                />
+                <input
+                  type="number"
+                  placeholder="Initial Stock"
+                  value={newItem.current_stock}
+                  onChange={(e) => setNewItem({ ...newItem, current_stock: e.target.value })}
+                  required
+                />
+                <input
+                  type="number"
+                  placeholder="Reorder Level"
+                  value={newItem.reorder_level}
+                  onChange={(e) => setNewItem({ ...newItem, reorder_level: e.target.value })}
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Supplier"
+                  value={newItem.supplier}
+                  onChange={(e) => setNewItem({ ...newItem, supplier: e.target.value })}
+                />
                 <button type="submit" className="btn-primary">Add Ingredient</button>
               </form>
             </div>
@@ -170,11 +222,37 @@ function Inventory() {
                     <tr key={item.id}>
                       {editingId === item.id ? (
                         <>
-                          <td><input className="edit-input" value={editFormData.item_name} onChange={(e) => setEditFormData({ ...editFormData, item_name: e.target.value })} /></td>
-                          <td><input className="edit-input" type="number" value={editFormData.current_stock} onChange={(e) => setEditFormData({ ...editFormData, current_stock: e.target.value })} /></td>
-                          <td><input className="edit-input" type="number" value={editFormData.reorder_level} onChange={(e) => setEditFormData({ ...editFormData, reorder_level: e.target.value })} /></td>
+                          <td>
+                            <input
+                              className="edit-input"
+                              value={editFormData.item_name || ""}
+                              onChange={(e) => setEditFormData({ ...editFormData, item_name: e.target.value })}
+                            />
+                          </td>
+                          <td>
+                            <input
+                              className="edit-input"
+                              type="number"
+                              value={editFormData.current_stock || ""}
+                              onChange={(e) => setEditFormData({ ...editFormData, current_stock: e.target.value })}
+                            />
+                          </td>
+                          <td>
+                            <input
+                              className="edit-input"
+                              type="number"
+                              value={editFormData.reorder_level || ""}
+                              onChange={(e) => setEditFormData({ ...editFormData, reorder_level: e.target.value })}
+                            />
+                          </td>
                           <td><span className="badge">Editing...</span></td>
-                          <td><input className="edit-input" value={editFormData.supplier} onChange={(e) => setEditFormData({ ...editFormData, supplier: e.target.value })} /></td>
+                          <td>
+                            <input
+                              className="edit-input"
+                              value={editFormData.supplier || ""}
+                              onChange={(e) => setEditFormData({ ...editFormData, supplier: e.target.value })}
+                            />
+                          </td>
                           <td className="actions-cell">
                             <button className="btn-save" onClick={() => handleSaveEdit(item.id)}>Save</button>
                             <button className="btn-cancel" onClick={() => setEditingId(null)}>Cancel</button>
@@ -186,7 +264,7 @@ function Inventory() {
                           <td>{item.current_stock} {item.unit}</td>
                           <td>{item.reorder_level}</td>
                           <td>
-                            <span className={`badge badge-${item.status.toLowerCase().replace(" ", "-")}`}>
+                            <span className={`badge badge-${String(item.status || "normal").toLowerCase().replace(" ", "-")}`}>
                               {item.status}
                             </span>
                           </td>

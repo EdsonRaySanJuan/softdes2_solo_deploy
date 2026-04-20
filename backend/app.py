@@ -41,7 +41,7 @@ def ensure_sales_table_schema():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    if is_postgres():
+    if is_postgres(conn):
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS public.sales (
                 id SERIAL PRIMARY KEY
@@ -112,12 +112,11 @@ def ensure_recipe_csv_placeholders():
             ])
 
 
-# Added
 init_db()
 ensure_sales_table_schema()
 ensure_recipe_csv_placeholders()
 
-# 🔥 SAFE FLOAT (PREVENT CRASH)
+
 def safe_float(value):
     try:
         return float(value)
@@ -125,7 +124,6 @@ def safe_float(value):
         return 0
 
 
-# 🔥 SYNC INVENTORY FROM CSV
 def sync_inventory_from_csv():
     inventory_path = os.path.join(DATA_DIR, "inventory.csv")
 
@@ -142,7 +140,6 @@ def sync_inventory_from_csv():
         for row in reader:
             item_name = str(row.get("item_name", "")).strip()
 
-            # 🔥 SKIP EMPTY OR COMMENT ROWS
             if not item_name or item_name.startswith("#"):
                 continue
 
@@ -150,7 +147,7 @@ def sync_inventory_from_csv():
             reorder_level = safe_float(row.get("reorder_level"))
             reorder_qty = safe_float(row.get("reorder_qty"))
 
-            if is_postgres():
+            if is_postgres(conn):
                 cursor.execute("""
                     INSERT INTO inventory (item_name, category, unit, current_stock, reorder_level, reorder_qty)
                     VALUES (%s, %s, %s, %s, %s, %s)
@@ -185,9 +182,7 @@ def sync_inventory_from_csv():
     print("✅ Inventory synced from CSV")
 
 
-# 🔥 RUN AFTER TABLES ARE READY
 sync_inventory_from_csv()
-# End
 
 app.register_blueprint(report_bp, url_prefix="/api/reports")
 app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
@@ -205,17 +200,23 @@ def home():
 
 @app.route("/api/health", methods=["GET"])
 def health():
-    return jsonify({"ok": True, "using_postgres": is_postgres()}), 200
+    conn = get_db_connection()
+    using_pg = is_postgres(conn)
+    conn.close()
+    return jsonify({"ok": True, "using_postgres": using_pg}), 200
 
 
 @app.route("/api/debug/db-check", methods=["GET"])
 def debug_db_check():
+    conn = None
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
 
         cursor.execute("SELECT COUNT(*) AS user_count FROM users")
         row = cursor.fetchone()
+
+        using_pg = is_postgres(conn)
         conn.close()
 
         if isinstance(row, dict):
@@ -224,24 +225,28 @@ def debug_db_check():
             user_count = row["user_count"] if "user_count" in row.keys() else row[0]
 
         return jsonify({
-            "using_postgres": is_postgres(),
+            "using_postgres": using_pg,
             "user_count": int(user_count)
         }), 200
 
     except Exception as e:
+        if conn:
+            conn.close()
         return jsonify({
-            "using_postgres": is_postgres(),
+            "using_postgres": False,
             "error": str(e)
         }), 500
 
 
 @app.route("/api/debug/tables", methods=["GET"])
 def debug_tables():
+    conn = None
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
+        using_pg = is_postgres(conn)
 
-        if is_postgres():
+        if using_pg:
             cursor.execute("""
                 SELECT table_name
                 FROM information_schema.tables
@@ -263,24 +268,28 @@ def debug_tables():
         conn.close()
 
         return jsonify({
-            "using_postgres": is_postgres(),
+            "using_postgres": using_pg,
             "tables": tables
         }), 200
 
     except Exception as e:
+        if conn:
+            conn.close()
         return jsonify({
-            "using_postgres": is_postgres(),
+            "using_postgres": False,
             "error": str(e)
         }), 500
 
 
 @app.route("/api/debug/sales-columns", methods=["GET"])
 def debug_sales_columns():
+    conn = None
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
+        using_pg = is_postgres(conn)
 
-        if is_postgres():
+        if using_pg:
             cursor.execute("""
                 SELECT column_name, data_type
                 FROM information_schema.columns
@@ -303,24 +312,28 @@ def debug_sales_columns():
         conn.close()
 
         return jsonify({
-            "using_postgres": is_postgres(),
+            "using_postgres": using_pg,
             "columns": result
         }), 200
 
     except Exception as e:
+        if conn:
+            conn.close()
         return jsonify({
-            "using_postgres": is_postgres(),
+            "using_postgres": False,
             "error": str(e)
         }), 500
 
 
 @app.route("/api/debug/seed-admin", methods=["GET"])
 def seed_admin():
+    conn = None
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
+        using_pg = is_postgres(conn)
 
-        if is_postgres():
+        if using_pg:
             cursor.execute("""
                 INSERT INTO users (user_id, full_name, username, password, role, status)
                 VALUES (%s, %s, %s, %s, %s, %s)
@@ -334,7 +347,7 @@ def seed_admin():
 
         conn.commit()
 
-        if is_postgres():
+        if using_pg:
             cursor.execute("""
                 SELECT user_id, full_name, username, role, status
                 FROM users
@@ -360,6 +373,8 @@ def seed_admin():
         }), 200
 
     except Exception as e:
+        if conn:
+            conn.close()
         return jsonify({
             "success": False,
             "error": str(e)
@@ -368,9 +383,11 @@ def seed_admin():
 
 @app.route("/api/debug/inventory", methods=["GET"])
 def debug_inventory():
+    conn = None
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
+        using_pg = is_postgres(conn)
 
         cursor.execute("""
             SELECT id, item_name, current_stock, reorder_level, reorder_qty, status, supplier
@@ -386,18 +403,20 @@ def debug_inventory():
             result.append(row if isinstance(row, dict) else dict(row))
 
         return jsonify({
-            "using_postgres": is_postgres(),
+            "using_postgres": using_pg,
             "inventory_count": len(result),
             "items": result
         }), 200
 
     except Exception as e:
+        if conn:
+            conn.close()
         return jsonify({
-            "using_postgres": is_postgres(),
+            "using_postgres": False,
             "error": str(e)
         }), 500
 
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=True)
