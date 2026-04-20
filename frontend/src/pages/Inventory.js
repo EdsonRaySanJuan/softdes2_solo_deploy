@@ -18,6 +18,12 @@ function Inventory() {
     supplier: ""
   });
 
+  const normalizeArray = (payload, key) => {
+    if (Array.isArray(payload)) return payload;
+    if (payload && Array.isArray(payload[key])) return payload[key];
+    return [];
+  };
+
   useEffect(() => {
     fetchInventory();
   }, []);
@@ -32,18 +38,9 @@ function Inventory() {
 
       const data = await res.json();
       console.log("Inventory API response:", data);
-      console.log("Is array?", Array.isArray(data));
 
-      if (Array.isArray(data)) {
-        setItems(data);
-      } else if (Array.isArray(data.items)) {
-        setItems(data.items);
-      } else if (Array.isArray(data.data)) {
-        setItems(data.data);
-      } else {
-        console.error("Inventory response is not an array:", data);
-        setItems([]);
-      }
+      const normalizedItems = normalizeArray(data, "items");
+      setItems(normalizedItems);
     } catch (err) {
       console.error("Failed to fetch inventory:", err);
       setItems([]);
@@ -59,7 +56,9 @@ function Inventory() {
         body: JSON.stringify(newItem)
       });
 
-      if (res.ok) {
+      const data = await res.json();
+
+      if (res.ok && data.success !== false) {
         alert("Item added!");
         setNewItem({
           item_name: "",
@@ -71,10 +70,10 @@ function Inventory() {
         });
         fetchInventory();
       } else {
-        const errData = await res.json();
-        alert("Error: " + errData.error);
+        alert("Error: " + (data.error || "Failed to add item"));
       }
     } catch (err) {
+      console.error("Add item failed:", err);
       alert("Backend connection failed!");
     }
   };
@@ -89,12 +88,13 @@ function Inventory() {
         method: "DELETE"
       });
 
-      if (res.ok) {
+      const data = await res.json();
+
+      if (res.ok && data.success !== false) {
         alert("Item deleted successfully!");
         fetchInventory();
       } else {
-        const data = await res.json();
-        alert("Error deleting item: " + data.error);
+        alert("Error deleting item: " + (data.error || "Delete failed"));
       }
     } catch (err) {
       console.error("Delete request failed:", err);
@@ -114,21 +114,32 @@ function Inventory() {
         body: JSON.stringify(editFormData)
       });
 
-      if (res.ok) {
+      const data = await res.json();
+
+      if (res.ok && data.success !== false) {
         setEditingId(null);
         fetchInventory();
       } else {
-        const data = await res.json();
-        alert("Failed to update: " + data.error);
+        alert("Failed to update: " + (data.error || "Unknown error"));
       }
     } catch (err) {
       console.error("Edit failed:", err);
     }
   };
 
-  const filteredItems = (Array.isArray(items) ? items : []).filter((item) =>
+  const safeItems = Array.isArray(items) ? items : [];
+
+  const filteredItems = safeItems.filter((item) =>
     String(item.item_name || "").toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const getStatusBadgeClass = (status) => {
+    const normalized = String(status || "").toLowerCase();
+
+    if (normalized === "low") return "badge-warning";
+    if (normalized === "critical" || normalized === "out of stock") return "badge-danger";
+    return "badge-ok";
+  };
 
   return (
     <div className="app-body">
@@ -218,65 +229,77 @@ function Inventory() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredItems.map((item) => (
-                    <tr key={item.id}>
-                      {editingId === item.id ? (
-                        <>
-                          <td>
-                            <input
-                              className="edit-input"
-                              value={editFormData.item_name || ""}
-                              onChange={(e) => setEditFormData({ ...editFormData, item_name: e.target.value })}
-                            />
-                          </td>
-                          <td>
-                            <input
-                              className="edit-input"
-                              type="number"
-                              value={editFormData.current_stock || ""}
-                              onChange={(e) => setEditFormData({ ...editFormData, current_stock: e.target.value })}
-                            />
-                          </td>
-                          <td>
-                            <input
-                              className="edit-input"
-                              type="number"
-                              value={editFormData.reorder_level || ""}
-                              onChange={(e) => setEditFormData({ ...editFormData, reorder_level: e.target.value })}
-                            />
-                          </td>
-                          <td><span className="badge">Editing...</span></td>
-                          <td>
-                            <input
-                              className="edit-input"
-                              value={editFormData.supplier || ""}
-                              onChange={(e) => setEditFormData({ ...editFormData, supplier: e.target.value })}
-                            />
-                          </td>
-                          <td className="actions-cell">
-                            <button className="btn-save" onClick={() => handleSaveEdit(item.id)}>Save</button>
-                            <button className="btn-cancel" onClick={() => setEditingId(null)}>Cancel</button>
-                          </td>
-                        </>
-                      ) : (
-                        <>
-                          <td><strong>{item.item_name}</strong></td>
-                          <td>{item.current_stock} {item.unit}</td>
-                          <td>{item.reorder_level}</td>
-                          <td>
-                            <span className={`badge badge-${String(item.status || "normal").toLowerCase().replace(" ", "-")}`}>
-                              {item.status}
-                            </span>
-                          </td>
-                          <td style={{ color: "#888", fontSize: "0.85rem" }}>{item.supplier || "N/A"}</td>
-                          <td className="actions-cell">
-                            <button className="btn-edit" onClick={() => startEdit(item)}>Edit</button>
-                            <button className="btn-danger-small" onClick={() => handleDeleteItem(item.id, item.item_name)}>Delete</button>
-                          </td>
-                        </>
-                      )}
+                  {filteredItems.length === 0 ? (
+                    <tr>
+                      <td colSpan="6" style={{ textAlign: "center", padding: "30px", color: "#888" }}>
+                        No inventory items found.
+                      </td>
                     </tr>
-                  ))}
+                  ) : (
+                    filteredItems.map((item) => (
+                      <tr key={item.id}>
+                        {editingId === item.id ? (
+                          <>
+                            <td>
+                              <input
+                                className="edit-input"
+                                value={editFormData.item_name || ""}
+                                onChange={(e) => setEditFormData({ ...editFormData, item_name: e.target.value })}
+                              />
+                            </td>
+                            <td>
+                              <input
+                                className="edit-input"
+                                type="number"
+                                value={editFormData.current_stock || ""}
+                                onChange={(e) => setEditFormData({ ...editFormData, current_stock: e.target.value })}
+                              />
+                            </td>
+                            <td>
+                              <input
+                                className="edit-input"
+                                type="number"
+                                value={editFormData.reorder_level || ""}
+                                onChange={(e) => setEditFormData({ ...editFormData, reorder_level: e.target.value })}
+                              />
+                            </td>
+                            <td><span className="badge">Editing...</span></td>
+                            <td>
+                              <input
+                                className="edit-input"
+                                value={editFormData.supplier || ""}
+                                onChange={(e) => setEditFormData({ ...editFormData, supplier: e.target.value })}
+                              />
+                            </td>
+                            <td className="actions-cell">
+                              <button className="btn-save" onClick={() => handleSaveEdit(item.id)}>Save</button>
+                              <button className="btn-cancel" onClick={() => setEditingId(null)}>Cancel</button>
+                            </td>
+                          </>
+                        ) : (
+                          <>
+                            <td><strong>{item.item_name}</strong></td>
+                            <td>{item.current_stock} {item.unit}</td>
+                            <td>{item.reorder_level}</td>
+                            <td>
+                              <span className={`badge ${getStatusBadgeClass(item.status)}`}>
+                                {item.status || "N/A"}
+                              </span>
+                            </td>
+                            <td style={{ color: "#888", fontSize: "0.85rem" }}>
+                              {item.supplier || "N/A"}
+                            </td>
+                            <td className="actions-cell">
+                              <button className="btn-edit" onClick={() => startEdit(item)}>Edit</button>
+                              <button className="btn-danger-small" onClick={() => handleDeleteItem(item.id, item.item_name)}>
+                                Delete
+                              </button>
+                            </td>
+                          </>
+                        )}
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
