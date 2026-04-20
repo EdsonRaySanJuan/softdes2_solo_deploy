@@ -6,6 +6,9 @@ API_URL = os.getenv("API_BASE_URL", "https://softdes-finalproj.onrender.com/api"
 BOT_NAME = os.getenv("RPA_BOT_NAME", "Inventory-Master-V1")
 SLEEP_SECONDS = int(os.getenv("RPA_INTERVAL_SECONDS", "60"))
 
+GET_TIMEOUT = (5, 45)
+POST_TIMEOUT = (5, 30)
+
 
 def run_automation_cycle():
     results = {
@@ -19,7 +22,10 @@ def run_automation_cycle():
     }
 
     try:
-        response = requests.get(f"{API_URL}/inventory/reorder-list", timeout=15)
+        response = requests.get(
+            f"{API_URL}/inventory/reorder-list",
+            timeout=GET_TIMEOUT
+        )
         response.raise_for_status()
 
         payload = response.json()
@@ -50,7 +56,7 @@ def run_automation_cycle():
                     "task_description": task_msg,
                     "status": "Completed"
                 },
-                timeout=15
+                timeout=POST_TIMEOUT
             )
             log_res.raise_for_status()
 
