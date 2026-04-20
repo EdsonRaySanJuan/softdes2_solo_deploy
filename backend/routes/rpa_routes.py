@@ -1,5 +1,6 @@
 from datetime import datetime
 from flask import Blueprint, request, jsonify
+from flask_cors import cross_origin
 from db import get_db_connection, is_postgres
 from rpa_agent import run_automation_cycle
 
@@ -16,8 +17,24 @@ def rows_to_dicts(rows):
     return result
 
 
-@rpa_bp.route("/run-bot", methods=["POST"])
+ALLOWED_ORIGINS = [
+    "https://softdes-finalproj.vercel.app",
+    "https://softdes-finalproj-98pf71sx2-edsonraysanjuans-projects.vercel.app",
+    "http://localhost:3000",
+    "http://localhost:5173",
+]
+
+
+@rpa_bp.route("/run-bot", methods=["POST", "OPTIONS"])
+@cross_origin(
+    origins=ALLOWED_ORIGINS,
+    methods=["POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
+)
 def run_bot():
+    if request.method == "OPTIONS":
+        return jsonify({"success": True}), 200
+
     try:
         result = run_automation_cycle()
 
@@ -43,8 +60,16 @@ def run_bot():
         }), 500
 
 
-@rpa_bp.route("/log", methods=["POST"])
+@rpa_bp.route("/log", methods=["POST", "OPTIONS"])
+@cross_origin(
+    origins=ALLOWED_ORIGINS,
+    methods=["POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
+)
 def add_log():
+    if request.method == "OPTIONS":
+        return jsonify({"success": True}), 200
+
     data = request.get_json() or {}
     bot_name = str(data.get("bot_name", "Unknown Bot")).strip()
     task = str(data.get("task_description", "No description provided")).strip()
@@ -92,6 +117,11 @@ def add_log():
 
 
 @rpa_bp.route("/logs", methods=["GET"])
+@cross_origin(
+    origins=ALLOWED_ORIGINS,
+    methods=["GET"],
+    allow_headers=["Content-Type", "Authorization"],
+)
 def get_logs():
     conn = None
     try:
