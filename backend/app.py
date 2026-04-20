@@ -27,7 +27,7 @@ CORS(
         r"/api/*": {
             "origins": [
                 "https://softdes-finalproj.vercel.app",
-                "https://softdes-finalproj-98pf71sx2-edsonraysanjuans-projects.vercel.app",
+                r"https://softdes-finalproj-.*\.vercel\.app",
                 "http://localhost:3000",
                 "http://localhost:5173",
             ],
@@ -37,7 +37,6 @@ CORS(
     },
     supports_credentials=False
 )
-
 
 def ensure_sales_table_schema():
     conn = get_db_connection()
