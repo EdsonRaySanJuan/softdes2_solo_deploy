@@ -59,15 +59,26 @@ def run_automation_cycle():
         "message": ""
     }
 
+    conn = None
     try:
-        response = requests.get(
-            f"{API_URL}/inventory/reorder-list",
-            timeout=GET_TIMEOUT
-        )
-        response.raise_for_status()
+        conn = get_db_connection()
+        cursor = conn.cursor()
 
-        payload = response.json()
-        reorder_list = payload.get("items", []) if isinstance(payload, dict) else []
+        if is_postgres(conn):
+            cursor.execute("""
+                SELECT item_name, supplier, reorder_qty, unit, current_stock, status
+                FROM inventory
+                WHERE current_stock <= reorder_level
+            """)
+        else:
+            cursor.execute("""
+                SELECT item_name, supplier, reorder_qty, unit, current_stock, status
+                FROM inventory
+                WHERE current_stock <= reorder_level
+            """)
+
+        rows = cursor.fetchall()
+        reorder_list = [dict(row) for row in rows]
         results["checked_items"] = len(reorder_list)
 
         if not reorder_list:
@@ -87,11 +98,7 @@ def run_automation_cycle():
                 f"of {item_name}. Current stock: {current_stock}. Status: {status}."
             )
 
-            saved = save_log(
-                BOT_NAME,
-                task_msg,
-                "Completed"
-            )
+            saved = save_log(BOT_NAME, task_msg, "Completed")
 
             results["processed_items"] += 1
             if saved:
@@ -109,16 +116,6 @@ def run_automation_cycle():
         results["message"] = f"Processed {results['processed_items']} reorder item(s)."
         return results
 
-    except requests.exceptions.RequestException as e:
-        return {
-            "success": False,
-            "bot_name": BOT_NAME,
-            "checked_items": results["checked_items"],
-            "processed_items": results["processed_items"],
-            "logs_sent": results["logs_sent"],
-            "items": results["items"],
-            "message": f"HTTP error: {str(e)}"
-        }
     except Exception as e:
         return {
             "success": False,
@@ -129,6 +126,10 @@ def run_automation_cycle():
             "items": results["items"],
             "message": f"Bot error: {str(e)}"
         }
+
+    finally:
+        if conn:
+            conn.close()
 
 
 if __name__ == "__main__":
