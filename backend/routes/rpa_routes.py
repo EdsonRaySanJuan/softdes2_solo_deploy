@@ -1,7 +1,6 @@
 from datetime import datetime
 from flask import Blueprint, request, jsonify, current_app
-from flask_cors import cross_origin
-from db import get_db_connection, is_postgres
+from db import get_db_connection, is_postgres  # ← removed cross_origin import
 from rpa_agent import run_automation_cycle
 
 rpa_bp = Blueprint("rpa", __name__)
@@ -17,30 +16,14 @@ def rows_to_dicts(rows):
     return result
 
 
-ALLOWED_ORIGINS = [
-    "https://softdes-finalproj.vercel.app",
-    "https://softdes-finalproj-98pf71sx2-edsonraysanjuans-projects.vercel.app",
-    "http://localhost:3000",
-    "http://localhost:5173",
-    "http://localhost:5174"
-]
-
-
 @rpa_bp.route("/run-bot", methods=["POST", "OPTIONS"])
-@cross_origin(
-    origins=ALLOWED_ORIGINS,
-    methods=["POST", "OPTIONS"],
-    allow_headers=["Content-Type", "Authorization"],
-)
 def run_bot():
     if request.method == "OPTIONS":
         return jsonify({"success": True}), 200
 
     try:
         current_app.logger.info("RUN BOT: route entered")
-
         result = run_automation_cycle()
-
         current_app.logger.info(f"RUN BOT: function returned: {result}")
 
         return jsonify({
@@ -55,7 +38,6 @@ def run_bot():
 
     except Exception as e:
         current_app.logger.exception(f"RUN BOT ERROR: {e}")
-
         return jsonify({
             "success": False,
             "message": str(e),
@@ -68,11 +50,6 @@ def run_bot():
 
 
 @rpa_bp.route("/log", methods=["POST", "OPTIONS"])
-@cross_origin(
-    origins=ALLOWED_ORIGINS,
-    methods=["POST", "OPTIONS"],
-    allow_headers=["Content-Type", "Authorization"],
-)
 def add_log():
     if request.method == "OPTIONS":
         return jsonify({"success": True}), 200
@@ -100,25 +77,16 @@ def add_log():
             """, (timestamp, bot_name, task, status))
 
         conn.commit()
-
-        return jsonify({
-            "success": True,
-            "message": "Log added successfully"
-        }), 201
+        return jsonify({"success": True, "message": "Log added successfully"}), 201
 
     except Exception as e:
         current_app.logger.exception(f"ADD LOG ERROR: {e}")
-
         if conn:
             try:
                 conn.rollback()
             except Exception:
                 pass
-
-        return jsonify({
-            "success": False,
-            "error": str(e)
-        }), 500
+        return jsonify({"success": False, "error": str(e)}), 500
 
     finally:
         if conn:
@@ -126,11 +94,6 @@ def add_log():
 
 
 @rpa_bp.route("/logs", methods=["GET"])
-@cross_origin(
-    origins=ALLOWED_ORIGINS,
-    methods=["GET"],
-    allow_headers=["Content-Type", "Authorization"],
-)
 def get_logs():
     conn = None
     try:
@@ -145,21 +108,11 @@ def get_logs():
         """)
 
         logs = rows_to_dicts(cursor.fetchall())
-
-        return jsonify({
-            "success": True,
-            "count": len(logs),
-            "logs": logs
-        }), 200
+        return jsonify({"success": True, "count": len(logs), "logs": logs}), 200
 
     except Exception as e:
         current_app.logger.exception(f"GET LOGS ERROR: {e}")
-
-        return jsonify({
-            "success": False,
-            "error": str(e),
-            "logs": []
-        }), 500
+        return jsonify({"success": False, "error": str(e), "logs": []}), 500
 
     finally:
         if conn:
