@@ -22,6 +22,7 @@ ALLOWED_ORIGINS = [
     "https://softdes-finalproj-98pf71sx2-edsonraysanjuans-projects.vercel.app",
     "http://localhost:3000",
     "http://localhost:5173",
+    "http://localhost:5174"
 ]
 
 
