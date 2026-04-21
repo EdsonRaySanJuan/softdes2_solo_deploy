@@ -2,7 +2,6 @@ from flask import Blueprint, request, jsonify
 from datetime import datetime
 import os
 import csv
-
 from db import get_db_connection, is_postgres
 
 order_bp = Blueprint("orders", __name__)
@@ -40,7 +39,6 @@ def normalize_size(size):
 def get_base_recipe_rows(menu_item, size_label):
     normalized_menu_item = normalize_text(str(menu_item).strip())
     normalized_size = normalize_size(str(size_label or "regular").strip())
-
     rows = load_csv_rows(DRINK_RECIPES_PATH)
 
     exact_matches = [
@@ -95,7 +93,6 @@ def get_addon_recipe_rows(addon_name):
 def ensure_sales_table_exists():
     conn = get_db_connection()
     cursor = conn.cursor()
-
     if is_postgres(conn):
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS public.sales (
@@ -134,7 +131,6 @@ def ensure_sales_table_exists():
                 table_no TEXT
             )
         """)
-
     conn.commit()
     conn.close()
 
@@ -150,64 +146,12 @@ def get_next_order_id(conn, cursor):
             SELECT COALESCE(MAX(order_id), 0) + 1 AS next_id
             FROM sales
         """)
-
     row = cursor.fetchone()
     if not row:
         return 1
-
     if isinstance(row, dict):
         return int(row["next_id"])
-
     return int(row["next_id"] if "next_id" in row.keys() else row[0])
-
-
-def deduct_inventory_ingredient(conn, cursor, ingredient_name, qty_needed, inventory_warnings, deducted_ingredients):
-    if is_postgres(conn):
-        cursor.execute("""
-            UPDATE inventory
-            SET current_stock = current_stock - %s
-            WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(%s))
-        """, (qty_needed, ingredient_name))
-    else:
-        cursor.execute("""
-            UPDATE inventory
-            SET current_stock = current_stock - ?
-            WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(?))
-        """, (qty_needed, ingredient_name))
-
-    if cursor.rowcount == 0:
-        inventory_warnings.append(
-            f"Missing inventory ingredient match for '{ingredient_name}'"
-        )
-        return
-
-    deducted_ingredients.append({
-        "ingredient_name": ingredient_name,
-        "qty_deducted": qty_needed
-    })
-
-    if is_postgres(conn):
-        cursor.execute("""
-            UPDATE inventory
-            SET status = CASE
-                WHEN current_stock <= 0 THEN 'Out of Stock'
-                WHEN current_stock <= (reorder_level * 0.25) THEN 'Critical'
-                WHEN current_stock <= reorder_level THEN 'Low'
-                ELSE 'Normal'
-            END
-            WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(%s))
-        """, (ingredient_name,))
-    else:
-        cursor.execute("""
-            UPDATE inventory
-            SET status = CASE
-                WHEN current_stock <= 0 THEN 'Out of Stock'
-                WHEN current_stock <= (reorder_level * 0.25) THEN 'Critical'
-                WHEN current_stock <= reorder_level THEN 'Low'
-                ELSE 'Normal'
-            END
-            WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(?))
-        """, (ingredient_name,))
 
 
 def check_ingredient_stock(conn, cursor, ingredient_name, qty_needed):
@@ -222,17 +166,135 @@ def check_ingredient_stock(conn, cursor, ingredient_name, qty_needed):
                 "SELECT current_stock FROM inventory WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(?))",
                 (ingredient_name,)
             )
-
         row = cursor.fetchone()
         if not row:
             return True, 9999
-
         stock = row["current_stock"] if isinstance(row, dict) else row[0]
         return stock >= qty_needed, stock
-
     except Exception as e:
         print(f"check_ingredient_stock ERROR: {e}")
         return True, 9999
+
+
+def deduct_inventory_ingredient(conn, cursor, ingredient_name, qty_needed, inventory_warnings, deducted_ingredients):
+    # Deduct stock
+    if is_postgres(conn):
+        cursor.execute("""
+            UPDATE inventory
+            SET current_stock = GREATEST(current_stock - %s, 0)
+            WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(%s))
+        """, (qty_needed, ingredient_name))
+    else:
+        cursor.execute("""
+            UPDATE inventory
+            SET current_stock = MAX(current_stock - ?, 0)
+            WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(?))
+        """, (qty_needed, ingredient_name))
+
+    if cursor.rowcount == 0:
+        inventory_warnings.append(
+            f"Missing inventory ingredient match for '{ingredient_name}'"
+        )
+        return
+
+    deducted_ingredients.append({
+        "ingredient_name": ingredient_name,
+        "qty_deducted": qty_needed
+    })
+
+    # ✅ UPDATE STATUS
+    if is_postgres(conn):
+        cursor.execute("""
+            UPDATE inventory
+            SET status = CASE
+                WHEN current_stock <= 0 THEN 'Out of Stock'
+                WHEN current_stock <= (reorder_level * 0.25) THEN 'Critical'
+                WHEN current_stock <= reorder_level THEN 'Low'
+                ELSE 'Normal'
+            END
+            WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(%s))
+        """, (ingredient_name,))
+    else:
+        cursor.execute("""
+            UPDATE inventory
+            SET status = CASE
+                WHEN current_stock <= 0 THEN 'Out of Stock'
+                WHEN current_stock <= (reorder_level * 0.25) THEN 'Critical'
+                WHEN current_stock <= reorder_level THEN 'Low'
+                ELSE 'Normal'
+            END
+            WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(?))
+        """, (ingredient_name,))
+
+    # 🔥 NEW FIX: AUTO RESET RPA FLAG
+    # 🔥 RESET LANG KAPAG LOW STOCK
+    if is_postgres(conn):
+        cursor.execute("""
+            UPDATE inventory
+            SET last_restocked = NULL
+            WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(%s))
+            AND current_stock <= reorder_level
+        """, (ingredient_name,))
+    else:
+        cursor.execute("""
+            UPDATE inventory
+            SET last_restocked = NULL
+            WHERE LOWER(TRIM(item_name)) = LOWER(TRIM(?))
+            AND current_stock <= reorder_level
+        """, (ingredient_name,))
+
+
+def validate_stock_for_all_items(conn, cursor, items):
+    """
+    PRE-CHECK: Bago mag-insert ng kahit ano sa sales o mag-deduct ng
+    inventory, i-validate muna lahat ng ingredients ng lahat ng items.
+    Ibalik ang listahan ng errors kung may kulang.
+    Empty list = okay lahat, pwede na mag-proceed.
+    """
+    stock_errors = []
+
+    for item in items:
+        name = str(item.get("name", "")).strip()
+        size = str(item.get("size") or "regular").strip()
+        qty = int(item.get("qty", 1) or 1)
+        addons_list = item.get("addons", []) or []
+
+        if not name:
+            continue
+
+        # Check base recipe ingredients
+        recipe_rows = get_base_recipe_rows(name, size)
+        for recipe in recipe_rows:
+            ingredient_name = str(recipe.get("ingredient_name", "")).strip()
+            qty_used = float(recipe.get("qty_used", 0) or 0) * qty
+            if not ingredient_name or qty_used <= 0:
+                continue
+            ok, stock = check_ingredient_stock(conn, cursor, ingredient_name, qty_used)
+            if not ok:
+                stock_errors.append(
+                    f"Out of stock: '{ingredient_name}' para sa '{name}' ({size}). "
+                    f"Available: {stock}, Needed: {qty_used}"
+                )
+
+        # Check addon ingredients
+        for addon in addons_list:
+            addon_name = str(addon.get("name", "")).strip()
+            if not addon_name:
+                continue
+            addon_recipe_rows = get_addon_recipe_rows(addon_name)
+            for addon_recipe in addon_recipe_rows:
+                ingredient_name = str(addon_recipe.get("ingredient_name", "")).strip()
+                qty_used = float(addon_recipe.get("qty_used", 0) or 0) * qty
+                if not ingredient_name or qty_used <= 0:
+                    continue
+                ok, stock = check_ingredient_stock(conn, cursor, ingredient_name, qty_used)
+                if not ok:
+                    stock_errors.append(
+                        f"Out of stock: '{ingredient_name}' para sa addon '{addon_name}'. "
+                        f"Available: {stock}, Needed: {qty_used}"
+                    )
+
+    return stock_errors
 
 
 @order_bp.route("/debug-db", methods=["GET"])
@@ -242,7 +304,6 @@ def debug_orders_db():
         conn = get_db_connection()
         cursor = conn.cursor()
         using_pg = is_postgres(conn)
-
         if using_pg:
             cursor.execute("""
                 SELECT table_schema, table_name
@@ -256,20 +317,16 @@ def debug_orders_db():
                 FROM sqlite_master
                 WHERE type = 'table' AND name = 'sales'
             """)
-
         rows = cursor.fetchall()
         conn.close()
-
         result = []
         for row in rows:
             result.append(row if isinstance(row, dict) else dict(row))
-
         return jsonify({
             "success": True,
             "using_postgres": using_pg,
             "sales_table_lookup": result
         }), 200
-
     except Exception as e:
         if conn:
             conn.close()
@@ -285,10 +342,8 @@ def get_orders():
     conn = None
     try:
         ensure_sales_table_exists()
-
         conn = get_db_connection()
         cursor = conn.cursor()
-
         if is_postgres(conn):
             cursor.execute("""
                 SELECT order_id, timestamp, item_name, category, size, qty,
@@ -303,16 +358,12 @@ def get_orders():
                 FROM sales
                 ORDER BY order_id DESC, timestamp DESC
             """)
-
         rows = cursor.fetchall()
         conn.close()
-
         result = []
         for row in rows:
             result.append(row if isinstance(row, dict) else dict(row))
-
         return jsonify(result), 200
-
     except Exception as e:
         if conn:
             conn.close()
@@ -327,9 +378,7 @@ def create_order():
     conn = None
     try:
         ensure_sales_table_exists()
-
         data = request.get_json(silent=True) or {}
-
         items = data.get("items", [])
         total = float(data.get("total", 0) or 0)
         cash = float(data.get("cash", 0) or 0)
@@ -339,13 +388,28 @@ def create_order():
 
         if not items:
             return jsonify({"success": False, "error": "No items in order"}), 400
-
         if payment_method.lower() == "cash" and cash < total:
             return jsonify({"success": False, "error": "Insufficient cash"}), 400
 
         conn = get_db_connection()
         cursor = conn.cursor()
 
+        # ============================================================
+        # STEP 1 — PRE-CHECK LAHAT NG STOCK
+        # Wala pang insert o deduction dito. Kung may kulang,
+        # ibalik agad ang error — walang mare-record sa sales.
+        # ============================================================
+        stock_errors = validate_stock_for_all_items(conn, cursor, items)
+        if stock_errors:
+            conn.close()
+            return jsonify({
+                "success": False,
+                "error": "The order cannot be processed. There is insufficient stock..",
+                "stock_errors": stock_errors
+            }), 400
+        # ============================================================
+
+        # STEP 2 — Okay na lahat ng stock, simulan na ang order
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         order_id = get_next_order_id(conn, cursor)
         inventory_warnings = []
@@ -391,9 +455,9 @@ def create_order():
                     order_id, timestamp, name, category, size, qty,
                     unit_price, line_total, addons_text, payment_method, cash, change, table_no
                 ))
-
             lines_written += 1
 
+            # Deduct base recipe ingredients
             recipe_rows = get_base_recipe_rows(name, size)
             print("DEBUG ORDER:", name, size)
             print("DEBUG RECIPES FOUND:", recipe_rows)
@@ -404,35 +468,21 @@ def create_order():
                 for recipe in recipe_rows:
                     ingredient_name = str(recipe.get("ingredient_name", "")).strip()
                     qty_used = float(recipe.get("qty_used", 0) or 0) * qty
-
                     if ingredient_name and qty_used > 0:
-                        ok, stock = check_ingredient_stock(conn, cursor, ingredient_name, qty_used)
-
-                        if not ok:
-                            inventory_warnings.append(
-                                f"Low stock for '{ingredient_name}'. Available: {stock}, Needed: {qty_used}"
-                            )
-                            print(f"⚠️ LOW STOCK: {ingredient_name} — available: {stock}, needed: {qty_used}")
-
                         deduct_inventory_ingredient(
-                            conn,
-                            cursor,
-                            ingredient_name,
-                            qty_used,
-                            inventory_warnings,
-                            deducted_ingredients
+                            conn, cursor, ingredient_name, qty_used,
+                            inventory_warnings, deducted_ingredients
                         )
                         print(f"✅ BASE DEDUCTED: {ingredient_name} | DEDUCTED: {qty_used}")
 
+            # Deduct addon ingredients
             for addon in addons_list:
                 addon_name = str(addon.get("name", "")).strip()
-
                 if not addon_name:
                     inventory_warnings.append("Addon with empty name.")
                     continue
 
                 print(f"🔍 ADDON ORDERED: {addon_name}")
-
                 addon_recipe_rows = get_addon_recipe_rows(addon_name)
 
                 if not addon_recipe_rows:
@@ -441,49 +491,31 @@ def create_order():
                     continue
 
                 print(f"✅ ADDON RECIPE FOUND: {addon_name} -> {addon_recipe_rows}")
-
                 for addon_recipe in addon_recipe_rows:
                     ingredient_name = str(addon_recipe.get("ingredient_name", "")).strip()
                     qty_used = float(addon_recipe.get("qty_used", 0) or 0) * qty
-
                     print(f"➡️ ADDON INGREDIENT: {ingredient_name} | QTY NEEDED: {qty_used}")
-
                     if not ingredient_name or qty_used <= 0:
                         inventory_warnings.append(f"Invalid addon data for '{addon_name}'")
                         continue
-
-                    ok, stock = check_ingredient_stock(conn, cursor, ingredient_name, qty_used)
-
-                    if not ok:
-                        inventory_warnings.append(
-                            f"Low stock for addon '{ingredient_name}'. Available: {stock}, Needed: {qty_used}"
-                        )
-                        print(f"⚠️ LOW STOCK ADDON: {ingredient_name} — available: {stock}, needed: {qty_used}")
-
                     deduct_inventory_ingredient(
-                        conn,
-                        cursor,
-                        ingredient_name,
-                        qty_used,
-                        inventory_warnings,
-                        deducted_ingredients
+                        conn, cursor, ingredient_name, qty_used,
+                        inventory_warnings, deducted_ingredients
                     )
-
                     print(f"✅ ADDON DEDUCTED: {ingredient_name} | DEDUCTED: {qty_used}")
 
+        # Log low stock items to rpa_logs
         cursor.execute("""
             SELECT item_name, current_stock, reorder_level
             FROM inventory
             WHERE current_stock <= reorder_level
         """)
         low_stock_items = cursor.fetchall()
-
         for low_item in low_stock_items:
             row = low_item if isinstance(low_item, dict) else dict(low_item)
             item_name = row["item_name"]
             current_stock = row["current_stock"]
             reorder_level = row["reorder_level"]
-
             if is_postgres(conn):
                 cursor.execute("""
                     INSERT INTO rpa_logs (timestamp, bot_name, task_description, status)
@@ -532,7 +564,6 @@ def create_order():
                 conn.close()
             except Exception:
                 pass
-
         return jsonify({
             "success": False,
             "error": str(e)

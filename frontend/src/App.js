@@ -7,20 +7,22 @@ import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import DashboardEmployee from "./pages/DashboardEmployee";
 import Orders from "./pages/Orders";
-import Automation from "./pages/Automation"; // <-- NEW: Imported the page
+import Automation from "./pages/Automation";
+import OrderMetrics from "./pages/OrderMetrics"; // ← NEW
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/admin" element={<DashboardAdmin />} />
+        <Route path="/"          element={<Login />} />
+        <Route path="/admin"     element={<DashboardAdmin />} />
         <Route path="/inventory" element={<Inventory />} />
-        <Route path="/reports" element={<Reports />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/automation" element={<Automation />} /> {/* <-- NEW: Added the route */}
-        <Route path="/employee" element={<DashboardEmployee />} />
-        <Route path="/orders" element={<Orders />} />
+        <Route path="/reports"   element={<Reports />} />
+        <Route path="/settings"  element={<Settings />} />
+        <Route path="/automation" element={<Automation />} />
+        <Route path="/employee"  element={<DashboardEmployee />} />
+        <Route path="/orders"    element={<Orders />} />
+        <Route path="/metrics"   element={<OrderMetrics />} /> {/* ← NEW */}
       </Routes>
     </Router>
   );

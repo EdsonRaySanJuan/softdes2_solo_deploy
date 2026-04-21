@@ -106,6 +106,32 @@ function Automation() {
               >
                 {isRefreshing ? "Refreshing..." : "Manual Refresh"}
               </button>
+
+              {/* 🔥 NEW BUTTON */}
+              <button
+                className="btn-danger"
+                onClick={async () => {
+                  if (!window.confirm("Are you sure you want to clear all automation logs?")) return;
+
+                  try {
+                    const res = await fetch(`${API_BASE_URL}/rpa/logs/clear`, {
+                      method: "DELETE",
+                    });
+
+                    const data = await res.json();
+
+                    if (!res.ok) throw new Error(data.error || "Failed");
+
+                    alert(data.message || "Logs cleared successfully");
+                    fetchLogs(); // refresh table
+                  } catch (err) {
+                    alert("Failed to clear logs");
+                    console.error(err);
+                  }
+                }}
+              >
+                Clear Logs
+              </button>
             </div>
           </header>
 
@@ -118,7 +144,9 @@ function Automation() {
 
             <div className="kpi-card">
               <span className="kpi-label">Total Automations</span>
-              <span className="kpi-value">{safeLogs.length}</span>
+              <span className="kpi-value">
+                  {safeLogs.filter(log => String(log.status).toLowerCase() === "completed").length}
+                </span>
               <span className="kpi-extra">Tasks completed</span>
             </div>
           </section>
@@ -150,7 +178,9 @@ function Automation() {
                     </td>
                   </tr>
                 ) : (
-                  safeLogs.map((log, index) => (
+                  safeLogs
+                    .filter((log) => String(log.status).toLowerCase() === "completed")
+                    .map((log, index) => (
                     <tr key={log.id || index}>
                       <td style={{ color: "#A9B3AE" }}>{log.timestamp || "—"}</td>
                       <td><strong>{log.bot_name || "Unknown Bot"}</strong></td>

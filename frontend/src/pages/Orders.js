@@ -3,6 +3,25 @@ import Sidebar from "../components/Sidebar";
 import "../styles/orders.css";
 import API_BASE_URL from "../config";
 
+const ADDON_PRICES = {
+  Yakult: 10,
+  Dutchmill: 10,
+  Nata: 5,
+  "Chia Seeds": 5,
+  "Boba Pearl": 10,
+  "Coffee Jelly": 10,
+  Oreo: 10,
+  "Salty Cream": 15,
+  "Cream Cheese": 15,
+  "Extra Shot": 20,
+  Milk: 10,
+  "Whip Cream": 10,
+  "Sugar Jelly": 10,
+  "Premium Upgrade": 20,
+  "Extra Bag": 10,
+  "Lemon Grass Oolong Upgrade": 15,
+};
+
 const menuData = {
   lemonade: {
     label: "Lemonade",
@@ -186,6 +205,9 @@ const menuData = {
   },
 };
 
+const computeAddonTotal = (addonNames) =>
+  addonNames.reduce((sum, name) => sum + (ADDON_PRICES[name] || 0), 0);
+
 export default function Orders() {
   const [selectedCategory, setSelectedCategory] = useState("lemonade");
   const [selectedItem, setSelectedItem] = useState(null);
@@ -197,18 +219,13 @@ export default function Orders() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const currentCategory = menuData[selectedCategory];
-
-  const total = useMemo(() => {
-    return cart.reduce((sum, item) => sum + item.line_total, 0);
-  }, [cart]);
-
+  const total = useMemo(() => cart.reduce((sum, item) => sum + item.line_total, 0), [cart]);
   const cashValue = Number(cash) || 0;
   const change = cashValue - total;
 
   const openItemModal = (item) => {
     setSelectedItem({ ...item, category: currentCategory.label });
-    const firstSize = Object.keys(item.prices)[0];
-    setSelectedSize(firstSize);
+    setSelectedSize(Object.keys(item.prices)[0]);
     setSelectedAddons([]);
   };
 
@@ -218,57 +235,53 @@ export default function Orders() {
     setSelectedAddons([]);
   };
 
-  const toggleAddon = (addon) => {
+  const toggleAddon = (addon) =>
     setSelectedAddons((prev) =>
       prev.includes(addon) ? prev.filter((a) => a !== addon) : [...prev, addon]
     );
-  };
 
   const addToCart = () => {
     if (!selectedItem || !selectedSize) return;
-    const unitPrice = selectedItem.prices[selectedSize];
-    const newItem = {
+    const basePrice = selectedItem.prices[selectedSize];
+    const addonsCopy = [...selectedAddons];
+    const addonTotal = computeAddonTotal(addonsCopy);
+    const unitPrice = basePrice + addonTotal;
+    setCart((prev) => [...prev, {
       category: selectedItem.category,
       item_name: selectedItem.name,
       size: selectedSize,
       qty: 1,
+      base_price: basePrice,
+      addon_total: addonTotal,
       unit_price: unitPrice,
-      addons: selectedAddons,
-      addons_text: selectedAddons.length ? selectedAddons.join(", ") : "None",
+      addons: addonsCopy,
+      addons_text: addonsCopy.length ? addonsCopy.join(", ") : "None",
       line_total: unitPrice,
-    };
-    setCart((prev) => [...prev, newItem]);
+    }]);
     closeItemModal();
   };
 
   const updateCartQty = (index, delta) => {
     setCart((prev) =>
-      prev
-        .map((item, i) => {
-          if (i !== index) return item;
-          const newQty = item.qty + delta;
-          if (newQty <= 0) return null;
-          return { ...item, qty: newQty, line_total: item.unit_price * newQty };
-        })
-        .filter(Boolean)
+      prev.map((item, i) => {
+        if (i !== index) return item;
+        const newQty = item.qty + delta;
+        if (newQty <= 0) return null;
+        return { ...item, qty: newQty, line_total: item.unit_price * newQty };
+      }).filter(Boolean)
     );
   };
 
-  const removeCartItem = (index) => {
-    setCart((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const clearCart = () => {
-    setCart([]);
-    setCash("");
-    setTable("Walk-in");
-  };
+  const removeCartItem = (index) => setCart((prev) => prev.filter((_, i) => i !== index));
+  const clearCart = () => { setCart([]); setCash(""); setTable("Walk-in"); };
 
   const handlePayAndPrint = async () => {
     if (cart.length === 0) { alert("Cart is empty."); return; }
     if (cashValue < total) { alert("Insufficient cash."); return; }
-
     setIsSubmitting(true);
+
+    const t0 = performance.now();
+
     try {
       const token = localStorage.getItem("token");
       const payload = {
@@ -280,26 +293,43 @@ export default function Orders() {
           unitPrice: item.unit_price,
           addons: item.addons.map((addonName) => ({ name: addonName })),
         })),
-        total,
-        cash: cashValue,
-        change,
-        table,
-        payment_method: "Cash",
+        total, cash: cashValue, change, table, payment_method: "Cash",
       };
 
       const response = await fetch(`${API_BASE_URL}/orders/`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
+        headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
         body: JSON.stringify(payload),
       });
 
+      const processingTimeMs = parseFloat((performance.now() - t0).toFixed(2));
       const data = await response.json();
-      if (!response.ok) { alert(data.error || "Failed to process order."); return; }
 
-      let message = `Order #${data.order_id} processed successfully.`;
+      if (!response.ok) {
+        if (data.stock_errors?.length > 0) {
+          alert("Hindi ma-process ang order:\n\n" + data.stock_errors.map((e) => `• ${e}`).join("\n"));
+        } else {
+          alert(data.error || "Failed to process order.");
+        }
+        return;
+      }
+
+      // Fire-and-forget metric recording
+      fetch(`${API_BASE_URL}/metrics/record`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+        body: JSON.stringify({
+          order_id: data.order_id,
+          timestamp: new Date().toISOString().replace("T", " ").substring(0, 19),
+          processing_time_ms: processingTimeMs,
+          item_count: cart.reduce((sum, i) => sum + i.qty, 0),
+          total_amount: total,
+          payment_method: "Cash",
+          table_no: table,
+        }),
+      }).catch((err) => console.warn("Metrics record failed (non-critical):", err));
+
+      let message = `Order #${data.order_id} processed successfully.\nProcessing time: ${processingTimeMs}ms`;
       if (data.inventory_warnings?.length > 0) {
         message += `\n\nInventory warnings:\n- ${data.inventory_warnings.join("\n- ")}`;
       }
@@ -314,71 +344,49 @@ export default function Orders() {
   };
 
   const lowestPrice = (prices) => Math.min(...Object.values(prices));
+  const modalPreviewPrice = selectedItem && selectedSize
+    ? selectedItem.prices[selectedSize] + computeAddonTotal(selectedAddons)
+    : 0;
 
   return (
     <div className="app-body">
       <div className="app-shell">
         <Sidebar role="Employee" />
-
         <main className="main-content">
-          {/* ── Layout ── */}
           <div className="orders-layout">
-
-            {/* ── LEFT: Menu Panel ── */}
             <div className="menu-panel">
               <div className="menu-panel-top">
                 <p className="panel-title">Menu</p>
                 <p className="panel-subtitle">Select a category then tap an item to add it</p>
               </div>
-
-              {/* Category tabs */}
               <div className="menu-tabs">
                 {Object.entries(menuData).map(([key, category]) => (
-                  <button
-                    key={key}
-                    className={`tab${selectedCategory === key ? " active" : ""}`}
-                    onClick={() => setSelectedCategory(key)}
-                  >
+                  <button key={key} className={`tab${selectedCategory === key ? " active" : ""}`} onClick={() => setSelectedCategory(key)}>
                     {category.label}
                   </button>
                 ))}
               </div>
-
-              {/* Category banner */}
               <div className="category-banner">
                 <div>
                   <div className="category-label">{currentCategory.label}</div>
                   <div className="category-description">{currentCategory.description}</div>
                 </div>
-                <span className="category-count">
-                  {currentCategory.items.length} items
-                </span>
+                <span className="category-count">{currentCategory.items.length} items</span>
               </div>
-
-              {/* Menu grid */}
               <div className="menu-grid">
                 {currentCategory.items.map((item, index) => (
-                  <button
-                    key={index}
-                    className="menu-item"
-                    onClick={() => openItemModal(item)}
-                  >
+                  <button key={index} className="menu-item" onClick={() => openItemModal(item)}>
                     <div className="menu-item-top">
                       <span className="menu-name">{item.name}</span>
-                      <span className="menu-price">
-                        from ₱{lowestPrice(item.prices)}
-                      </span>
+                      <span className="menu-price">from ₱{lowestPrice(item.prices)}</span>
                       <span className="menu-meta">{currentCategory.description}</span>
                     </div>
-                    {item.addons.length > 0 && (
-                      <span className="menu-addon-note">+ add-ons available</span>
-                    )}
+                    {item.addons.length > 0 && <span className="menu-addon-note">+ add-ons available</span>}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* ── RIGHT: Cart Panel ── */}
             <div className="cart-panel">
               <div className="panel-header">
                 <div>
@@ -387,35 +395,24 @@ export default function Orders() {
                 </div>
                 <span className="cart-badge">{cart.length} item{cart.length !== 1 ? "s" : ""}</span>
               </div>
-
               <div className="cart-scroll">
                 <table className="table">
                   <thead>
-                    <tr>
-                      <th>Item</th>
-                      <th>Qty</th>
-                      <th className="num-cell">Total</th>
-                      <th></th>
-                    </tr>
+                    <tr><th>Item</th><th>Qty</th><th className="num-cell">Total</th><th></th></tr>
                   </thead>
                   <tbody>
                     {cart.length === 0 ? (
-                      <tr>
-                        <td colSpan={4} className="empty-cart">No items yet — tap a menu item to add</td>
-                      </tr>
+                      <tr><td colSpan={4} className="empty-cart">No items yet — tap a menu item to add</td></tr>
                     ) : (
                       cart.map((item, index) => (
                         <tr key={index}>
                           <td>
-                            <div className="cart-item-head">
-                              <div>
-                                <div className="cart-item-name">{item.item_name}</div>
-                                <div className="cart-item-meta">{item.size} · ₱{item.unit_price.toFixed(2)}</div>
-                                {item.addons.length > 0 && (
-                                  <div className="cart-item-addons">+{item.addons_text}</div>
-                                )}
-                              </div>
+                            <div className="cart-item-name">{item.item_name}</div>
+                            <div className="cart-item-meta">
+                              {item.size} · ₱{item.base_price.toFixed(2)}
+                              {item.addon_total > 0 && <span className="addon-price-tag"> +₱{item.addon_total.toFixed(2)} add-ons</span>}
                             </div>
+                            {item.addons.length > 0 && <div className="cart-item-addons">+{item.addons_text}</div>}
                           </td>
                           <td>
                             <div className="qty-control">
@@ -425,35 +422,22 @@ export default function Orders() {
                             </div>
                           </td>
                           <td className="num-cell">₱{item.line_total.toFixed(2)}</td>
-                          <td>
-                            <button className="remove-btn" onClick={() => removeCartItem(index)}>×</button>
-                          </td>
+                          <td><button className="remove-btn" onClick={() => removeCartItem(index)}>×</button></td>
                         </tr>
                       ))
                     )}
                   </tbody>
                 </table>
               </div>
-
-              {/* Footer: totals + payment */}
               <div className="cart-footer">
                 <div className="totals">
-                  <div className="totals-row">
-                    <span>Subtotal</span>
-                    <span>₱{total.toFixed(2)}</span>
-                  </div>
-                  <div className="totals-row">
-                    <span>Cash</span>
-                    <span>₱{cashValue.toFixed(2)}</span>
-                  </div>
+                  <div className="totals-row"><span>Subtotal</span><span>₱{total.toFixed(2)}</span></div>
+                  <div className="totals-row"><span>Cash</span><span>₱{cashValue.toFixed(2)}</span></div>
                   <div className="totals-row grand">
                     <span>Change</span>
-                    <span className={change < 0 ? "error-text" : ""}>
-                      ₱{change >= 0 ? change.toFixed(2) : "0.00"}
-                    </span>
+                    <span className={change < 0 ? "error-text" : ""}>₱{change >= 0 ? change.toFixed(2) : "0.00"}</span>
                   </div>
                 </div>
-
                 <div className="payment-actions">
                   <div className="cash-input">
                     <label>Table / Type</label>
@@ -462,25 +446,12 @@ export default function Orders() {
                       <option value="Takeout">Takeout</option>
                     </select>
                   </div>
-
                   <div className="cash-input">
                     <label>Cash Received</label>
-                    <input
-                      type="number"
-                      value={cash}
-                      onChange={(e) => setCash(e.target.value)}
-                      placeholder="Enter cash amount"
-                    />
+                    <input type="number" value={cash} onChange={(e) => setCash(e.target.value)} placeholder="Enter cash amount" />
                   </div>
-
-                  <button className="btn-cancel" onClick={clearCart}>
-                    Cancel Order
-                  </button>
-                  <button
-                    className="btn-pay"
-                    onClick={handlePayAndPrint}
-                    disabled={isSubmitting}
-                  >
+                  <button className="btn-cancel" onClick={clearCart}>Cancel Order</button>
+                  <button className="btn-pay" onClick={handlePayAndPrint} disabled={isSubmitting}>
                     {isSubmitting ? "Processing…" : "Pay & Print Receipt"}
                   </button>
                 </div>
@@ -490,7 +461,6 @@ export default function Orders() {
         </main>
       </div>
 
-      {/* ── Modal ── */}
       {selectedItem && (
         <div className="modal">
           <div className="modal-content">
@@ -501,24 +471,16 @@ export default function Orders() {
               </div>
               <button className="modal-close" onClick={closeItemModal}>×</button>
             </div>
-
-            {/* Size */}
             <div>
               <p className="modal-section-title">Size</p>
               <div className="size-list">
                 {Object.entries(selectedItem.prices).map(([size, price]) => (
-                  <button
-                    key={size}
-                    className={`size-chip${selectedSize === size ? " selected" : ""}`}
-                    onClick={() => setSelectedSize(size)}
-                  >
+                  <button key={size} className={`size-chip${selectedSize === size ? " selected" : ""}`} onClick={() => setSelectedSize(size)}>
                     {size} <span className="price">₱{price}</span>
                   </button>
                 ))}
               </div>
             </div>
-
-            {/* Add-ons */}
             {selectedItem.addons.length > 0 ? (
               <div>
                 <p className="modal-section-title">Add-ons</p>
@@ -526,12 +488,9 @@ export default function Orders() {
                   {selectedItem.addons.map((addon, index) => (
                     <div key={index} className="addon-row">
                       <label>
-                        <input
-                          type="checkbox"
-                          checked={selectedAddons.includes(addon)}
-                          onChange={() => toggleAddon(addon)}
-                        />
+                        <input type="checkbox" checked={selectedAddons.includes(addon)} onChange={() => toggleAddon(addon)} />
                         {addon}
+                        {ADDON_PRICES[addon] != null && <span className="addon-price"> +₱{ADDON_PRICES[addon]}</span>}
                       </label>
                     </div>
                   ))}
@@ -540,14 +499,10 @@ export default function Orders() {
             ) : (
               <p className="empty-addon">No add-ons available for this item.</p>
             )}
-
-            {/* Summary */}
             <div className="modal-summary">
-              <span>Selected: {selectedSize}</span>
-              <span>₱{selectedItem.prices[selectedSize]}</span>
+              <span>{selectedSize}{selectedAddons.length > 0 && ` + ${selectedAddons.length} add-on${selectedAddons.length > 1 ? "s" : ""}`}</span>
+              <span>₱{modalPreviewPrice}</span>
             </div>
-
-            {/* Actions */}
             <div className="modal-footer">
               <button className="btn-secondary" onClick={closeItemModal}>Cancel</button>
               <button className="btn-primary" onClick={addToCart}>Add to Cart</button>

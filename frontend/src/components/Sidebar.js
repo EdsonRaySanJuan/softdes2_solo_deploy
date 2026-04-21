@@ -4,7 +4,6 @@ function Sidebar({ role }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear out user data so the next person logging in starts fresh
     localStorage.clear();
     navigate("/");
   };
@@ -21,20 +20,21 @@ function Sidebar({ role }) {
 
       <nav className="nav">
         {role === "Admin" && (
-            <>
-            <NavLink to="/admin" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Dashboard</NavLink>
-            <NavLink to="/inventory" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Inventory</NavLink>
-            <NavLink to="/reports" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Reports</NavLink>
-            <NavLink to="/automation" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Automation Logs</NavLink> {/* <-- NEW TAB ADDED */}
-            <NavLink to="/settings" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Settings</NavLink>
-            </>
+          <>
+            <NavLink to="/admin"      className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Dashboard</NavLink>
+            <NavLink to="/inventory"  className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Inventory</NavLink>
+            <NavLink to="/reports"    className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Reports</NavLink>
+            <NavLink to="/automation" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Automation Logs</NavLink>
+            <NavLink to="/settings"   className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Settings</NavLink>
+          </>
         )}
 
         {role === "Employee" && (
-            <>
+          <>
             <NavLink to="/employee" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Dashboard</NavLink>
-            <NavLink to="/orders" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Orders</NavLink>
-            </>
+            <NavLink to="/orders"   className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Orders</NavLink>
+            <NavLink to="/metrics"  className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Order Metrics</NavLink>
+          </>
         )}
       </nav>
 
@@ -43,7 +43,6 @@ function Sidebar({ role }) {
           Logout
         </button>
       </div>
-
     </aside>
   );
 }

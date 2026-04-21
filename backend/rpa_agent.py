@@ -1,16 +1,13 @@
 import os
 import time
-import requests
 from datetime import datetime
-
 from db import get_db_connection, is_postgres
 
-
-API_URL = os.getenv("API_BASE_URL", "https://softdes-finalproj.onrender.com/api").rstrip("/")
+API_URL = os.getenv("API_BASE_URL", "").rstrip("/")
 BOT_NAME = os.getenv("RPA_BOT_NAME", "Inventory-Master-V1")
 SLEEP_SECONDS = int(os.getenv("RPA_INTERVAL_SECONDS", "60"))
 
-GET_TIMEOUT = (5, 45)
+FORCE_PROCESS_ALL = False
 
 
 def save_log(bot_name, task_description, status):
@@ -35,14 +32,8 @@ def save_log(bot_name, task_description, status):
         return True
 
     except Exception as e:
-        print(f"save_log error: {e}", flush=True)
-        if conn:
-            try:
-                conn.rollback()
-            except Exception:
-                pass
+        print("save_log error:", e)
         return False
-
     finally:
         if conn:
             conn.close()
@@ -64,67 +55,82 @@ def run_automation_cycle():
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        if is_postgres(conn):
-            cursor.execute("""
-                SELECT item_name, supplier, reorder_qty, unit, current_stock, status
-                FROM inventory
-                WHERE current_stock <= reorder_level
-            """)
-        else:
-            cursor.execute("""
-                SELECT item_name, supplier, reorder_qty, unit, current_stock, status
-                FROM inventory
-                WHERE current_stock <= reorder_level
-            """)
+        # 🔥 GET LOW STOCK ITEMS
+        cursor.execute("""
+            SELECT item_name, supplier, reorder_qty, unit, current_stock, reorder_level
+            FROM inventory
+            WHERE current_stock <= reorder_level
+            AND last_restocked IS NULL
+        """)
 
         rows = cursor.fetchall()
-        reorder_list = [dict(row) for row in rows]
-        results["checked_items"] = len(reorder_list)
+        low_items = [dict(row) for row in rows]
 
-        if not reorder_list:
-            results["message"] = "Everything looks good. No reorders needed."
+        results["checked_items"] = len(low_items)
+
+        if not low_items:
+            results["message"] = "No low stock items found. Inventory is in good condition."
             return results
 
-        for item in reorder_list:
-            item_name = item.get("item_name", "Unknown Item")
-            supplier = item.get("supplier") or "N/A"
-            reorder_qty = item.get("reorder_qty", 0)
-            unit = item.get("unit", "")
-            current_stock = item.get("current_stock", 0)
-            status = item.get("status", "Unknown")
+        for item in low_items:
+            item_name = item["item_name"]
+            current_stock = item["current_stock"]
+            reorder_level = item["reorder_level"]
 
-            task_msg = (
-                f"Automatically sent PO to {supplier} for {reorder_qty} {unit} "
-                f"of {item_name}. Current stock: {current_stock}. Status: {status}."
+            # 🔥 FIX: COMPUTE STATUS
+            if current_stock <= 0:
+                computed_status = "Out of Stock"
+            elif current_stock <= (reorder_level * 0.25):
+                computed_status = "Critical"
+            elif current_stock <= reorder_level:
+                computed_status = "Low"
+            else:
+                computed_status = "Normal"
+
+            # 🔥 LOW STOCK ALERT LOG
+            alert_msg = (
+                f"[{datetime.now().strftime('%H:%M:%S.%f')}] "
+                f"{item_name} is low on stock "
+                f"({current_stock} <= reorder level {reorder_level})"
+            )
+            save_log("inventory_bot", alert_msg, "LOW_STOCK_ALERT")
+
+            # 🔥 PROCESS LOG (FIXED STATUS)
+            process_msg = (
+                f"[{datetime.now().strftime('%H:%M:%S.%f')}] "
+                f"{item_name} | PO sent to {item.get('supplier') or 'None'} | "
+                f"{item.get('reorder_qty', 0)} {item.get('unit', '')} | "
+                f"Stock: {current_stock} | Status: {computed_status}"
             )
 
-            saved = save_log(BOT_NAME, task_msg, "Completed")
+            saved = save_log(BOT_NAME, process_msg, "Completed")
+
+            # OPTIONAL: mark processed
+            if not FORCE_PROCESS_ALL:
+                cursor.execute(
+                    "UPDATE inventory SET last_restocked = ? WHERE item_name = ?"
+                    if not is_postgres(conn)
+                    else "UPDATE inventory SET last_restocked = %s WHERE item_name = %s",
+                    (datetime.now().strftime("%Y-%m-%d %H:%M:%S"), item_name)
+                )
 
             results["processed_items"] += 1
             if saved:
                 results["logs_sent"] += 1
 
-            results["items"].append({
-                "item_name": item_name,
-                "supplier": supplier,
-                "reorder_qty": reorder_qty,
-                "unit": unit,
-                "current_stock": current_stock,
-                "status": status
-            })
+        conn.commit()
 
-        results["message"] = f"Processed {results['processed_items']} reorder item(s)."
+        results["message"] = (
+            f"Checked {results['checked_items']} items, "
+            f"processed {results['processed_items']} reorder(s)."
+        )
+
         return results
 
     except Exception as e:
         return {
             "success": False,
-            "bot_name": BOT_NAME,
-            "checked_items": results["checked_items"],
-            "processed_items": results["processed_items"],
-            "logs_sent": results["logs_sent"],
-            "items": results["items"],
-            "message": f"Bot error: {str(e)}"
+            "message": str(e)
         }
 
     finally:
@@ -134,6 +140,5 @@ def run_automation_cycle():
 
 if __name__ == "__main__":
     while True:
-        result = run_automation_cycle()
-        print(result)
+        print(run_automation_cycle())
         time.sleep(SLEEP_SECONDS)

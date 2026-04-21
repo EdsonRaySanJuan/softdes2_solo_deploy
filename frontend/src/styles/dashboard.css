@@ -407,3 +407,64 @@ body {
     overflow: visible;
   }
 }
+
+/* Utility classes */
+.dashboard-row {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.panel.half {
+  flex: 1;
+}
+
+/* stocks and orders side by side*/
+.badge-danger {
+  background: #ef4444;
+  color: white;
+}
+
+.badge-warning {
+  background: #f59e0b;
+  color: white;
+}
+
+.badge-low {
+  background: #facc15;
+  color: black;
+}
+
+/* Add some spacing between the two tables */
+.dashboard-row {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+  height: 500px;
+}
+
+.panel.half {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-scroll .table-container {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.badge-danger {
+  background: #ef4444;
+  color: white;
+}
+
+.badge-warning {
+  background: #f59e0b;
+  color: white;
+}
+
+.badge-low {
+  background: #facc15;
+  color: black;
+}

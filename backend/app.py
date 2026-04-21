@@ -11,9 +11,12 @@ from routes.inventory_routes import inventory_bp
 from routes.auth_routes import auth_bp
 from routes.user_routes import user_bp
 from routes.rpa_routes import rpa_bp
+from routes.metrics_routes import metrics_bp  # ← moved import up with the rest
 
+from dotenv import load_dotenv
+load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__)  # ← app must be created BEFORE register_blueprint
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev-secret-key")
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -185,13 +188,15 @@ def sync_inventory_from_csv():
 
 sync_inventory_from_csv()
 
-app.register_blueprint(report_bp, url_prefix="/api/reports")
-app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
-app.register_blueprint(order_bp, url_prefix="/api/orders")
-app.register_blueprint(inventory_bp, url_prefix="/api/inventory")
-app.register_blueprint(auth_bp, url_prefix="/api/auth")
-app.register_blueprint(user_bp, url_prefix="/api/users")
-app.register_blueprint(rpa_bp, url_prefix="/api/rpa")
+# ── Register all blueprints ──────────────────────────────────────────────────
+app.register_blueprint(report_bp,     url_prefix="/api/reports")
+app.register_blueprint(dashboard_bp,  url_prefix="/api/dashboard")
+app.register_blueprint(order_bp,      url_prefix="/api/orders")
+app.register_blueprint(inventory_bp,  url_prefix="/api/inventory")
+app.register_blueprint(auth_bp,       url_prefix="/api/auth")
+app.register_blueprint(user_bp,       url_prefix="/api/users")
+app.register_blueprint(rpa_bp,        url_prefix="/api/rpa")
+app.register_blueprint(metrics_bp,    url_prefix="/api/metrics")  # ← /api/ prefix para consistent
 
 
 @app.route("/")
