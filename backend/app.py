@@ -28,16 +28,9 @@ CORS(
     app,
     resources={
         r"/api/*": {
-            "origins": [
-                "https://softdes2-solo-deploy-iovhczzf1-edsonraysanjuans-projects.vercel.app/",
-                "http://localhost:3000",
-                "http://localhost:5173",
-            ],
-            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-            "allow_headers": ["Content-Type", "Authorization"],
+            "origins": r"https://.*\.vercel\.app"
         }
-    },
-    supports_credentials=False
+    }
 )
 
 def ensure_sales_table_schema():
