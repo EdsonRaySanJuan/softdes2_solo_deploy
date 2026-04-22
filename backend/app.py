@@ -31,7 +31,7 @@ CORS(
             "origins": [
                 "https://softdes-finalproj.vercel.app",
                 r"https://softdes-finalproj-.*\.vercel\.app",
-                "https://softdes-finalproj-drshg18d8-edsonraysanjuans-projects.vercel.app",
+                "https://softdes2-solo-deploy.vercel.app",
                 "http://localhost:3000",
                 "http://localhost:5173",
             ],
