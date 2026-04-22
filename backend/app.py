@@ -29,8 +29,6 @@ CORS(
     resources={
         r"/api/*": {
             "origins": [
-                r"https://softdes2-solo-deploy-.*\.vercel\.app",
-                "https://softdes2-solo-deploy.vercel.app",
                 "https://softdes2-solo-deploy-iovhczzf1-edsonraysanjuans-projects.vercel.app/",
                 "http://localhost:3000",
                 "http://localhost:5173",
