@@ -24,22 +24,6 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 DRINK_RECIPES_PATH = os.path.join(DATA_DIR, "drink_recipes.csv")
 ADDON_RECIPES_PATH = os.path.join(DATA_DIR, "addon_recipes.csv")
 
-CORS(
-    app,
-    resources={
-        r"/api/*": {
-            "origins": [
-                r"https://softdes2-solo-deploy-.*\.vercel\.app",
-                "https://softdes2-solo-deploy.vercel.app",
-                "http://localhost:3000",
-                "http://localhost:5173",
-            ],
-            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-            "allow_headers": ["Content-Type", "Authorization"],
-        }
-    },
-    supports_credentials=False
-)
 
 def ensure_sales_table_schema():
     conn = get_db_connection()
