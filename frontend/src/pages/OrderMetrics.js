@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import Sidebar from "../components/Sidebar";
 import API_BASE_URL from "../config";
 import "../styles/order_metrics.css";
@@ -61,8 +61,14 @@ export default function OrderMetrics() {
   const LIMIT = 15;
 
   const token = localStorage.getItem("token");
-  const headers = { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) };
 
+  // ✅ FIX: memoized headers
+  const headers = useMemo(() => ({
+    "Content-Type": "application/json",
+    ...(token ? { Authorization: `Bearer ${token}` } : {})
+  }), [token]);
+
+  // ✅ FIX: added dependency
   const fetchAll = useCallback(async (pageNum = 0) => {
     setLoading(true); setError(null);
     try {
@@ -90,11 +96,13 @@ export default function OrderMetrics() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [headers]);
 
-  useEffect(() => { fetchAll(page); }, [page]);
+  // ✅ FIX: added fetchAll
+  useEffect(() => { 
+    fetchAll(page); 
+  }, [page, fetchAll]);
 
-  // 🔥 CLEAR DATA FUNCTION
   const handleClearData = async () => {
     const confirmClear = window.confirm("Are you sure you want to delete all metrics data?");
     if (!confirmClear) return;
@@ -134,7 +142,6 @@ export default function OrderMetrics() {
               <p className="metrics-subtitle">Processing speed & average handling time per transaction</p>
             </div>
 
-            {/* 🔥 BUTTONS */}
             <div style={{ display: "flex", gap: "10px" }}>
               <button className="refresh-btn" onClick={() => fetchAll(page)} disabled={loading}>
                 {loading ? "Loading…" : "↻ Refresh"}
@@ -148,7 +155,6 @@ export default function OrderMetrics() {
 
           {error && <div className="metrics-error">{error}</div>}
 
-          {/* Summary cards */}
           <div className="summary-cards">
             <div className="metric-card card-total">
               <div className="card-label">Total Orders Tracked</div>
@@ -186,7 +192,6 @@ export default function OrderMetrics() {
             </div>
           </div>
 
-          {/* Chart */}
           <div className="chart-card">
             <div className="chart-card-header">
               <span className="chart-title">Processing Speed — Last 30 Orders</span>
@@ -198,7 +203,6 @@ export default function OrderMetrics() {
             <div className="chart-wrap"><LineChart data={chartData} /></div>
           </div>
 
-          {/* History table */}
           <div className="history-card">
             <div className="history-header">
               <span className="history-title">Transaction History</span>
