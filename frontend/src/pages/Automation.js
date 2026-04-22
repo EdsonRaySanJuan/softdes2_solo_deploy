@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import API_BASE_URL from "../config";
 import "../styles/automation.css";
 
+/*
 // ── Mini SVG spark chart ──────────────────────────────────────────────────────
 function SparkLine({ data, color = "#f97316" }) {
   if (!data || data.length < 2) return <span style={{ color: "#444", fontSize: "0.75rem" }}>No data</span>;
@@ -23,7 +24,7 @@ function SparkLine({ data, color = "#f97316" }) {
     </svg>
   );
 }
-
+*/
 // ── Speed badge ───────────────────────────────────────────────────────────────
 function SpeedBadge({ ms }) {
   if (ms == null) return null;
